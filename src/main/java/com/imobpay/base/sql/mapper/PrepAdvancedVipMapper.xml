@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.PrepAdvancedVipDao">
+
+	
+	<sql id="paramSql">
+		<!--  此处一定要增加一个查询 -->
+		<if test="lastchangedate !=null and lastchangedate !=''">
+			AND LASTCHANGEDATE =  #{lastchangedate}
+		</if>
+		<if test="bankname !=null and bankname !=''">
+			AND BANKNAME =  #{bankname}
+		</if>
+		<if test="feedate !=null and feedate !=''">
+			AND FEEDATE =  #{feedate}
+		</if>
+		<if test="transtime !=null and transtime !=''">
+			AND TRANSTIME =  #{transtime}
+		</if>
+		<if test="translogno !=null and translogno !=''">
+			AND TRANSLOGNO =  #{translogno}
+		</if>
+		<if test="transflag !=null and transflag !=''">
+			AND TRANSFLAG =  #{transflag}
+		</if>
+		<if test="transdate !=null and transdate !=''">
+			AND TRANSDATE =  #{transdate}
+		</if>
+		<if test="isassure !=null and isassure !=''">
+			AND ISASSURE =  #{isassure}
+		</if>
+		<if test="isgotofee !=null and isgotofee !=''">
+			AND ISGOTOFEE =  #{isgotofee}
+		</if>
+		<if test="customerid !=null and customerid !=''">
+			AND CUSTOMERID =  #{customerid}
+		</if>
+		<if test="account !=null and account !=''">
+			AND ACCOUNT =  #{account}
+		</if>
+		<if test="type !=null and type !=''">
+			AND TYPE =  #{type}
+		</if>
+		<if test="url !=null and url !=''">
+			AND URL =  #{url}
+		</if>
+		<if test="timestamp !=null and timestamp !=''">
+			AND TIMESTAMP =  #{timestamp}
+		</if>
+		<if test="branchid !=null and branchid !=''">
+			AND BRANCHID =  #{branchid}
+		</if>
+		<if test="appuser !=null and appuser !=''">
+			AND APPUSER =  #{appuser}
+		</if>
+		<if test="status !=null and status !=''">
+			AND STATUS =  #{status}
+		</if>
+		<if test="flag !=null and flag !=''">
+			AND FLAG =  #{flag}
+		</if>
+		<if test="validtime !=null and validtime !=''">
+			AND VALIDTIME =  #{validtime}
+		</if>
+		<if test="rejectreason !=null and rejectreason !=''">
+			AND REJECTREASON =  #{rejectreason}
+		</if>
+		<if test="leveldesc !=null and leveldesc !=''">
+			AND LEVELDESC =  #{leveldesc}
+		</if>
+		<if test="cardtype !=null and cardtype !=''">
+			AND CARDTYPE =  #{cardtype}
+		</if>
+		<if test="bankid !=null and bankid !=''">
+			AND BANKID =  #{bankid}
+		</if>
+		<if test="id !=null and id !=''">
+			AND ID =  #{id}
+		</if>
+	</sql>
+	
+	<parameterMap type="com.imobpay.base.entity.PrepAdvancedVip" id="paramIdPrepAdvancedVip">
+		<parameter property="pageflag"  javaType="Boolean" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="curPage"   javaType="Integer" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="pageSize"  javaType="Integer" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="lastchangedate" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="bankname" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="feedate" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="transtime" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="translogno" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="transflag" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="transdate" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="isassure" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="isgotofee" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="customerid" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="account" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="type" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="url" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="timestamp" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="branchid" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="appuser" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="status" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="flag" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="validtime" javaType="String" jdbcType="NVARCHAR" mode="IN"   />
+		<parameter property="rejectreason" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="leveldesc" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="cardtype" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="bankid" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="id" javaType="Integer" jdbcType="NUMERIC" mode="IN"   />
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.PrepAdvancedVip" id="resultTbPrepAdvancedVip">
+		<result column="LASTCHANGEDATE" property="lastchangedate" javaType="String" jdbcType="VARCHAR" />
+		<result column="BANKNAME" property="bankname" javaType="String" jdbcType="VARCHAR" />
+		<result column="FEEDATE" property="feedate" javaType="String" jdbcType="VARCHAR" />
+		<result column="TRANSTIME" property="transtime" javaType="String" jdbcType="VARCHAR" />
+		<result column="TRANSLOGNO" property="translogno" javaType="String" jdbcType="VARCHAR" />
+		<result column="TRANSFLAG" property="transflag" javaType="String" jdbcType="VARCHAR" />
+		<result column="TRANSDATE" property="transdate" javaType="String" jdbcType="VARCHAR" />
+		<result column="ISASSURE" property="isassure" javaType="String" jdbcType="VARCHAR" />
+		<result column="ISGOTOFEE" property="isgotofee" javaType="String" jdbcType="VARCHAR" />
+		<result column="CUSTOMERID" property="customerid" javaType="String" jdbcType="VARCHAR" />
+		<result column="ACCOUNT" property="account" javaType="String" jdbcType="VARCHAR" />
+		<result column="TYPE" property="type" javaType="String" jdbcType="VARCHAR" />
+		<result column="URL" property="url" javaType="String" jdbcType="VARCHAR" />
+		<result column="TIMESTAMP" property="timestamp" javaType="String" jdbcType="VARCHAR" />
+		<result column="BRANCHID" property="branchid" javaType="String" jdbcType="VARCHAR" />
+		<result column="APPUSER" property="appuser" javaType="String" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" javaType="String" jdbcType="VARCHAR" />
+		<result column="FLAG" property="flag" javaType="String" jdbcType="VARCHAR" />
+		<result column="VALIDTIME" property="validtime" javaType="String" jdbcType="NVARCHAR" />
+		<result column="REJECTREASON" property="rejectreason" javaType="String" jdbcType="VARCHAR" />
+		<result column="LEVELDESC" property="leveldesc" javaType="String" jdbcType="VARCHAR" />
+		<result column="CARDTYPE" property="cardtype" javaType="String" jdbcType="VARCHAR" />
+		<result column="BANKID" property="bankid" javaType="String" jdbcType="VARCHAR" />
+		<result column="ID" property="id" javaType="Integer" jdbcType="NUMERIC" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdPrepAdvancedVip" resultMap="resultTbPrepAdvancedVip">
+		SELECT * FROM PREP_ADVANCED_VIP WHERE  ROWNUM = 1  
+		<include refid="paramSql"></include>
+	</select>
+	
+	<select id="list" parameterMap="paramIdPrepAdvancedVip" resultMap="resultTbPrepAdvancedVip">
+		<if test="pageflag==true">
+			SELECT * FROM (
+				SELECT A.*, ROWNUM RN FROM
+				(
+					SELECT * FROM PREP_ADVANCED_VIP WHERE 1=1
+					<include refid="paramSql"></include>
+				) A WHERE ROWNUM &lt;= #{curPage}*#{pageSize}
+				) WHERE RN  &gt;=
+			(#{curPage}-1)*#{pageSize}
+		</if>
+		<if test="pageBlag==false">
+			SELECT * FROM PREP_ADVANCED_VIP
+			WHERE 1=1
+			<include refid="paramSql"></include>
+		</if>
+	</select>
+	
+	<select id="listCount" parameterMap="paramIdPrepAdvancedVip" resultType="Integer">
+				SELECT count(1) as count FROM PREP_ADVANCED_VIP
+				WHERE 1=1 
+				<include refid="paramSql"></include>
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterMap="paramIdPrepAdvancedVip" timeout="1000"  >
+		INSERT INTO 
+		PREP_ADVANCED_VIP(
+LASTCHANGEDATE,
+		BANKNAME,
+		FEEDATE,
+		TRANSTIME,
+		TRANSLOGNO,
+		TRANSFLAG,
+		TRANSDATE,
+		ISASSURE,
+		ISGOTOFEE,
+		CUSTOMERID,
+		ACCOUNT,
+		TYPE,
+		URL,
+		TIMESTAMP,
+		BRANCHID,
+		APPUSER,
+		STATUS,
+		FLAG,
+		VALIDTIME,
+		REJECTREASON,
+		LEVELDESC,
+		CARDTYPE,
+		BANKID,
+				ID
+		
+		)
+		VALUES(		#{lastchangedate},
+				#{bankname},
+				#{feedate},
+				#{transtime},
+				#{translogno},
+				#{transflag},
+				#{transdate},
+				#{isassure},
+				#{isgotofee},
+				#{customerid},
+				#{account},
+				#{type},
+				#{url},
+				#{timestamp},
+				#{branchid},
+				#{appuser},
+				#{status},
+				#{flag},
+				#{validtime},
+				#{rejectreason},
+				#{leveldesc},
+				#{cardtype},
+				#{bankid},
+		
+#{id})
+	</insert>
+	
+
+	<!-- 修改信用卡状态 审核中 -->
+	<update id="updateCreditCardStatus"  timeout="1000" >
+	update qtpay.prep_advanced_vip pav
+	   set pav.status = #{status}
+	 where pav.customerid = #{customerid}
+	</update>
+	
+	<!-- 修改 -->
+	<update id="update"  timeout="1000" >
+		UPDATE PREP_ADVANCED_VIP 
+		<trim prefix="SET" prefixOverrides="SET">
+		<if test="lastchangedate !=null and lastchangedate !=''">
+			,LASTCHANGEDATE = #{lastchangedate}  
+		</if>
+		<if test="bankname !=null and bankname !=''">
+			,BANKNAME = #{bankname}  
+		</if>
+		<if test="feedate !=null and feedate !=''">
+			,FEEDATE = #{feedate}  
+		</if>
+		<if test="transtime !=null and transtime !=''">
+			,TRANSTIME = #{transtime}  
+		</if>
+		<if test="translogno !=null and translogno !=''">
+			,TRANSLOGNO = #{translogno}  
+		</if>
+		<if test="transflag !=null and transflag !=''">
+			,TRANSFLAG = #{transflag}  
+		</if>
+		<if test="transdate !=null and transdate !=''">
+			,TRANSDATE = #{transdate}  
+		</if>
+		<if test="isassure !=null and isassure !=''">
+			,ISASSURE = #{isassure}  
+		</if>
+		<if test="isgotofee !=null and isgotofee !=''">
+			,ISGOTOFEE = #{isgotofee}  
+		</if>
+		<if test="customerid !=null and customerid !=''">
+			,CUSTOMERID = #{customerid}  
+		</if>
+		<if test="account !=null and account !=''">
+			,ACCOUNT = #{account}  
+		</if>
+		<if test="type !=null and type !=''">
+			,TYPE = #{type}  
+		</if>
+		<if test="url !=null and url !=''">
+			,URL = #{url}  
+		</if>
+		<if test="timestamp !=null and timestamp !=''">
+			,TIMESTAMP = #{timestamp}  
+		</if>
+		<if test="branchid !=null and branchid !=''">
+			,BRANCHID = #{branchid}  
+		</if>
+		<if test="appuser !=null and appuser !=''">
+			,APPUSER = #{appuser}  
+		</if>
+		<if test="status !=null and status !=''">
+			,STATUS = #{status}  
+		</if>
+		<if test="flag !=null and flag !=''">
+			,FLAG = #{flag}  
+		</if>
+		<if test="validtime !=null and validtime !=''">
+			,VALIDTIME = #{validtime}  
+		</if>
+		<if test="rejectreason !=null and rejectreason !=''">
+			,REJECTREASON = #{rejectreason}  
+		</if>
+		<if test="leveldesc !=null and leveldesc !=''">
+			,LEVELDESC = #{leveldesc}  
+		</if>
+		<if test="cardtype !=null and cardtype !=''">
+			,CARDTYPE = #{cardtype}  
+		</if>
+		<if test="bankid !=null and bankid !=''">
+			,BANKID = #{bankid}  
+		</if>
+		<if test="id !=null and id !=''">
+			,ID = #{id}  
+		</if>
+		</trim>
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</update>
+	
+</mapper>

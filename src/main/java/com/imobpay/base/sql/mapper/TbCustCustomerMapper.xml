@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.TbCustCustomerDao">
+
+	
+	<sql id="paramSql">
+		<!--  此处一定要增加一个查询 -->
+		<if test="testFlag !=null and testFlag !=''">
+			AND TEST_FLAG =  #{testFlag}
+		</if>
+		<if test="auditFlag !=null and auditFlag !=''">
+			AND AUDIT_FLAG =  #{auditFlag}
+		</if>
+		<if test="customername !=null and customername !=''">
+			AND CUSTOMERNAME =  #{customername}
+		</if>
+		<if test="customerpid !=null and customerpid !=''">
+			AND CUSTOMERPID =  #{customerpid}
+		</if>
+		<if test="mobileno !=null and mobileno !=''">
+			AND MOBILENO =  #{mobileno}
+		</if>
+		<if test="qualificationFlag !=null and qualificationFlag !=''">
+			AND QUALIFICATION_FLAG =  #{qualificationFlag}
+		</if>
+		<if test="mobilenoFlag !=null and mobilenoFlag !=''">
+			AND MOBILENO_FLAG =  #{mobilenoFlag}
+		</if>
+		<if test="auditFailReason !=null and auditFailReason !=''">
+			AND AUDIT_FAIL_REASON =  #{auditFailReason}
+		</if>
+		<if test="creditMoney !=null and creditMoney !=''">
+			AND CREDIT_MONEY =  #{creditMoney}
+		</if>
+		<if test="creditDate !=null and creditDate !=''">
+			AND CREDIT_DATE =  #{creditDate}
+		</if>
+		<if test="realnameFlag !=null and realnameFlag !=''">
+			AND REALNAME_FLAG =  #{realnameFlag}
+		</if>
+		<if test="creditReportFlag !=null and creditReportFlag !=''">
+			AND CREDIT_REPORT_FLAG =  #{creditReportFlag}
+		</if>
+		<if test="customerid !=null and customerid !=''">
+			AND CUSTOMERID =  #{customerid}
+		</if>
+	</sql>
+	
+	<parameterMap type="com.imobpay.base.entity.TbCustCustomer" id="paramIdTbCustCustomer">
+		<parameter property="pageflag"  javaType="Boolean" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="curPage"   javaType="Integer" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="pageSize"  javaType="Integer" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="testFlag" javaType="String" jdbcType="CHAR" mode="IN"   />
+		<parameter property="auditFlag" javaType="String" jdbcType="CHAR" mode="IN"   />
+		<parameter property="customername" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="customerpid" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="mobileno" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="qualificationFlag" javaType="String" jdbcType="CHAR" mode="IN"   />
+		<parameter property="mobilenoFlag" javaType="String" jdbcType="CHAR" mode="IN"   />
+		<parameter property="auditFailReason" javaType="String" jdbcType="CLOB" mode="IN"   />
+		<parameter property="creditMoney" javaType="Integer" jdbcType="NUMERIC" mode="IN"   />
+		<parameter property="creditDate" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="realnameFlag" javaType="String" jdbcType="CHAR" mode="IN"   />
+		<parameter property="creditReportFlag" javaType="String" jdbcType="CHAR" mode="IN"   />
+		<parameter property="customerid" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.TbCustCustomer" id="resultTbTbCustCustomer">
+		<result column="TEST_FLAG" property="testFlag" javaType="String" jdbcType="CHAR" />
+		<result column="AUDIT_FLAG" property="auditFlag" javaType="String" jdbcType="CHAR" />
+		<result column="CUSTOMERNAME" property="customername" javaType="String" jdbcType="VARCHAR" />
+		<result column="CUSTOMERPID" property="customerpid" javaType="String" jdbcType="VARCHAR" />
+		<result column="MOBILENO" property="mobileno" javaType="String" jdbcType="VARCHAR" />
+		<result column="QUALIFICATION_FLAG" property="qualificationFlag" javaType="String" jdbcType="CHAR" />
+		<result column="MOBILENO_FLAG" property="mobilenoFlag" javaType="String" jdbcType="CHAR" />
+		<result column="AUDIT_FAIL_REASON" property="auditFailReason" javaType="String" jdbcType="CLOB" />
+		<result column="CREDIT_MONEY" property="creditMoney" javaType="Integer" jdbcType="NUMERIC" />
+		<result column="CREDIT_DATE" property="creditDate" javaType="String" jdbcType="VARCHAR" />
+		<result column="REALNAME_FLAG" property="realnameFlag" javaType="String" jdbcType="CHAR" />
+		<result column="CREDIT_REPORT_FLAG" property="creditReportFlag" javaType="String" jdbcType="CHAR" />
+		<result column="CUSTOMERID" property="customerid" javaType="String" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdTbCustCustomer" resultMap="resultTbTbCustCustomer">
+		SELECT * FROM QTCREDIT.TB_CUST_CUSTOMER WHERE  ROWNUM = 1  
+		<include refid="paramSql"></include>
+	</select>
+	
+	<select id="list" parameterMap="paramIdTbCustCustomer" resultMap="resultTbTbCustCustomer">
+		<if test="pageflag==true">
+			SELECT * FROM (
+				SELECT A.*, ROWNUM RN FROM
+				(
+					SELECT * FROM QTCREDIT.TB_CUST_CUSTOMER WHERE 1=1
+					<include refid="paramSql"></include>
+				) A WHERE ROWNUM &lt;= #{curPage}*#{pageSize}
+				) WHERE RN  &gt;=
+			(#{curPage}-1)*#{pageSize}
+		</if>
+		<if test="pageBlag==false">
+			SELECT * FROM QTCREDIT.TB_CUST_CUSTOMER
+			WHERE 1=1
+			<include refid="paramSql"></include>
+		</if>
+	</select>
+	
+	<select id="listCount" parameterMap="paramIdTbCustCustomer" resultType="Integer">
+				SELECT count(1) as count FROM QTCREDIT.TB_CUST_CUSTOMER
+				WHERE 1=1 
+				<include refid="paramSql"></include>
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterMap="paramIdTbCustCustomer" timeout="1000"  >
+		INSERT INTO 
+		QTCREDIT.TB_CUST_CUSTOMER(
+TEST_FLAG,
+		AUDIT_FLAG,
+		CUSTOMERNAME,
+		CUSTOMERPID,
+		MOBILENO,
+		QUALIFICATION_FLAG,
+		MOBILENO_FLAG,
+		AUDIT_FAIL_REASON,
+		CREDIT_MONEY,
+		CREDIT_DATE,
+		REALNAME_FLAG,
+		CREDIT_REPORT_FLAG,
+				CUSTOMERID
+		
+		)
+		VALUES(		#{testFlag},
+				#{auditFlag},
+				#{customername},
+				#{customerpid},
+				#{mobileno},
+				#{qualificationFlag},
+				#{mobilenoFlag},
+				#{auditFailReason},
+				#{creditMoney},
+				#{creditDate},
+				#{realnameFlag},
+				#{creditReportFlag},
+		
+#{customerid})
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update"  timeout="1000" >
+		UPDATE QTCREDIT.TB_CUST_CUSTOMER 
+		<trim prefix="SET" prefixOverrides="SET ,">
+		<if test="testFlag !=null and testFlag !=''">
+			,TEST_FLAG = #{testFlag}  
+		</if>
+		<if test="auditFlag !=null and auditFlag !=''">
+			,AUDIT_FLAG = #{auditFlag}  
+		</if>
+		<if test="customername !=null and customername !=''">
+			,CUSTOMERNAME = #{customername}  
+		</if>
+		<if test="customerpid !=null and customerpid !=''">
+			,CUSTOMERPID = #{customerpid}  
+		</if>
+		<if test="mobileno !=null and mobileno !=''">
+			,MOBILENO = #{mobileno}  
+		</if>
+		<if test="qualificationFlag !=null and qualificationFlag !=''">
+			,QUALIFICATION_FLAG = #{qualificationFlag}  
+		</if>
+		<if test="mobilenoFlag !=null and mobilenoFlag !=''">
+			,MOBILENO_FLAG = #{mobilenoFlag}  
+		</if>
+		<if test="auditFailReason !=null and auditFailReason !=''">
+			,AUDIT_FAIL_REASON = #{auditFailReason}  
+		</if>
+		<if test="creditMoney !=null and creditMoney !=''">
+			,CREDIT_MONEY = #{creditMoney}  
+		</if>
+		<if test="creditDate !=null and creditDate !=''">
+			,CREDIT_DATE = #{creditDate}  
+		</if>
+		<if test="realnameFlag !=null and realnameFlag !=''">
+			,REALNAME_FLAG = #{realnameFlag}  
+		</if>
+		<if test="creditReportFlag !=null and creditReportFlag !=''">
+			,CREDIT_REPORT_FLAG = #{creditReportFlag}  
+		</if>
+		<if test="customerid !=null and customerid !=''">
+			,CUSTOMERID = #{customerid}  
+		</if>
+		</trim>
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</update>
+	
+</mapper>

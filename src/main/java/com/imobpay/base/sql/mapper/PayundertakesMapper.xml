@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.PayundertakesDao">
+
+
+	<sql id="paramSql">
+		<!-- 此处一定要增加一个查询 -->
+		<if test="pidflag !=null and pidflag !=''">
+			AND PIDFLAG = #{pidflag}
+		</if>
+		<if test="oilaccountflag !=null and oilaccountflag !=''">
+			AND OILACCOUNTFLAG = #{oilaccountflag}
+		</if>
+		<if test="gpstag !=null and gpstag !=''">
+			AND GPSTAG = #{gpstag}
+		</if>
+		<if test="regtag !=null and regtag !=''">
+			AND REGTAG = #{regtag}
+		</if>
+		<if test="itags !=null and itags !=''">
+			AND ITAGS = #{itags}
+		</if>
+		<if test="branchid !=null and branchid !=''">
+			AND BRANCHID = #{branchid}
+		</if>
+		<if test="undertakesname !=null and undertakesname !=''">
+			AND UNDERTAKESNAME = #{undertakesname}
+		</if>
+		<if test="status !=null and status !=''">
+			AND STATUS = #{status}
+		</if>
+		<if test="vipsfflag !=null and vipsfflag !=''">
+			AND VIPSFFLAG = #{vipsfflag}
+		</if>
+	</sql>
+
+	<parameterMap type="com.imobpay.base.entity.Payundertakes" id="paramIdPayundertakes">
+		<parameter property="pageflag" />
+		<parameter property="curPage" />
+		<parameter property="pageSize" />
+		<parameter property="pidflag" />
+		<parameter property="oilaccountflag" />
+		<parameter property="gpstag" />
+		<parameter property="regtag" />
+		<parameter property="itags" />
+		<parameter property="branchid" />
+		<parameter property="undertakesname" />
+		<parameter property="status" />
+		<parameter property="vipsfflag" />
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.Payundertakes" id="resultTbPayundertakes">
+		<result column="PIDFLAG" property="pidflag" />
+		<result column="OILACCOUNTFLAG" property="oilaccountflag" />
+		<result column="GPSTAG" property="gpstag" />
+		<result column="REGTAG" property="regtag" />
+		<result column="ITAGS" property="itags" />
+		<result column="BRANCHID" property="branchid" />
+		<result column="UNDERTAKESNAME" property="undertakesname" />
+		<result column="STATUS" property="status" />
+		<result column="VIPSFFLAG" property="vipsfflag" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdPayundertakes" resultMap="resultTbPayundertakes">
+		SELECT * FROM PAYUNDERTAKES WHERE 1=1 AND ROWNUM = 1
+		<include refid="paramSql"></include>
+	</select>
+
+	<select id="list" parameterMap="paramIdPayundertakes" resultMap="resultTbPayundertakes">
+		<if test="pageflag==true">
+			SELECT * FROM (
+			SELECT A.*, ROWNUM RN FROM
+			(
+			SELECT * FROM PAYUNDERTAKES WHERE 1=1
+			<include refid="paramSql"></include>
+			) A WHERE ROWNUM &lt;= #{curPage}*#{pageSize}
+			) WHERE RN &gt;=
+			(#{curPage}-1)*#{pageSize}
+		</if>
+		<if test="pageBlag==false">
+			SELECT * FROM PAYUNDERTAKES
+			WHERE 1=1
+			<include refid="paramSql"></include>
+		</if>
+	</select>
+
+	<select id="listCount" parameterMap="paramIdPayundertakes" resultType="Integer">
+		SELECT count(1) as count FROM PAYUNDERTAKES
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</select>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterMap="paramIdPayundertakes">
+		INSERT INTO
+		PAYUNDERTAKES(
+		<if test="pidflag !=null and pidflag !=''">
+
+			PIDFLAG
+		</if>
+		<if test="oilaccountflag !=null and oilaccountflag !=''">
+			,
+			OILACCOUNTFLAG
+		</if>
+		<if test="gpstag !=null and gpstag !=''">
+			,
+			GPSTAG
+		</if>
+		<if test="regtag !=null and regtag !=''">
+			,
+			REGTAG
+		</if>
+		<if test="itags !=null and itags !=''">
+			,
+			ITAGS
+		</if>
+		<if test="branchid !=null and branchid !=''">
+			,
+			BRANCHID
+		</if>
+		<if test="undertakesname !=null and undertakesname !=''">
+			,
+			UNDERTAKESNAME
+		</if>
+		<if test="status !=null and status !=''">
+			,
+			STATUS
+		</if>
+		<if test="vipsfflag !=null and vipsfflag !=''">
+			,
+			VIPSFFLAG
+		</if>
+		)
+		VALUES(
+		<if test="pidflag !=null and pidflag !=''">
+
+			#{pidflag}
+		</if>
+		<if test="oilaccountflag !=null and oilaccountflag !=''">
+			,
+			#{oilaccountflag}
+		</if>
+		<if test="gpstag !=null and gpstag !=''">
+			,
+			#{gpstag}
+		</if>
+		<if test="regtag !=null and regtag !=''">
+			,
+			#{regtag}
+		</if>
+		<if test="itags !=null and itags !=''">
+			,
+			#{itags}
+		</if>
+		<if test="branchid !=null and branchid !=''">
+			,
+			#{branchid}
+		</if>
+		<if test="undertakesname !=null and undertakesname !=''">
+			,
+			#{undertakesname}
+		</if>
+		<if test="status !=null and status !=''">
+			,
+			#{status}
+		</if>
+		<if test="vipsfflag !=null and vipsfflag !=''">
+			,
+			#{vipsfflag}
+		</if>
+		)
+	</insert>
+
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE PAYUNDERTAKES SET
+		<if test="pidflag !=null and pidflag !=''">
+
+			PIDFLAG = #{pidflag}
+		</if>
+		<if test="oilaccountflag !=null and oilaccountflag !=''">
+			,
+			OILACCOUNTFLAG = #{oilaccountflag}
+		</if>
+		<if test="gpstag !=null and gpstag !=''">
+			,
+			GPSTAG = #{gpstag}
+		</if>
+		<if test="regtag !=null and regtag !=''">
+			,
+			REGTAG = #{regtag}
+		</if>
+		<if test="itags !=null and itags !=''">
+			,
+			ITAGS = #{itags}
+		</if>
+		<if test="branchid !=null and branchid !=''">
+			,
+			BRANCHID = #{branchid}
+		</if>
+		<if test="undertakesname !=null and undertakesname !=''">
+			,
+			UNDERTAKESNAME = #{undertakesname}
+		</if>
+		<if test="status !=null and status !=''">
+			,
+			STATUS = #{status}
+		</if>
+		<if test="vipsfflag !=null and vipsfflag !=''">
+			,
+			VIPSFFLAG = #{vipsfflag}
+		</if>
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</update>
+
+	<!-- 查询当前机构是否在白名单范围 -->
+	<select id="selByBranchIdReg" parameterMap="paramIdPayundertakes" resultType="Integer">
+		SELECT COUNT(1) AS NUM FROM PAYUNDERTAKES P WHERE
+		P.REGTAG='1' AND
+		P.BRANCHID=#{branchid}
+	</select>
+</mapper>

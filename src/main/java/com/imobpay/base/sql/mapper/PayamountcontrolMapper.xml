@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.PayamountcontrolDao">
+
+	
+	<sql id="paramSql">
+		<!--  此处一定要增加一个查询 -->
+		<if test="branchid !=null and branchid !=''">
+			AND BRANCHID =  #{branchid}
+		</if>
+		<if test="servcode !=null and servcode !=''">
+			AND SERVCODE =  #{servcode}
+		</if>
+		<if test="productid !=null and productid !=''">
+			AND PRODUCTID =  #{productid}
+		</if>
+		<if test="paytype !=null and paytype !=''">
+			AND PAYTYPE =  #{paytype}
+		</if>
+		<if test="branchtype !=null and branchtype !=''">
+			AND BRANCHTYPE =  #{branchtype}
+		</if>
+		<if test="lowlimit !=null and lowlimit !=''">
+			AND LOWLIMIT =  #{lowlimit}
+		</if>
+		<if test="cardday !=null and cardday !=''">
+			AND CARDDAY =  #{cardday}
+		</if>
+		<if test="cardmonth !=null and cardmonth !=''">
+			AND CARDMONTH =  #{cardmonth}
+		</if>
+		<if test="accountday !=null and accountday !=''">
+			AND ACCOUNTDAY =  #{accountday}
+		</if>
+		<if test="accountmonth !=null and accountmonth !=''">
+			AND ACCOUNTMONTH =  #{accountmonth}
+		</if>
+		<if test="upplimit !=null and upplimit !=''">
+			AND UPPLIMIT =  #{upplimit}
+		</if>
+		<if test="limitid !=null and limitid !=''">
+			AND LIMITID =  #{limitid}
+		</if>
+	</sql>
+	
+	<parameterMap type="com.imobpay.base.entity.Payamountcontrol" id="paramIdPayamountcontrol">
+		<parameter property="pageflag" />
+		<parameter property="curPage" />
+		<parameter property="pageSize" />
+		<parameter property="branchid" />
+		<parameter property="servcode" />
+		<parameter property="productid" />
+		<parameter property="paytype" />
+		<parameter property="branchtype" />
+		<parameter property="lowlimit" />
+		<parameter property="cardday" />
+		<parameter property="cardmonth" />
+		<parameter property="accountday" />
+		<parameter property="accountmonth" />
+		<parameter property="upplimit" />
+		<parameter property="limitid" />
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.Payamountcontrol" id="resultTbPayamountcontrol">
+		<result column="BRANCHID" property="branchid" />
+		<result column="SERVCODE" property="servcode" />
+		<result column="PRODUCTID" property="productid" />
+		<result column="PAYTYPE" property="paytype" />
+		<result column="BRANCHTYPE" property="branchtype" />
+		<result column="LOWLIMIT" property="lowlimit" />
+		<result column="CARDDAY" property="cardday" />
+		<result column="CARDMONTH" property="cardmonth" />
+		<result column="ACCOUNTDAY" property="accountday" />
+		<result column="ACCOUNTMONTH" property="accountmonth" />
+		<result column="UPPLIMIT" property="upplimit" />
+		<result column="LIMITID" property="limitid" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdPayamountcontrol" resultMap="resultTbPayamountcontrol">
+		SELECT * FROM PAYAMOUNTCONTROL WHERE 1=1 AND ROWNUM = 1  
+		<include refid="paramSql"></include>
+	</select>
+	
+	<select id="list" parameterMap="paramIdPayamountcontrol" resultMap="resultTbPayamountcontrol">
+		<if test="pageflag==true">
+			SELECT * FROM (
+			SELECT A.*, ROWNUM RN FROM
+			(
+			SELECT * FROM PAYAMOUNTCONTROL WHERE 1=1
+			<include refid="paramSql"></include>
+			) A WHERE ROWNUM &lt;= #{curPage}*#{pageSize}
+			) WHERE RN  &gt;=
+			(#{curPage}-1)*#{pageSize}
+		</if>
+		<if test="pageBlag==false">
+			SELECT * FROM PAYAMOUNTCONTROL
+			WHERE 1=1
+			<include refid="paramSql"></include>
+		</if>
+	</select>
+	
+	<select id="listCount" parameterMap="paramIdPayamountcontrol" resultType="Integer">
+				SELECT count(1) as count FROM PAYAMOUNTCONTROL
+				WHERE 1=1 
+				<include refid="paramSql"></include>
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterMap="paramIdPayamountcontrol"    >
+		INSERT INTO 
+		PAYAMOUNTCONTROL(
+		<if test="branchid !=null and branchid !=''">
+		
+			BRANCHID
+		</if>
+		<if test="servcode !=null and servcode !=''">
+		,
+			SERVCODE
+		</if>
+		<if test="productid !=null and productid !=''">
+		,
+			PRODUCTID
+		</if>
+		<if test="paytype !=null and paytype !=''">
+		,
+			PAYTYPE
+		</if>
+		<if test="branchtype !=null and branchtype !=''">
+		,
+			BRANCHTYPE
+		</if>
+		<if test="lowlimit !=null and lowlimit !=''">
+		,
+			LOWLIMIT
+		</if>
+		<if test="cardday !=null and cardday !=''">
+		,
+			CARDDAY
+		</if>
+		<if test="cardmonth !=null and cardmonth !=''">
+		,
+			CARDMONTH
+		</if>
+		<if test="accountday !=null and accountday !=''">
+		,
+			ACCOUNTDAY
+		</if>
+		<if test="accountmonth !=null and accountmonth !=''">
+		,
+			ACCOUNTMONTH
+		</if>
+		<if test="upplimit !=null and upplimit !=''">
+		,
+			UPPLIMIT
+		</if>
+		<if test="limitid !=null and limitid !=''">
+		,
+			LIMITID
+		</if>
+		)
+		VALUES(
+		<if test="branchid !=null and branchid !=''">
+		
+#{branchid}		</if>
+		<if test="servcode !=null and servcode !=''">
+		,
+#{servcode}		</if>
+		<if test="productid !=null and productid !=''">
+		,
+#{productid}		</if>
+		<if test="paytype !=null and paytype !=''">
+		,
+#{paytype}		</if>
+		<if test="branchtype !=null and branchtype !=''">
+		,
+#{branchtype}		</if>
+		<if test="lowlimit !=null and lowlimit !=''">
+		,
+#{lowlimit}		</if>
+		<if test="cardday !=null and cardday !=''">
+		,
+#{cardday}		</if>
+		<if test="cardmonth !=null and cardmonth !=''">
+		,
+#{cardmonth}		</if>
+		<if test="accountday !=null and accountday !=''">
+		,
+#{accountday}		</if>
+		<if test="accountmonth !=null and accountmonth !=''">
+		,
+#{accountmonth}		</if>
+		<if test="upplimit !=null and upplimit !=''">
+		,
+#{upplimit}		</if>
+		<if test="limitid !=null and limitid !=''">
+		,
+#{limitid}		</if>
+		 )
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE PAYAMOUNTCONTROL SET
+		<if test="branchid !=null and branchid !=''">
+		
+			BRANCHID = #{branchid}  
+		</if>
+		<if test="servcode !=null and servcode !=''">
+		,
+			SERVCODE = #{servcode}  
+		</if>
+		<if test="productid !=null and productid !=''">
+		,
+			PRODUCTID = #{productid}  
+		</if>
+		<if test="paytype !=null and paytype !=''">
+		,
+			PAYTYPE = #{paytype}  
+		</if>
+		<if test="branchtype !=null and branchtype !=''">
+		,
+			BRANCHTYPE = #{branchtype}  
+		</if>
+		<if test="lowlimit !=null and lowlimit !=''">
+		,
+			LOWLIMIT = #{lowlimit}  
+		</if>
+		<if test="cardday !=null and cardday !=''">
+		,
+			CARDDAY = #{cardday}  
+		</if>
+		<if test="cardmonth !=null and cardmonth !=''">
+		,
+			CARDMONTH = #{cardmonth}  
+		</if>
+		<if test="accountday !=null and accountday !=''">
+		,
+			ACCOUNTDAY = #{accountday}  
+		</if>
+		<if test="accountmonth !=null and accountmonth !=''">
+		,
+			ACCOUNTMONTH = #{accountmonth}  
+		</if>
+		<if test="upplimit !=null and upplimit !=''">
+		,
+			UPPLIMIT = #{upplimit}  
+		</if>
+		<if test="limitid !=null and limitid !=''">
+		,
+			LIMITID = #{limitid}  
+		</if>
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</update>
+	
+</mapper>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.TbCustFunctionPermissionDao">
+
+	
+	<sql id="paramSql">
+		<!--  此处一定要增加一个查询 -->
+		<if test="functionValue !=null and functionValue !=''">
+			AND FUNCTION_VALUE =  #{functionValue}
+		</if>
+		<if test="functionName !=null and functionName !=''">
+			AND FUNCTION_NAME =  #{functionName}
+		</if>
+		<if test="status !=null and status !=''">
+			AND STATUS =  #{status}
+		</if>
+		<if test="customerid !=null and customerid !=''">
+			AND CUSTOMERID =  #{customerid}
+		</if>
+		<if test="id !=null and id !=''">
+			AND ID =  #{id}
+		</if>
+	</sql>
+	
+	<parameterMap type="com.imobpay.base.entity.TbCustFunctionPermission" id="paramIdTbCustFunctionPermission">
+		<parameter property="pageflag"  javaType="Boolean" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="curPage"   javaType="Integer" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="pageSize"  javaType="Integer" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="functionValue" javaType="String" jdbcType="CLOB" mode="IN"   />
+		<parameter property="functionName" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="status" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="customerid" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="id" javaType="Integer" jdbcType="NUMERIC" mode="IN"   />
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.TbCustFunctionPermission" id="resultTbTbCustFunctionPermission">
+		<result column="FUNCTION_VALUE" property="functionValue" javaType="String" jdbcType="CLOB" />
+		<result column="FUNCTION_NAME" property="functionName" javaType="String" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" javaType="String" jdbcType="VARCHAR" />
+		<result column="CUSTOMERID" property="customerid" javaType="String" jdbcType="VARCHAR" />
+		<result column="ID" property="id" javaType="Integer" jdbcType="NUMERIC" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdTbCustFunctionPermission" resultMap="resultTbTbCustFunctionPermission">
+		SELECT * FROM TB_CUST_FUNCTION_PERMISSION WHERE  ROWNUM = 1  
+		<include refid="paramSql"></include>
+	</select>
+	
+	<select id="list" parameterMap="paramIdTbCustFunctionPermission" resultMap="resultTbTbCustFunctionPermission">
+		<if test="pageflag==true">
+			SELECT * FROM (
+				SELECT A.*, ROWNUM RN FROM
+				(
+					SELECT * FROM TB_CUST_FUNCTION_PERMISSION WHERE 1=1
+					<include refid="paramSql"></include>
+				) A WHERE ROWNUM &lt;= #{curPage}*#{pageSize}
+				) WHERE RN  &gt;=
+			(#{curPage}-1)*#{pageSize}
+		</if>
+		<if test="pageBlag==false">
+			SELECT * FROM TB_CUST_FUNCTION_PERMISSION
+			WHERE 1=1
+			<include refid="paramSql"></include>
+		</if>
+	</select>
+	
+	<select id="listCount" parameterMap="paramIdTbCustFunctionPermission" resultType="Integer">
+				SELECT count(1) as count FROM TB_CUST_FUNCTION_PERMISSION
+				WHERE 1=1 
+				<include refid="paramSql"></include>
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterMap="paramIdTbCustFunctionPermission" timeout="1000"  >
+		INSERT INTO 
+		TB_CUST_FUNCTION_PERMISSION(
+FUNCTION_VALUE,
+		FUNCTION_NAME,
+		STATUS,
+		CUSTOMERID,
+				ID
+		
+		)
+		VALUES(		#{functionValue},
+				#{functionName},
+				#{status},
+				#{customerid},
+		
+#{id})
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update"  timeout="1000" >
+		UPDATE TB_CUST_FUNCTION_PERMISSION 
+		<trim prefix="SET" prefixOverrides="SET ,">
+		<if test="functionValue !=null and functionValue !=''">
+			,FUNCTION_VALUE = #{functionValue}  
+		</if>
+		<if test="functionName !=null and functionName !=''">
+			,FUNCTION_NAME = #{functionName}  
+		</if>
+		<if test="status !=null and status !=''">
+			,STATUS = #{status}  
+		</if>
+		<if test="customerid !=null and customerid !=''">
+			,CUSTOMERID = #{customerid}  
+		</if>
+		<if test="id !=null and id !=''">
+			,ID = #{id}  
+		</if>
+		</trim>
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</update>
+	
+</mapper>

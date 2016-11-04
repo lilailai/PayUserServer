@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.TbValBwWhitelistDao">
+
+
+	<sql id="paramSql">
+		<!-- 此处一定要增加一个查询 -->
+		<if test="flag !=null and flag !=''">
+			AND FLAG = #{flag}
+		</if>
+		<if test="currentusercode !=null and currentusercode !=''">
+			AND CURRENTUSERCODE = #{currentusercode}
+		</if>
+		<if test="whitetag !=null and whitetag !=''">
+			AND WHITETAG = #{whitetag}
+		</if>
+		<if test="currentusername !=null and currentusername !=''">
+			AND CURRENTUSERNAME = #{currentusername}
+		</if>
+		<if test="localtime !=null and localtime !=''">
+			AND LOCALTIME = #{localtime}
+		</if>
+		<if test="whitetype !=null and whitetype !=''">
+			AND WHITETYPE = #{whitetype}
+		</if>
+		<if test="whitekey !=null and whitekey !=''">
+			AND WHITEKEY = #{whitekey}
+		</if>
+	</sql>
+
+	<parameterMap type="com.imobpay.base.entity.TbValBwWhitelist" id="paramIdTbValBwWhitelist">
+		<parameter property="pageflag" />
+		<parameter property="curPage" />
+		<parameter property="pageSize" />
+		<parameter property="flag" />
+		<parameter property="currentusercode" />
+		<parameter property="whitetag" />
+		<parameter property="currentusername" />
+		<parameter property="localtime" />
+		<parameter property="whitetype" />
+		<parameter property="whitekey" />
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.TbValBwWhitelist" id="resultTbTbValBwWhitelist">
+		<result column="FLAG" property="flag" />
+		<result column="CURRENTUSERCODE" property="currentusercode" />
+		<result column="WHITETAG" property="whitetag" />
+		<result column="CURRENTUSERNAME" property="currentusername" />
+		<result column="LOCALTIME" property="localtime" />
+		<result column="WHITETYPE" property="whitetype" />
+		<result column="WHITEKEY" property="whitekey" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdTbValBwWhitelist"
+		resultMap="resultTbTbValBwWhitelist">
+		SELECT * FROM TB_VAL_BW_WHITELIST WHERE 1=1 AND ROWNUM = 1
+		<include refid="paramSql"></include>
+	</select>
+
+	<select id="list" parameterMap="paramIdTbValBwWhitelist" resultMap="resultTbTbValBwWhitelist">
+		<if test="pageflag==true">
+			SELECT * FROM (
+			SELECT A.*, ROWNUM RN FROM
+			(
+			SELECT * FROM TB_VAL_BW_WHITELIST
+			WHERE 1=1
+			<include refid="paramSql"></include>
+			) A WHERE ROWNUM &gt;= #{curPage}*#{pageSize}
+			) WHERE RN &lt;=
+			(#{curPage}-1)*#{pageSize}
+		</if>
+		<if test="pageBlag==false">
+			SELECT * FROM TB_VAL_BW_WHITELIST
+			WHERE 1=1
+			<include refid="paramSql"></include>
+		</if>
+	</select>
+
+	<select id="listCount" parameterMap="paramIdTbValBwWhitelist"
+		resultType="Integer">
+		SELECT count(1) as count FROM TB_VAL_BW_WHITELIST
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</select>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterMap="paramIdTbValBwWhitelist">
+		INSERT INTO TB_VAL_BW_WHITELIST
+		(FLAG,
+		CURRENTUSERCODE,
+		WHITETAG,
+		CURRENTUSERNAME,
+		LOCALTIME,
+		WHITETYPE,
+		WHITEKEY)
+		VALUES
+		(#{flag,jdbcType=VARCHAR},
+		#{currentusercode,jdbcType=VARCHAR},
+		#{whitetag,jdbcType=VARCHAR},
+		#{currentusername,jdbcType=VARCHAR},
+		#{localtime,jdbcType=VARCHAR},
+		#{whitetype,jdbcType=VARCHAR},
+		#{whitekey,jdbcType=VARCHAR})
+
+	</insert>
+
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE TB_VAL_BW_WHITELIST SET
+		<if test="flag !=null and flag !=''">
+
+			FLAG = #{flag}
+		</if>
+		<if test="currentusercode !=null and currentusercode !=''">
+			,
+			CURRENTUSERCODE = #{currentusercode}
+		</if>
+		<if test="whitetag !=null and whitetag !=''">
+			,
+			WHITETAG = #{whitetag}
+		</if>
+		<if test="currentusername !=null and currentusername !=''">
+			,
+			CURRENTUSERNAME = #{currentusername}
+		</if>
+		<if test="localtime !=null and localtime !=''">
+			,
+			LOCALTIME = #{localtime}
+		</if>
+		<if test="whitetype !=null and whitetype !=''">
+			,
+			WHITETYPE = #{whitetype}
+		</if>
+		<if test="whitekey !=null and whitekey !=''">
+			,
+			WHITEKEY = #{whitekey}
+		</if>
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</update>
+
+</mapper>

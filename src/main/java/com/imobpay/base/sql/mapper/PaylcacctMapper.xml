@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.PaylcacctDao">
+
+	
+	<sql id="paramSql">
+		<!--  此处一定要增加一个查询 -->
+		<if test="createtime !=null and createtime !=''">
+			AND CREATETIME =  #{createtime}
+		</if>
+		<if test="createdate !=null and createdate !=''">
+			AND CREATEDATE =  #{createdate}
+		</if>
+		<if test="pendingamt !=null and pendingamt !=''">
+			AND PENDINGAMT =  #{pendingamt}
+		</if>
+		<if test="status !=null and status !=''">
+			AND STATUS =  #{status}
+		</if>
+		<if test="baseamt !=null and baseamt !=''">
+			AND BASEAMT =  #{baseamt}
+		</if>
+		<if test="customerid !=null and customerid !=''">
+			AND CUSTOMERID =  #{customerid}
+		</if>
+	</sql>
+	
+	<parameterMap type="com.imobpay.base.entity.Paylcacct" id="paramIdPaylcacct">
+		<parameter property="pageflag" />
+		<parameter property="curPage" />
+		<parameter property="pageSize" />
+		<parameter property="createtime" />
+		<parameter property="createdate" />
+		<parameter property="pendingamt" />
+		<parameter property="status" />
+		<parameter property="baseamt" />
+		<parameter property="customerid" />
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.Paylcacct" id="resultTbPaylcacct">
+		<result column="CREATETIME" property="createtime" />
+		<result column="CREATEDATE" property="createdate" />
+		<result column="PENDINGAMT" property="pendingamt" />
+		<result column="STATUS" property="status" />
+		<result column="BASEAMT" property="baseamt" />
+		<result column="CUSTOMERID" property="customerid" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdPaylcacct" resultMap="resultTbPaylcacct">
+		SELECT * FROM PAYLCACCT WHERE 1=1 AND ROWNUM = 1  
+		<include refid="paramSql"></include>
+	</select>
+	
+	<select id="list" parameterMap="paramIdPaylcacct" resultMap="resultTbPaylcacct">
+		<if test="pageflag==true">
+			SELECT * FROM (
+			SELECT A.*, ROWNUM RN FROM
+			(
+			SELECT * FROM PAYLCACCT WHERE 1=1
+			<include refid="paramSql"></include>
+			) A WHERE ROWNUM &lt;= #{curPage}*#{pageSize}
+			) WHERE RN  &gt;=
+			(#{curPage}-1)*#{pageSize}
+		</if>
+		<if test="pageBlag==false">
+			SELECT * FROM PAYLCACCT
+			WHERE 1=1
+			<include refid="paramSql"></include>
+		</if>
+	</select>
+	
+	<select id="listCount" parameterMap="paramIdPaylcacct" resultType="Integer">
+				SELECT count(1) as count FROM PAYLCACCT
+				WHERE 1=1 
+				<include refid="paramSql"></include>
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterMap="paramIdPaylcacct"    >
+		INSERT INTO 
+		PAYLCACCT(
+		<if test="createtime !=null and createtime !=''">
+		
+			CREATETIME
+		</if>
+		<if test="createdate !=null and createdate !=''">
+		,
+			CREATEDATE
+		</if>
+		<if test="pendingamt !=null and pendingamt !=''">
+		,
+			PENDINGAMT
+		</if>
+		<if test="status !=null and status !=''">
+		,
+			STATUS
+		</if>
+		<if test="baseamt !=null and baseamt !=''">
+		,
+			BASEAMT
+		</if>
+		<if test="customerid !=null and customerid !=''">
+		,
+			CUSTOMERID
+		</if>
+		)
+		VALUES(
+		<if test="createtime !=null and createtime !=''">
+		
+#{createtime}		</if>
+		<if test="createdate !=null and createdate !=''">
+		,
+#{createdate}		</if>
+		<if test="pendingamt !=null and pendingamt !=''">
+		,
+#{pendingamt}		</if>
+		<if test="status !=null and status !=''">
+		,
+#{status}		</if>
+		<if test="baseamt !=null and baseamt !=''">
+		,
+#{baseamt}		</if>
+		<if test="customerid !=null and customerid !=''">
+		,
+#{customerid}		</if>
+		 )
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE PAYLCACCT SET
+		<if test="createtime !=null and createtime !=''">
+		
+			CREATETIME = #{createtime}  
+		</if>
+		<if test="createdate !=null and createdate !=''">
+		,
+			CREATEDATE = #{createdate}  
+		</if>
+		<if test="pendingamt !=null and pendingamt !=''">
+		,
+			PENDINGAMT = #{pendingamt}  
+		</if>
+		<if test="status !=null and status !=''">
+		,
+			STATUS = #{status}  
+		</if>
+		<if test="baseamt !=null and baseamt !=''">
+		,
+			BASEAMT = #{baseamt}  
+		</if>
+		<if test="customerid !=null and customerid !=''">
+		,
+			CUSTOMERID = #{customerid}  
+		</if>
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</update>
+	
+</mapper>

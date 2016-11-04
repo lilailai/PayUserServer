@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.IdentityQueryDao">
+
+	
+	<sql id="paramSql">
+		<!--  此处一定要增加一个查询 -->
+		<if test="name !=null and name !=''">
+			AND NAME =  #{name}
+		</if>
+		<if test="username !=null and username !=''">
+			AND USERNAME =  #{username}
+		</if>
+		<if test="password !=null and password !=''">
+			AND PASSWORD =  #{password}
+		</if>
+		<if test="type !=null and type !=''">
+			AND TYPE =  #{type}
+		</if>
+		<if test="status !=null and status !=''">
+			AND STATUS =  #{status}
+		</if>
+		<if test="identityNo !=null and identityNo !=''">
+			AND IDENTITY_NO =  #{identityNo}
+		</if>
+		<if test="createDate !=null and createDate !=''">
+			AND CREATE_DATE =  #{createDate}
+		</if>
+		<if test="createTime !=null and createTime !=''">
+			AND CREATE_TIME =  #{createTime}
+		</if>
+		<if test="photo !=null and photo !=''">
+			AND PHOTO =  #{photo}
+		</if>
+		<if test="idcardUrl !=null and idcardUrl !=''">
+			AND IDCARD_URL =  #{idcardUrl}
+		</if>
+		<if test="inlince !=null and inlince !=''">
+			AND INLINCE =  #{inlince}
+		</if>
+		<if test="id !=null and id !=''">
+			AND ID =  #{id}
+		</if>
+	</sql>
+	
+	<parameterMap type="com.imobpay.base.entity.IdentityQuery" id="paramIdIdentityQuery">
+		<parameter property="pageflag"  javaType="Boolean" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="curPage"   javaType="Integer" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="pageSize"  javaType="Integer" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="name" javaType="String" jdbcType="NVARCHAR" mode="IN"   />
+		<parameter property="username" javaType="String" jdbcType="NVARCHAR" mode="IN"   />
+		<parameter property="password" javaType="String" jdbcType="NVARCHAR" mode="IN"   />
+		<parameter property="type" javaType="String" jdbcType="NVARCHAR" mode="IN"   />
+		<parameter property="status" javaType="String" jdbcType="NVARCHAR" mode="IN"   />
+		<parameter property="identityNo" javaType="String" jdbcType="NVARCHAR" mode="IN"   />
+		<parameter property="createDate" javaType="String" jdbcType="NVARCHAR" mode="IN"   />
+		<parameter property="createTime" javaType="String" jdbcType="NVARCHAR" mode="IN"   />
+		<parameter property="photo" javaType="String" jdbcType="BLOB" mode="IN"   />
+		<parameter property="idcardUrl" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="inlince" javaType="String" jdbcType="NVARCHAR" mode="IN"   />
+		<parameter property="id" javaType="Integer" jdbcType="NUMERIC" mode="IN"   />
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.IdentityQuery" id="resultTbIdentityQuery">
+		<result column="NAME" property="name" javaType="String" jdbcType="NVARCHAR" />
+		<result column="USERNAME" property="username" javaType="String" jdbcType="NVARCHAR" />
+		<result column="PASSWORD" property="password" javaType="String" jdbcType="NVARCHAR" />
+		<result column="TYPE" property="type" javaType="String" jdbcType="NVARCHAR" />
+		<result column="STATUS" property="status" javaType="String" jdbcType="NVARCHAR" />
+		<result column="IDENTITY_NO" property="identityNo" javaType="String" jdbcType="NVARCHAR" />
+		<result column="CREATE_DATE" property="createDate" javaType="String" jdbcType="NVARCHAR" />
+		<result column="CREATE_TIME" property="createTime" javaType="String" jdbcType="NVARCHAR" />
+		<result column="PHOTO" property="photo" javaType="String" jdbcType="BLOB" />
+		<result column="IDCARD_URL" property="idcardUrl" javaType="String" jdbcType="VARCHAR" />
+		<result column="INLINCE" property="inlince" javaType="String" jdbcType="NVARCHAR" />
+		<result column="ID" property="id" javaType="Integer" jdbcType="NUMERIC" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdIdentityQuery" resultMap="resultTbIdentityQuery">
+		SELECT NAME,IDENTITY_NO FROM qtcommons.IDENTITY_QUERY WHERE  ROWNUM = 1  
+		<include refid="paramSql"></include>
+	</select>
+	
+	<select id="list" parameterMap="paramIdIdentityQuery" resultMap="resultTbIdentityQuery">
+		<if test="pageflag==true">
+			SELECT * FROM (
+				SELECT A.*, ROWNUM RN FROM
+				(
+					SELECT * FROM qtcommons.IDENTITY_QUERY WHERE 1=1
+					<include refid="paramSql"></include>
+				) A WHERE ROWNUM &lt;= #{curPage}*#{pageSize}
+				) WHERE RN  &gt;=
+			(#{curPage}-1)*#{pageSize}
+		</if>
+		<if test="pageBlag==false">
+			SELECT * FROM IDENTITY_QUERY
+			WHERE 1=1
+			<include refid="paramSql"></include>
+		</if>
+	</select>
+	
+	<select id="listCount" parameterMap="paramIdIdentityQuery" resultType="Integer">
+				SELECT count(1) as count FROM qtcommons.IDENTITY_QUERY
+				WHERE 1=1 
+				<include refid="paramSql"></include>
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterMap="paramIdIdentityQuery" timeout="1000"  >
+		INSERT INTO 
+		qtcommons.IDENTITY_QUERY(
+NAME,
+		USERNAME,
+		PASSWORD,
+		TYPE,
+		STATUS,
+		IDENTITY_NO,
+		CREATE_DATE,
+		CREATE_TIME,
+		PHOTO,
+		IDCARD_URL,
+		INLINCE,
+				ID
+		
+		)
+		VALUES(		#{name},
+				#{username},
+				#{password},
+				#{type},
+				#{status},
+				#{identityNo},
+				#{createDate},
+				#{createTime},
+				#{photo},
+				#{idcardUrl},
+				#{inlince},
+		
+#{id})
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update"  timeout="1000" >
+		UPDATE qtcommons.IDENTITY_QUERY 
+		<trim prefix="SET" prefixOverrides="SET ,">
+		<if test="name !=null and name !=''">
+			,NAME = #{name}  
+		</if>
+		<if test="username !=null and username !=''">
+			,USERNAME = #{username}  
+		</if>
+		<if test="password !=null and password !=''">
+			,PASSWORD = #{password}  
+		</if>
+		<if test="type !=null and type !=''">
+			,TYPE = #{type}  
+		</if>
+		<if test="status !=null and status !=''">
+			,STATUS = #{status}  
+		</if>
+		<if test="identityNo !=null and identityNo !=''">
+			,IDENTITY_NO = #{identityNo}  
+		</if>
+		<if test="createDate !=null and createDate !=''">
+			,CREATE_DATE = #{createDate}  
+		</if>
+		<if test="createTime !=null and createTime !=''">
+			,CREATE_TIME = #{createTime}  
+		</if>
+		<if test="photo !=null and photo !=''">
+			,PHOTO = #{photo}  
+		</if>
+		<if test="idcardUrl !=null and idcardUrl !=''">
+			,IDCARD_URL = #{idcardUrl}  
+		</if>
+		<if test="inlince !=null and inlince !=''">
+			,INLINCE = #{inlince}  
+		</if>
+		<if test="id !=null and id !=''">
+			,ID = #{id}  
+		</if>
+		</trim>
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</update>
+	
+</mapper>

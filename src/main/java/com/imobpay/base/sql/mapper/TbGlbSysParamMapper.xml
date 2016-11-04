@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.TbGlbSysParamDao">
+
+	
+	<sql id="paramSql">
+		<!--  此处一定要增加一个查询 -->
+		<if test="orderbyseq !=null and orderbyseq !=''">
+			AND ORDERBYSEQ =  #{orderbyseq}
+		</if>
+		<if test="usesys !=null and usesys !=''">
+			AND USESYS =  #{usesys}
+		</if>
+		<if test="status !=null and status !=''">
+			AND STATUS =  #{status}
+		</if>
+		<if test="paramDesc !=null and paramDesc !=''">
+			AND PARAM_DESC =  #{paramDesc}
+		</if>
+		<if test="paramName !=null and paramName !=''">
+			AND PARAM_NAME =  #{paramName}
+		</if>
+		<if test="paramValue !=null and paramValue !=''">
+			AND PARAM_VALUE =  #{paramValue}
+		</if>
+	</sql>
+	
+	<parameterMap type="com.imobpay.base.entity.TbGlbSysParam" id="paramIdTbGlbSysParam">
+		<parameter property="pageflag"  javaType="Boolean" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="curPage"   javaType="Integer" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="pageSize"  javaType="Integer" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="orderbyseq" javaType="Integer" jdbcType="NUMERIC" mode="IN"   />
+		<parameter property="usesys" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="status" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="paramDesc" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="paramName" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="paramValue" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.TbGlbSysParam" id="resultTbTbGlbSysParam">
+		<result column="ORDERBYSEQ" property="orderbyseq" javaType="Integer" jdbcType="NUMERIC" />
+		<result column="USESYS" property="usesys" javaType="String" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" javaType="String" jdbcType="VARCHAR" />
+		<result column="PARAM_DESC" property="paramDesc" javaType="String" jdbcType="VARCHAR" />
+		<result column="PARAM_NAME" property="paramName" javaType="String" jdbcType="VARCHAR" />
+		<result column="PARAM_VALUE" property="paramValue" javaType="String" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdTbGlbSysParam" resultMap="resultTbTbGlbSysParam">
+		SELECT * FROM TB_GLB_SYS_PARAM WHERE  ROWNUM = 1  
+		<include refid="paramSql"></include>
+	</select>
+	<!-- 获取登录本机器id -->
+	<select id="getSqueId"  resultType="Integer">
+		SELECT PREPO.NEXTVAL AS loginId FROM DUAL  
+	</select>
+	
+	<select id="list" parameterMap="paramIdTbGlbSysParam" resultMap="resultTbTbGlbSysParam">
+		<if test="pageflag==true">
+			SELECT * FROM (
+				SELECT A.*, ROWNUM RN FROM
+				(
+					SELECT * FROM TB_GLB_SYS_PARAM WHERE 1=1
+					<include refid="paramSql"></include>
+				) A WHERE ROWNUM &lt;= #{curPage}*#{pageSize}
+				) WHERE RN  &gt;=
+			(#{curPage}-1)*#{pageSize}
+		</if>
+		<if test="pageBlag==false">
+			SELECT * FROM TB_GLB_SYS_PARAM
+			WHERE 1=1
+			<include refid="paramSql"></include>
+		</if>
+	</select>
+	
+	<select id="listCount" parameterMap="paramIdTbGlbSysParam" resultType="Integer">
+				SELECT count(1) as count FROM TB_GLB_SYS_PARAM
+				WHERE 1=1 
+				<include refid="paramSql"></include>
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterMap="paramIdTbGlbSysParam" timeout="1000"  >
+		INSERT INTO 
+		TB_GLB_SYS_PARAM(
+ORDERBYSEQ,
+		USESYS,
+		STATUS,
+		PARAM_DESC,
+		PARAM_NAME,
+				PARAM_VALUE
+		
+		)
+		VALUES(		#{orderbyseq},
+				#{usesys},
+				#{status},
+				#{paramDesc},
+				#{paramName},
+		
+#{paramValue})
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update"  timeout="1000" >
+		UPDATE TB_GLB_SYS_PARAM 
+		<trim prefix="SET" prefixOverrides="SET ,">
+		<if test="orderbyseq !=null and orderbyseq !=''">
+			,ORDERBYSEQ = #{orderbyseq}  
+		</if>
+		<if test="usesys !=null and usesys !=''">
+			,USESYS = #{usesys}  
+		</if>
+		<if test="status !=null and status !=''">
+			,STATUS = #{status}  
+		</if>
+		<if test="paramDesc !=null and paramDesc !=''">
+			,PARAM_DESC = #{paramDesc}  
+		</if>
+		<if test="paramName !=null and paramName !=''">
+			,PARAM_NAME = #{paramName}  
+		</if>
+		<if test="paramValue !=null and paramValue !=''">
+			,PARAM_VALUE = #{paramValue}  
+		</if>
+		</trim>
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</update>
+	
+</mapper>

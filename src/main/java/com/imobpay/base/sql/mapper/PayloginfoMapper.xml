@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.PayloginfoDao">
+
+	
+	<sql id="paramSql">
+		<!--  此处一定要增加一个查询 -->
+		<if test="servcode !=null and servcode !=''">
+			AND SERVCODE =  #{servcode}
+		</if>
+		<if test="reqsysip !=null and reqsysip !=''">
+			AND REQSYSIP =  #{reqsysip}
+		</if>
+		<if test="userid !=null and userid !=''">
+			AND USERID =  #{userid}
+		</if>
+		<if test="logintag !=null and logintag !=''">
+			AND LOGINTAG =  #{logintag}
+		</if>
+		<if test="mobileversion !=null and mobileversion !=''">
+			AND MOBILEVERSION =  #{mobileversion}
+		</if>
+		<if test="mobileno !=null and mobileno !=''">
+			AND MOBILENO =  #{mobileno}
+		</if>
+		<if test="customerid !=null and customerid !=''">
+			AND CUSTOMERID =  #{customerid}
+		</if>
+		<if test="branchid !=null and branchid !=''">
+			AND BRANCHID =  #{branchid}
+		</if>
+		<if test="logip !=null and logip !=''">
+			AND LOGIP =  #{logip}
+		</if>
+		<if test="latitude !=null and latitude !=''">
+			AND LATITUDE =  #{latitude}
+		</if>
+		<if test="longitude !=null and longitude !=''">
+			AND LONGITUDE =  #{longitude}
+		</if>
+		<if test="appuser !=null and appuser !=''">
+			AND APPUSER =  #{appuser}
+		</if>
+		<if test="clientversion !=null and clientversion !=''">
+			AND CLIENTVERSION =  #{clientversion}
+		</if>
+		<if test="mobilesystem !=null and mobilesystem !=''">
+			AND MOBILESYSTEM =  #{mobilesystem}
+		</if>
+		<if test="logno !=null and logno !=''">
+			AND LOGNO =  #{logno}
+		</if>
+		<if test="logtime !=null and logtime !=''">
+			AND LOGTIME =  #{logtime}
+		</if>
+		<if test="logdate !=null and logdate !=''">
+			AND LOGDATE =  #{logdate}
+		</if>
+	</sql>
+	
+	<parameterMap type="com.imobpay.base.entity.Payloginfo" id="paramIdPayloginfo">
+		<parameter property="pageflag" />
+		<parameter property="curPage" />
+		<parameter property="pageSize" />
+		<parameter property="servcode" />
+		<parameter property="reqsysip" />
+		<parameter property="userid" />
+		<parameter property="logintag" />
+		<parameter property="mobileversion" />
+		<parameter property="mobileno" />
+		<parameter property="customerid" />
+		<parameter property="branchid" />
+		<parameter property="logip" />
+		<parameter property="latitude" />
+		<parameter property="longitude" />
+		<parameter property="appuser" />
+		<parameter property="clientversion" />
+		<parameter property="mobilesystem" />
+		<parameter property="logno" />
+		<parameter property="logtime" />
+		<parameter property="logdate" />
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.Payloginfo" id="resultTbPayloginfo">
+		<result column="SERVCODE" property="servcode" />
+		<result column="REQSYSIP" property="reqsysip" />
+		<result column="USERID" property="userid" />
+		<result column="LOGINTAG" property="logintag" />
+		<result column="MOBILEVERSION" property="mobileversion" />
+		<result column="MOBILENO" property="mobileno" />
+		<result column="CUSTOMERID" property="customerid" />
+		<result column="BRANCHID" property="branchid" />
+		<result column="LOGIP" property="logip" />
+		<result column="LATITUDE" property="latitude" />
+		<result column="LONGITUDE" property="longitude" />
+		<result column="APPUSER" property="appuser" />
+		<result column="CLIENTVERSION" property="clientversion" />
+		<result column="MOBILESYSTEM" property="mobilesystem" />
+		<result column="LOGNO" property="logno" />
+		<result column="LOGTIME" property="logtime" />
+		<result column="LOGDATE" property="logdate" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdPayloginfo" resultMap="resultTbPayloginfo">
+		SELECT * FROM PAYLOGINFO WHERE 1=1 AND ROWNUM = 1  
+		<include refid="paramSql"></include>
+	</select>
+	
+	<select id="list" parameterMap="paramIdPayloginfo" resultMap="resultTbPayloginfo">
+		<if test="pageflag==true">
+			SELECT * FROM (
+			SELECT A.*, ROWNUM RN FROM
+			(
+			SELECT * FROM PAYLOGINFO WHERE 1=1
+			<include refid="paramSql"></include>
+			) A WHERE ROWNUM &lt;= #{curPage}*#{pageSize}
+			) WHERE RN  &gt;=
+			(#{curPage}-1)*#{pageSize}
+		</if>
+		<if test="pageBlag==false">
+			SELECT * FROM PAYLOGINFO
+			WHERE 1=1
+			<include refid="paramSql"></include>
+		</if>
+	</select>
+	
+	<select id="listCount" parameterMap="paramIdPayloginfo" resultType="Integer">
+				SELECT count(1) as count FROM PAYLOGINFO
+				WHERE 1=1 
+				<include refid="paramSql"></include>
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterMap="paramIdPayloginfo"    >
+		INSERT INTO 
+		PAYLOGINFO(
+		<if test="servcode !=null and servcode !=''">
+		
+			SERVCODE
+		</if>
+		<if test="reqsysip !=null and reqsysip !=''">
+		,
+			REQSYSIP
+		</if>
+		<if test="userid !=null and userid !=''">
+		,
+			USERID
+		</if>
+		<if test="logintag !=null and logintag !=''">
+		,
+			LOGINTAG
+		</if>
+		<if test="mobileversion !=null and mobileversion !=''">
+		,
+			MOBILEVERSION
+		</if>
+		<if test="mobileno !=null and mobileno !=''">
+		,
+			MOBILENO
+		</if>
+		<if test="customerid !=null and customerid !=''">
+		,
+			CUSTOMERID
+		</if>
+		<if test="branchid !=null and branchid !=''">
+		,
+			BRANCHID
+		</if>
+		<if test="logip !=null and logip !=''">
+		,
+			LOGIP
+		</if>
+		<if test="latitude !=null and latitude !=''">
+		,
+			LATITUDE
+		</if>
+		<if test="longitude !=null and longitude !=''">
+		,
+			LONGITUDE
+		</if>
+		<if test="appuser !=null and appuser !=''">
+		,
+			APPUSER
+		</if>
+		<if test="clientversion !=null and clientversion !=''">
+		,
+			CLIENTVERSION
+		</if>
+		<if test="mobilesystem !=null and mobilesystem !=''">
+		,
+			MOBILESYSTEM
+		</if>
+		<if test="logno !=null and logno !=''">
+		,
+			LOGNO
+		</if>
+		<if test="logtime !=null and logtime !=''">
+		,
+			LOGTIME
+		</if>
+		<if test="logdate !=null and logdate !=''">
+		,
+			LOGDATE
+		</if>
+		)
+		VALUES(
+		<if test="servcode !=null and servcode !=''">
+		
+#{servcode}		</if>
+		<if test="reqsysip !=null and reqsysip !=''">
+		,
+#{reqsysip}		</if>
+		<if test="userid !=null and userid !=''">
+		,
+#{userid}		</if>
+		<if test="logintag !=null and logintag !=''">
+		,
+#{logintag}		</if>
+		<if test="mobileversion !=null and mobileversion !=''">
+		,
+#{mobileversion}		</if>
+		<if test="mobileno !=null and mobileno !=''">
+		,
+#{mobileno}		</if>
+		<if test="customerid !=null and customerid !=''">
+		,
+#{customerid}		</if>
+		<if test="branchid !=null and branchid !=''">
+		,
+#{branchid}		</if>
+		<if test="logip !=null and logip !=''">
+		,
+#{logip}		</if>
+		<if test="latitude !=null and latitude !=''">
+		,
+#{latitude}		</if>
+		<if test="longitude !=null and longitude !=''">
+		,
+#{longitude}		</if>
+		<if test="appuser !=null and appuser !=''">
+		,
+#{appuser}		</if>
+		<if test="clientversion !=null and clientversion !=''">
+		,
+#{clientversion}		</if>
+		<if test="mobilesystem !=null and mobilesystem !=''">
+		,
+#{mobilesystem}		</if>
+		<if test="logno !=null and logno !=''">
+		,
+#{logno}		</if>
+		<if test="logtime !=null and logtime !=''">
+		,
+#{logtime}		</if>
+		<if test="logdate !=null and logdate !=''">
+		,
+#{logdate}		</if>
+		 )
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE PAYLOGINFO SET
+		<if test="servcode !=null and servcode !=''">
+		
+			SERVCODE = #{servcode}  
+		</if>
+		<if test="reqsysip !=null and reqsysip !=''">
+		,
+			REQSYSIP = #{reqsysip}  
+		</if>
+		<if test="userid !=null and userid !=''">
+		,
+			USERID = #{userid}  
+		</if>
+		<if test="logintag !=null and logintag !=''">
+		,
+			LOGINTAG = #{logintag}  
+		</if>
+		<if test="mobileversion !=null and mobileversion !=''">
+		,
+			MOBILEVERSION = #{mobileversion}  
+		</if>
+		<if test="mobileno !=null and mobileno !=''">
+		,
+			MOBILENO = #{mobileno}  
+		</if>
+		<if test="customerid !=null and customerid !=''">
+		,
+			CUSTOMERID = #{customerid}  
+		</if>
+		<if test="branchid !=null and branchid !=''">
+		,
+			BRANCHID = #{branchid}  
+		</if>
+		<if test="logip !=null and logip !=''">
+		,
+			LOGIP = #{logip}  
+		</if>
+		<if test="latitude !=null and latitude !=''">
+		,
+			LATITUDE = #{latitude}  
+		</if>
+		<if test="longitude !=null and longitude !=''">
+		,
+			LONGITUDE = #{longitude}  
+		</if>
+		<if test="appuser !=null and appuser !=''">
+		,
+			APPUSER = #{appuser}  
+		</if>
+		<if test="clientversion !=null and clientversion !=''">
+		,
+			CLIENTVERSION = #{clientversion}  
+		</if>
+		<if test="mobilesystem !=null and mobilesystem !=''">
+		,
+			MOBILESYSTEM = #{mobilesystem}  
+		</if>
+		<if test="logno !=null and logno !=''">
+		,
+			LOGNO = #{logno}  
+		</if>
+		<if test="logtime !=null and logtime !=''">
+		,
+			LOGTIME = #{logtime}  
+		</if>
+		<if test="logdate !=null and logdate !=''">
+		,
+			LOGDATE = #{logdate}  
+		</if>
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</update>
+	
+</mapper>

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.TbKybJnlsDao">
+
+
+	<sql id="paramSql">
+		<!-- 此处一定要增加一个查询 -->
+		<if test="servcode !=null and servcode !=''">
+			AND SERVCODE = #{servcode}
+		</if>
+		<if test="ptype !=null and ptype !=''">
+			AND PTYPE = #{ptype}
+		</if>
+		<if test="customerid !=null and customerid !=''">
+			AND CUSTOMERID = #{customerid}
+		</if>
+		<if test="username !=null and username !=''">
+			AND USERNAME = #{username}
+		</if>
+		<if test="mobileno !=null and mobileno !=''">
+			AND MOBILENO = #{mobileno}
+		</if>
+		<if test="msgtxt !=null and msgtxt !=''">
+			AND MSGTXT = #{msgtxt}
+		</if>
+		<if test="branchid !=null and branchid !=''">
+			AND BRANCHID = #{branchid}
+		</if>
+		<if test="msgcode !=null and msgcode !=''">
+			AND MSGCODE = #{msgcode}
+		</if>
+		<if test="promotionamt !=null and promotionamt !=''">
+			AND PROMOTIONAMT = #{promotionamt}
+		</if>
+		<if test="locallogno !=null and locallogno !=''">
+			AND LOCALLOGNO = #{locallogno}
+		</if>
+		<if test="localtime !=null and localtime !=''">
+			AND LOCALTIME = #{localtime}
+		</if>
+		<if test="localdate !=null and localdate !=''">
+			AND LOCALDATE = #{localdate}
+		</if>
+	</sql>
+
+	<parameterMap type="com.imobpay.base.entity.TbKybJnls" id="paramIdTbKybJnls">
+		<parameter property="pageflag" />
+		<parameter property="curPage" />
+		<parameter property="pageSize" />
+		<parameter property="servcode" />
+		<parameter property="ptype" />
+		<parameter property="customerid" />
+		<parameter property="username" />
+		<parameter property="mobileno" />
+		<parameter property="msgtxt" />
+		<parameter property="branchid" />
+		<parameter property="msgcode" />
+		<parameter property="promotionamt" />
+		<parameter property="locallogno" />
+		<parameter property="localtime" />
+		<parameter property="localdate" />
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.TbKybJnls" id="resultTbTbKybJnls">
+		<result column="SERVCODE" property="servcode" />
+		<result column="PTYPE" property="ptype" />
+		<result column="CUSTOMERID" property="customerid" />
+		<result column="USERNAME" property="username" />
+		<result column="MOBILENO" property="mobileno" />
+		<result column="MSGTXT" property="msgtxt" />
+		<result column="BRANCHID" property="branchid" />
+		<result column="MSGCODE" property="msgcode" />
+		<result column="PROMOTIONAMT" property="promotionamt" />
+		<result column="LOCALLOGNO" property="locallogno" />
+		<result column="LOCALTIME" property="localtime" />
+		<result column="LOCALDATE" property="localdate" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdTbKybJnls" resultMap="resultTbTbKybJnls">
+		SELECT * FROM TB_KYB_JNLS WHERE 1=1 AND ROWNUM = 1
+		<include refid="paramSql"></include>
+	</select>
+
+	<select id="list" parameterMap="paramIdTbKybJnls" resultMap="resultTbTbKybJnls">
+		<if test="pageflag==true">
+			SELECT * FROM (
+			SELECT A.*, ROWNUM RN FROM
+			(
+			SELECT * FROM TB_KYB_JNLS WHERE 1=1
+			<include refid="paramSql"></include>
+			) A WHERE ROWNUM &gt;= #{curPage}*#{pageSize}
+			) WHERE RN &lt;=
+			(#{curPage}-1)*#{pageSize}
+		</if>
+		<if test="pageBlag==false">
+			SELECT * FROM TB_KYB_JNLS
+			WHERE 1=1
+			<include refid="paramSql"></include>
+		</if>
+	</select>
+
+	<select id="listCount" parameterMap="paramIdTbKybJnls" resultType="Integer">
+		SELECT count(1) as count FROM TB_KYB_JNLS
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</select>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterMap="paramIdTbKybJnls">
+		INSERT INTO TB_KYB_JNLS
+		(
+		SERVCODE,
+		PTYPE, CUSTOMERID, USERNAME, MOBILENO,
+		MSGTXT, BRANCHID, MSGCODE, PROMOTIONAMT,
+		LOCALLOGNO,
+		LOCALTIME, LOCALDATE)
+		VALUES
+		(#{servcode,jdbcType=VARCHAR},
+		#{ptype,jdbcType=VARCHAR}, #{customerid,jdbcType=VARCHAR},
+		#{username,jdbcType=VARCHAR},
+		#{mobileno,jdbcType=VARCHAR},
+		#{msgtxt,jdbcType=VARCHAR}, #{branchid,jdbcType=VARCHAR},
+		#{msgcode,jdbcType=VARCHAR},
+		#{promotionamt,jdbcType=VARCHAR},
+		#{locallogno,jdbcType=VARCHAR}, #{localtime,jdbcType=VARCHAR},
+		#{localdate,jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE TB_KYB_JNLS SET
+		<if test="servcode !=null and servcode !=''">
+
+			SERVCODE = #{servcode}
+		</if>
+		<if test="ptype !=null and ptype !=''">
+			,
+			PTYPE = #{ptype}
+		</if>
+		<if test="customerid !=null and customerid !=''">
+			,
+			CUSTOMERID = #{customerid}
+		</if>
+		<if test="username !=null and username !=''">
+			,
+			USERNAME = #{username}
+		</if>
+		<if test="mobileno !=null and mobileno !=''">
+			,
+			MOBILENO = #{mobileno}
+		</if>
+		<if test="msgtxt !=null and msgtxt !=''">
+			,
+			MSGTXT = #{msgtxt}
+		</if>
+		<if test="branchid !=null and branchid !=''">
+			,
+			BRANCHID = #{branchid}
+		</if>
+		<if test="msgcode !=null and msgcode !=''">
+			,
+			MSGCODE = #{msgcode}
+		</if>
+		<if test="promotionamt !=null and promotionamt !=''">
+			,
+			PROMOTIONAMT = #{promotionamt}
+		</if>
+		<if test="locallogno !=null and locallogno !=''">
+			,
+			LOCALLOGNO = #{locallogno}
+		</if>
+		<if test="localtime !=null and localtime !=''">
+			,
+			LOCALTIME = #{localtime}
+		</if>
+		<if test="localdate !=null and localdate !=''">
+			,
+			LOCALDATE = #{localdate}
+		</if>
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</update>
+
+</mapper>

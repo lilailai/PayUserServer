@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.PrepPersonalinfoDao">
+
+
+	<sql id="paramSql">
+		<!-- 此处一定要增加一个查询 -->
+		<if test="initialChecktime !=null and initialChecktime !=''">
+			AND INITIAL_CHECKTIME = #{initialChecktime}
+		</if>
+		<if test="usertype !=null and usertype !=''">
+			AND USERTYPE = #{usertype}
+		</if>
+		<if test="pidantiimgurl !=null and pidantiimgurl !=''">
+			AND PIDANTIIMGURL = #{pidantiimgurl}
+		</if>
+		<if test="pidimgurl !=null and pidimgurl !=''">
+			AND PIDIMGURL = #{pidimgurl}
+		</if>
+		<if test="picurl !=null and picurl !=''">
+			AND PICURL = #{picurl}
+		</if>
+		<if test="mugshoturl !=null and mugshoturl !=''">
+			AND MUGSHOTURL = #{mugshoturl}
+		</if>
+		<if test="resultinfo !=null and resultinfo !=''">
+			AND RESULTINFO = #{resultinfo}
+		</if>
+		<if test="checkrange !=null and checkrange !=''">
+			AND CHECKRANGE = #{checkrange}
+		</if>
+		<if test="licensepicurl !=null and licensepicurl !=''">
+			AND LICENSEPICURL = #{licensepicurl}
+		</if>
+		<if test="agencyAuditor !=null and agencyAuditor !=''">
+			AND AGENCY_AUDITOR = #{agencyAuditor}
+		</if>
+		<if test="identitypicurl !=null and identitypicurl !=''">
+			AND IDENTITYPICURL = #{identitypicurl}
+		</if>
+		<if test="auditor !=null and auditor !=''">
+			AND AUDITOR = #{auditor}
+		</if>
+		<if test="timestamp !=null and timestamp !=''">
+			AND TIMESTAMP = #{timestamp}
+		</if>
+		<if test="customerid !=null and customerid !=''">
+			AND CUSTOMERID = #{customerid}
+		</if>
+		<if test="mobileno !=null and mobileno !=''">
+			AND MOBILENO = #{mobileno}
+		</if>
+		<if test="auditflag !=null and auditflag !=''">
+			AND AUDITFLAG = #{auditflag}
+		</if>
+		<if test="createdate !=null and createdate !=''">
+			AND CREATEDATE = #{createdate}
+		</if>
+		<if test="createtime !=null and createtime !=''">
+			AND CREATETIME = #{createtime}
+		</if>
+		<if test="remark !=null and remark !=''">
+			AND REMARK = #{remark}
+		</if>
+		<if test="checktime !=null and checktime !=''">
+			AND CHECKTIME = #{checktime}
+		</if>
+	</sql>
+
+	<parameterMap type="com.imobpay.base.entity.PrepPersonalinfo" id="paramIdPrepPersonalinfo">
+		<parameter property="pageflag" />
+		<parameter property="curPage" />
+		<parameter property="pageSize" />
+		<parameter property="initialChecktime" />
+		<parameter property="usertype" />
+		<parameter property="pidantiimgurl" />
+		<parameter property="pidimgurl" />
+		<parameter property="picurl" />
+		<parameter property="mugshoturl" />
+		<parameter property="resultinfo" />
+		<parameter property="checkrange" />
+		<parameter property="licensepicurl" />
+		<parameter property="agencyAuditor" />
+		<parameter property="identitypicurl" />
+		<parameter property="auditor" />
+		<parameter property="timestamp" />
+		<parameter property="customerid" />
+		<parameter property="mobileno" />
+		<parameter property="auditflag" />
+		<parameter property="createdate" />
+		<parameter property="createtime" />
+		<parameter property="remark" />
+		<parameter property="checktime" />
+		<parameter property="pidfrontimgidentifying" />
+		<parameter property="pidversoimgidentifying" />
+		<parameter property="picimgidentifying" />
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.PrepPersonalinfo" id="resultTbPrepPersonalinfo">
+		<result column="INITIAL_CHECKTIME" property="initialChecktime" />
+		<result column="USERTYPE" property="usertype" />
+		<result column="PIDANTIIMGURL" property="pidantiimgurl" />
+		<result column="PIDIMGURL" property="pidimgurl" />
+		<result column="PICURL" property="picurl" />
+		<result column="MUGSHOTURL" property="mugshoturl" />
+		<result column="RESULTINFO" property="resultinfo" />
+		<result column="CHECKRANGE" property="checkrange" />
+		<result column="LICENSEPICURL" property="licensepicurl" />
+		<result column="AGENCY_AUDITOR" property="agencyAuditor" />
+		<result column="IDENTITYPICURL" property="identitypicurl" />
+		<result column="AUDITOR" property="auditor" />
+		<result column="TIMESTAMP" property="timestamp" />
+		<result column="CUSTOMERID" property="customerid" />
+		<result column="MOBILENO" property="mobileno" />
+		<result column="AUDITFLAG" property="auditflag" />
+		<result column="CREATEDATE" property="createdate" />
+		<result column="CREATETIME" property="createtime" />
+		<result column="REMARK" property="remark" />
+		<result column="CHECKTIME" property="checktime" />
+		<result column="AUDITNUMBER" property="auditNumber" />
+		<result column="PIDFRONTIMGIDENTIFYING" property="pidfrontimgidentifying" />
+		<result column="PIDVERSOIMGIDENTIFYING" property="pidversoimgidentifying" />
+		<result column="PICIMGIDENTIFYING" property="picimgidentifying" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdPrepPersonalinfo" resultMap="resultTbPrepPersonalinfo">
+		SELECT * FROM PREP_PERSONALINFO WHERE 1=1 AND ROWNUM = 1
+		<include refid="paramSql"></include>
+	</select>
+
+	<select id="list" parameterMap="paramIdPrepPersonalinfo" resultMap="resultTbPrepPersonalinfo">
+		<if test="pageflag==true">
+			SELECT * FROM (
+			SELECT A.*, ROWNUM RN FROM
+			(
+			SELECT * FROM PREP_PERSONALINFO WHERE 1=1
+			<include refid="paramSql"></include>
+			) A WHERE ROWNUM &gt;= #{curPage}*#{pageSize}
+			) WHERE RN &lt;=
+			(#{curPage}-1)*#{pageSize}
+		</if>
+		<if test="pageBlag==false">
+			SELECT * FROM PREP_PERSONALINFO
+			WHERE 1=1
+			<include refid="paramSql"></include>
+		</if>
+	</select>
+
+	<select id="listCount" parameterMap="paramIdPrepPersonalinfo" resultType="Integer">
+		SELECT count(1) as count FROM PREP_PERSONALINFO
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</select>
+
+	<!-- 添加初始信息 -->
+	<insert id="insertInitial" parameterMap="paramIdPrepPersonalinfo">
+		insert into PREP_PERSONALINFO
+		  (TIMESTAMP,
+		   customerId,
+		   mobileNo,
+		   auditFlag,
+		   createDate,
+		   createTime,
+		   pidImgUrl,
+		   pidAntiImgUrl,
+		   picUrl,
+		   pidfrontimgidentifying,
+		   pidversoimgidentifying,
+		   picimgidentifying
+		   )
+		values
+		  (#{timestamp},
+		   #{customerid},
+		   #{mobileno},
+		   #{auditflag},
+		   #{createdate},
+		   #{createtime},
+		   #{pidimgurl},
+		   #{pidantiimgurl},
+		   #{picurl},
+		   #{pidfrontimgidentifying},
+		   #{pidversoimgidentifying},
+		   #{picimgidentifying})
+	</insert>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterMap="paramIdPrepPersonalinfo">
+		INSERT INTO
+		PREP_PERSONALINFO(
+		<if test="initialChecktime !=null and initialChecktime !=''">
+
+			INITIAL_CHECKTIME
+		</if>
+		<if test="usertype !=null and usertype !=''">
+			,
+			USERTYPE
+		</if>
+		<if test="pidantiimgurl !=null and pidantiimgurl !=''">
+			,
+			PIDANTIIMGURL
+		</if>
+		<if test="pidimgurl !=null and pidimgurl !=''">
+			,
+			PIDIMGURL
+		</if>
+		<if test="picurl !=null and picurl !=''">
+			,
+			PICURL
+		</if>
+		<if test="mugshoturl !=null and mugshoturl !=''">
+			,
+			MUGSHOTURL
+		</if>
+		<if test="resultinfo !=null and resultinfo !=''">
+			,
+			RESULTINFO
+		</if>
+		<if test="checkrange !=null and checkrange !=''">
+			,
+			CHECKRANGE
+		</if>
+		<if test="licensepicurl !=null and licensepicurl !=''">
+			,
+			LICENSEPICURL
+		</if>
+		<if test="agencyAuditor !=null and agencyAuditor !=''">
+			,
+			AGENCY_AUDITOR
+		</if>
+		<if test="identitypicurl !=null and identitypicurl !=''">
+			,
+			IDENTITYPICURL
+		</if>
+		<if test="auditor !=null and auditor !=''">
+			,
+			AUDITOR
+		</if>
+		<if test="timestamp !=null and timestamp !=''">
+			,
+			TIMESTAMP
+		</if>
+		<if test="customerid !=null and customerid !=''">
+			,
+			CUSTOMERID
+		</if>
+		<if test="mobileno !=null and mobileno !=''">
+			,
+			MOBILENO
+		</if>
+		<if test="auditflag !=null and auditflag !=''">
+			,
+			AUDITFLAG
+		</if>
+		<if test="createdate !=null and createdate !=''">
+			,
+			CREATEDATE
+		</if>
+		<if test="createtime !=null and createtime !=''">
+			,
+			CREATETIME
+		</if>
+		<if test="remark !=null and remark !=''">
+			,
+			REMARK
+		</if>
+		<if test="checktime !=null and checktime !=''">
+			,
+			CHECKTIME
+		</if>
+		)
+		VALUES(
+		<if test="initialChecktime !=null and initialChecktime !=''">
+
+			#{initialChecktime}
+		</if>
+		<if test="usertype !=null and usertype !=''">
+			,
+			#{usertype}
+		</if>
+		<if test="pidantiimgurl !=null and pidantiimgurl !=''">
+			,
+			#{pidantiimgurl}
+		</if>
+		<if test="pidimgurl !=null and pidimgurl !=''">
+			,
+			#{pidimgurl}
+		</if>
+		<if test="picurl !=null and picurl !=''">
+			,
+			#{picurl}
+		</if>
+		<if test="mugshoturl !=null and mugshoturl !=''">
+			,
+			#{mugshoturl}
+		</if>
+		<if test="resultinfo !=null and resultinfo !=''">
+			,
+			#{resultinfo}
+		</if>
+		<if test="checkrange !=null and checkrange !=''">
+			,
+			#{checkrange}
+		</if>
+		<if test="licensepicurl !=null and licensepicurl !=''">
+			,
+			#{licensepicurl}
+		</if>
+		<if test="agencyAuditor !=null and agencyAuditor !=''">
+			,
+			#{agencyAuditor}
+		</if>
+		<if test="identitypicurl !=null and identitypicurl !=''">
+			,
+			#{identitypicurl}
+		</if>
+		<if test="auditor !=null and auditor !=''">
+			,
+			#{auditor}
+		</if>
+		<if test="timestamp !=null and timestamp !=''">
+			,
+			#{timestamp}
+		</if>
+		<if test="customerid !=null and customerid !=''">
+			,
+			#{customerid}
+		</if>
+		<if test="mobileno !=null and mobileno !=''">
+			,
+			#{mobileno}
+		</if>
+		<if test="auditflag !=null and auditflag !=''">
+			,
+			#{auditflag}
+		</if>
+		<if test="createdate !=null and createdate !=''">
+			,
+			#{createdate}
+		</if>
+		<if test="createtime !=null and createtime !=''">
+			,
+			#{createtime}
+		</if>
+		<if test="remark !=null and remark !=''">
+			,
+			#{remark}
+		</if>
+		<if test="checktime !=null and checktime !=''">
+			,
+			#{checktime}
+		</if>
+		)
+	</insert>
+
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE PREP_PERSONALINFO SET
+		<if test="initialChecktime !=null and initialChecktime !=''">
+
+			INITIAL_CHECKTIME = #{initialChecktime}
+		</if>
+		<if test="usertype !=null and usertype !=''">
+			,
+			USERTYPE = #{usertype}
+		</if>
+		<if test="pidantiimgurl !=null and pidantiimgurl !=''">
+			,
+			PIDANTIIMGURL = #{pidantiimgurl}
+		</if>
+		<if test="pidimgurl !=null and pidimgurl !=''">
+			,
+			PIDIMGURL = #{pidimgurl}
+		</if>
+		<if test="picurl !=null and picurl !=''">
+			,
+			PICURL = #{picurl}
+		</if>
+		<if test="mugshoturl !=null and mugshoturl !=''">
+			,
+			MUGSHOTURL = #{mugshoturl}
+		</if>
+		<if test="resultinfo !=null and resultinfo !=''">
+			,
+			RESULTINFO = #{resultinfo}
+		</if>
+		<if test="checkrange !=null and checkrange !=''">
+			,
+			CHECKRANGE = #{checkrange}
+		</if>
+		<if test="licensepicurl !=null and licensepicurl !=''">
+			,
+			LICENSEPICURL = #{licensepicurl}
+		</if>
+		<if test="agencyAuditor !=null and agencyAuditor !=''">
+			,
+			AGENCY_AUDITOR = #{agencyAuditor}
+		</if>
+		<if test="identitypicurl !=null and identitypicurl !=''">
+			,
+			IDENTITYPICURL = #{identitypicurl}
+		</if>
+		<if test="auditor !=null and auditor !=''">
+			,
+			AUDITOR = #{auditor}
+		</if>
+		<if test="timestamp !=null and timestamp !=''">
+			,
+			TIMESTAMP = #{timestamp}
+		</if>
+		<if test="customerid !=null and customerid !=''">
+			,
+			CUSTOMERID = #{customerid}
+		</if>
+		<if test="mobileno !=null and mobileno !=''">
+			,
+			MOBILENO = #{mobileno}
+		</if>
+		<if test="auditflag !=null and auditflag !=''">
+			,
+			AUDITFLAG = #{auditflag}
+		</if>
+		<if test="createdate !=null and createdate !=''">
+			,
+			CREATEDATE = #{createdate}
+		</if>
+		<if test="createtime !=null and createtime !=''">
+			,
+			CREATETIME = #{createtime}
+		</if>
+		<if test="remark !=null and remark !=''">
+			,
+			REMARK = #{remark}
+		</if>
+		<if test="checktime !=null and checktime !=''">
+			,
+			CHECKTIME = #{checktime}
+		</if>
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</update>
+
+	<!-- 个人信息 身份证反面和头像更新 -->
+	<update id="imgUpdatePersonalInfo" >
+    update PREP_PERSONALINFO
+	       set timeStamp              = #{timestamp},
+	           pidImgUrl              = #{pidimgurl},
+	           MOBILENO               = #{mobileno},
+	           pidAntiImgUrl          = #{pidantiimgurl},
+	           picUrl                 = #{picurl},
+	           createDate             = #{createdate},
+	           createTime             = #{createtime},
+	           pidfrontimgidentifying = #{pidfrontimgidentifying},
+	           pidversoimgidentifying = #{pidversoimgidentifying},
+	           picimgidentifying      = #{picimgidentifying},
+	           auditFlag              = #{auditflag}
+	     where customerId = #{customerid}
+	</update>
+	<!-- 个人信息 更新当前老用户状态 -->
+	<update id="imgUpdatePhotoStatus" >
+	
+	    update PREP_PERSONALINFO pp
+	       set pp.pidfrontimgidentifying = '1',
+	           pp.pidversoimgidentifying = '1',
+	           pp.picimgidentifying      = '1',
+	           pp.auditnumber            = '111'
+	     where pp.customerId = #{customerid}
+
+	</update>
+
+
+	<delete id="delete" parameterMap="paramIdPrepPersonalinfo">
+		delete from PREP_PERSONALINFO where customerid = #{customerid}
+	</delete>
+</mapper>

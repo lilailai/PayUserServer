@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+            http://www.springframework.org/schema/beans/spring-beans.xsd  
+            http://code.alibabatech.com/schema/dubbo  
+            http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<bean id="targetConnectionFactory" class="com.tibco.tibjms.TibjmsConnectionFactory">
+		<property name="serverUrl" value="${tibco_url}" />
+	</bean>
+
+	<bean id="connectionFactory"
+		class="org.springframework.jms.connection.UserCredentialsConnectionFactoryAdapter">
+		<property name="targetConnectionFactory" ref="targetConnectionFactory" />
+		<property name="username" value="${tibco_userName}" />
+		<property name="password" value="${tibco_pwd}" />
+	</bean>
+	
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">    
+        <property name="connectionFactory" ref="connectionFactory"/>    
+    </bean>
+    
+     <bean id="queueDestination" class="com.tibco.tibjms.TibjmsQueue">    
+        <constructor-arg  value="${tibco_user_destination_IN}" />    
+    </bean> 
+    
+    <bean id="consumerMessageListener" class="com.imobpay.base.services.ConsumerMessageListener">
+    	<property name="sendTibcoOutName" value="${tibco_user_destination_OUT}" />
+    	<property name="encode"  value="${tibco_user_encode}" />
+    </bean>         
+     
+    <bean id="jmsContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">    
+        <property name="connectionFactory" ref="connectionFactory" />    
+        <property name="destination" ref="queueDestination" />    
+        <property name="messageListener" ref="consumerMessageListener" />    
+    </bean>  
+
+</beans>  

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.PayusersecurityDao">
+
+	
+	<sql id="paramSql">
+		<!--  此处一定要增加一个查询 -->
+		<if test="timestamp !=null and timestamp !=''">
+			AND TIMESTAMP =  #{timestamp}
+		</if>
+		<if test="userid !=null and userid !=''">
+			AND USERID =  #{userid}
+		</if>
+		<if test="branchid !=null and branchid !=''">
+			AND BRANCHID =  #{branchid}
+		</if>
+		<if test="passworderrcnt !=null and passworderrcnt !=''">
+			AND PASSWORDERRCNT =  #{passworderrcnt}
+		</if>
+		<if test="userpassword !=null and userpassword !=''">
+			AND USERPASSWORD =  #{userpassword}
+		</if>
+	</sql>
+	
+	<parameterMap type="com.imobpay.base.entity.Payusersecurity" id="paramIdPayusersecurity">
+		<parameter property="pageflag" />
+		<parameter property="curPage" />
+		<parameter property="pageSize" />
+		<parameter property="timestamp" />
+		<parameter property="userid" />
+		<parameter property="branchid" />
+		<parameter property="passworderrcnt" />
+		<parameter property="userpassword" />
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.Payusersecurity" id="resultTbPayusersecurity">
+		<result column="TIMESTAMP" property="timestamp" />
+		<result column="USERID" property="userid" />
+		<result column="BRANCHID" property="branchid" />
+		<result column="PASSWORDERRCNT" property="passworderrcnt" />
+		<result column="USERPASSWORD" property="userpassword" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdPayusersecurity" resultMap="resultTbPayusersecurity">
+		SELECT * FROM PAYUSERSECURITY WHERE 1=1 AND ROWNUM = 1  
+		<include refid="paramSql"></include>
+	</select>
+	
+	<select id="list" parameterMap="paramIdPayusersecurity" resultMap="resultTbPayusersecurity">
+		<if test="pageflag==true">
+			SELECT * FROM (
+			SELECT A.*, ROWNUM RN FROM
+			(
+			SELECT * FROM PAYUSERSECURITY WHERE 1=1
+			<include refid="paramSql"></include>
+			) A WHERE ROWNUM &lt;= #{curPage}*#{pageSize}
+			) WHERE RN  &gt;=
+			(#{curPage}-1)*#{pageSize}
+		</if>
+		<if test="pageBlag==false">
+			SELECT * FROM PAYUSERSECURITY
+			WHERE 1=1
+			<include refid="paramSql"></include>
+		</if>
+	</select>
+	
+	<select id="listCount" parameterMap="paramIdPayusersecurity" resultType="Integer">
+				SELECT count(1) as count FROM PAYUSERSECURITY
+				WHERE 1=1 
+				<include refid="paramSql"></include>
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterMap="paramIdPayusersecurity"    >
+		INSERT INTO 
+		PAYUSERSECURITY(
+		<if test="timestamp !=null and timestamp !=''">
+		
+			TIMESTAMP
+		</if>
+		<if test="userid !=null and userid !=''">
+		,
+			USERID
+		</if>
+		<if test="branchid !=null and branchid !=''">
+		,
+			BRANCHID
+		</if>
+		<if test="passworderrcnt !=null and passworderrcnt !=''">
+		,
+			PASSWORDERRCNT
+		</if>
+		<if test="userpassword !=null and userpassword !=''">
+		,
+			USERPASSWORD
+		</if>
+		)
+		VALUES(
+		<if test="timestamp !=null and timestamp !=''">
+		
+#{timestamp}		</if>
+		<if test="userid !=null and userid !=''">
+		,
+#{userid}		</if>
+		<if test="branchid !=null and branchid !=''">
+		,
+#{branchid}		</if>
+		<if test="passworderrcnt !=null and passworderrcnt !=''">
+		,
+#{passworderrcnt}		</if>
+		<if test="userpassword !=null and userpassword !=''">
+		,
+#{userpassword}		</if>
+		 )
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE PAYUSERSECURITY SET
+		<if test="timestamp !=null and timestamp !=''">
+		
+			TIMESTAMP = #{timestamp}  
+		</if>
+		<if test="userid !=null and userid !=''">
+		,
+			USERID = #{userid}  
+		</if>
+		<if test="branchid !=null and branchid !=''">
+		,
+			BRANCHID = #{branchid}  
+		</if>
+		<if test="passworderrcnt !=null and passworderrcnt !=''">
+		,
+			PASSWORDERRCNT = #{passworderrcnt}  
+		</if>
+		<if test="userpassword !=null and userpassword !=''">
+		,
+			USERPASSWORD = #{userpassword}  
+		</if>
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</update>
+	
+</mapper>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.PaybranchDao">
+
+	
+	<sql id="paramSql">
+		<!--  此处一定要增加一个查询 -->
+		<if test="email !=null and email !=''">
+			AND EMAIL =  #{email}
+		</if>
+		<if test="branchid !=null and branchid !=''">
+			AND BRANCHID =  #{branchid}
+		</if>
+		<if test="branchname !=null and branchname !=''">
+			AND BRANCHNAME =  #{branchname}
+		</if>
+		<if test="branchattr !=null and branchattr !=''">
+			AND BRANCHATTR =  #{branchattr}
+		</if>
+		<if test="prepbranchPm !=null and prepbranchPm !=''">
+			AND PREPBRANCH_PM =  #{prepbranchPm}
+		</if>
+		<if test="prepbranch !=null and prepbranch !=''">
+			AND PREPBRANCH =  #{prepbranch}
+		</if>
+		<if test="auditflag !=null and auditflag !=''">
+			AND AUDITFLAG =  #{auditflag}
+		</if>
+		<if test="branchlevel !=null and branchlevel !=''">
+			AND BRANCHLEVEL =  #{branchlevel}
+		</if>
+		<if test="branchacct !=null and branchacct !=''">
+			AND BRANCHACCT =  #{branchacct}
+		</if>
+	</sql>
+	
+	<parameterMap type="com.imobpay.base.entity.Paybranch" id="paramIdPaybranch">
+		<parameter property="pageflag" />
+		<parameter property="curPage" />
+		<parameter property="pageSize" />
+		<parameter property="email" />
+		<parameter property="branchid" />
+		<parameter property="branchname" />
+		<parameter property="branchattr" />
+		<parameter property="prepbranchPm" />
+		<parameter property="prepbranch" />
+		<parameter property="auditflag" />
+		<parameter property="branchlevel" />
+		<parameter property="branchacct" />
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.Paybranch" id="resultTbPaybranch">
+		<result column="EMAIL" property="email" />
+		<result column="BRANCHID" property="branchid" />
+		<result column="BRANCHNAME" property="branchname" />
+		<result column="BRANCHATTR" property="branchattr" />
+		<result column="PREPBRANCH_PM" property="prepbranchPm" />
+		<result column="PREPBRANCH" property="prepbranch" />
+		<result column="AUDITFLAG" property="auditflag" />
+		<result column="BRANCHLEVEL" property="branchlevel" />
+		<result column="BRANCHACCT" property="branchacct" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdPaybranch" resultMap="resultTbPaybranch">
+		SELECT * FROM PAYBRANCH WHERE 1=1 AND ROWNUM = 1  
+		<include refid="paramSql"></include>
+	</select>
+	
+	<select id="list" parameterMap="paramIdPaybranch" resultMap="resultTbPaybranch">
+		<if test="pageflag==true">
+			SELECT * FROM (
+			SELECT A.*, ROWNUM RN FROM
+			(
+			SELECT * FROM PAYBRANCH WHERE 1=1
+			<include refid="paramSql"></include>
+			) A WHERE ROWNUM &lt;= #{curPage}*#{pageSize}
+			) WHERE RN  &gt;=
+			(#{curPage}-1)*#{pageSize}
+		</if>
+		<if test="pageBlag==false">
+			SELECT * FROM PAYBRANCH
+			WHERE 1=1
+			<include refid="paramSql"></include>
+		</if>
+	</select>
+	
+	<select id="listCount" parameterMap="paramIdPaybranch" resultType="Integer">
+				SELECT count(1) as count FROM PAYBRANCH
+				WHERE 1=1 
+				<include refid="paramSql"></include>
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterMap="paramIdPaybranch"    >
+		INSERT INTO 
+		PAYBRANCH(
+		<if test="email !=null and email !=''">
+		
+			EMAIL
+		</if>
+		<if test="branchid !=null and branchid !=''">
+		,
+			BRANCHID
+		</if>
+		<if test="branchname !=null and branchname !=''">
+		,
+			BRANCHNAME
+		</if>
+		<if test="branchattr !=null and branchattr !=''">
+		,
+			BRANCHATTR
+		</if>
+		<if test="prepbranchPm !=null and prepbranchPm !=''">
+		,
+			PREPBRANCH_PM
+		</if>
+		<if test="prepbranch !=null and prepbranch !=''">
+		,
+			PREPBRANCH
+		</if>
+		<if test="auditflag !=null and auditflag !=''">
+		,
+			AUDITFLAG
+		</if>
+		<if test="branchlevel !=null and branchlevel !=''">
+		,
+			BRANCHLEVEL
+		</if>
+		<if test="branchacct !=null and branchacct !=''">
+		,
+			BRANCHACCT
+		</if>
+		)
+		VALUES(
+		<if test="email !=null and email !=''">
+		
+#{email}		</if>
+		<if test="branchid !=null and branchid !=''">
+		,
+#{branchid}		</if>
+		<if test="branchname !=null and branchname !=''">
+		,
+#{branchname}		</if>
+		<if test="branchattr !=null and branchattr !=''">
+		,
+#{branchattr}		</if>
+		<if test="prepbranchPm !=null and prepbranchPm !=''">
+		,
+#{prepbranchPm}		</if>
+		<if test="prepbranch !=null and prepbranch !=''">
+		,
+#{prepbranch}		</if>
+		<if test="auditflag !=null and auditflag !=''">
+		,
+#{auditflag}		</if>
+		<if test="branchlevel !=null and branchlevel !=''">
+		,
+#{branchlevel}		</if>
+		<if test="branchacct !=null and branchacct !=''">
+		,
+#{branchacct}		</if>
+		 )
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE PAYBRANCH SET
+		<if test="email !=null and email !=''">
+		
+			EMAIL = #{email}  
+		</if>
+		<if test="branchid !=null and branchid !=''">
+		,
+			BRANCHID = #{branchid}  
+		</if>
+		<if test="branchname !=null and branchname !=''">
+		,
+			BRANCHNAME = #{branchname}  
+		</if>
+		<if test="branchattr !=null and branchattr !=''">
+		,
+			BRANCHATTR = #{branchattr}  
+		</if>
+		<if test="prepbranchPm !=null and prepbranchPm !=''">
+		,
+			PREPBRANCH_PM = #{prepbranchPm}  
+		</if>
+		<if test="prepbranch !=null and prepbranch !=''">
+		,
+			PREPBRANCH = #{prepbranch}  
+		</if>
+		<if test="auditflag !=null and auditflag !=''">
+		,
+			AUDITFLAG = #{auditflag}  
+		</if>
+		<if test="branchlevel !=null and branchlevel !=''">
+		,
+			BRANCHLEVEL = #{branchlevel}  
+		</if>
+		<if test="branchacct !=null and branchacct !=''">
+		,
+			BRANCHACCT = #{branchacct}  
+		</if>
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</update>
+	
+</mapper>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.PaycustomersecurityDao">
+
+	
+	<sql id="paramSql">
+		<!--  此处一定要增加一个查询 -->
+		<if test="loginpassword !=null and loginpassword !=''">
+			AND LOGINPASSWORD =  #{loginpassword}
+		</if>
+		<if test="paypassflag !=null and paypassflag !=''">
+			AND PAYPASSFLAG =  #{paypassflag}
+		</if>
+		<if test="passworderrcnt !=null and passworderrcnt !=''">
+			AND PASSWORDERRCNT =  #{passworderrcnt}
+		</if>
+		<if test="customerid !=null and customerid !=''">
+			AND CUSTOMERID =  #{customerid}
+		</if>
+		<if test="paypassword !=null and paypassword !=''">
+			AND PAYPASSWORD =  #{paypassword}
+		</if>
+		<if test="timestamp !=null and timestamp !=''">
+			AND TIMESTAMP =  #{timestamp}
+		</if>
+	</sql>
+	
+	<parameterMap type="com.imobpay.base.entity.Paycustomersecurity" id="paramIdPaycustomersecurity">
+		<parameter property="pageflag" />
+		<parameter property="curPage" />
+		<parameter property="pageSize" />
+		<parameter property="loginpassword" />
+		<parameter property="paypassflag" />
+		<parameter property="passworderrcnt" />
+		<parameter property="customerid" />
+		<parameter property="paypassword" />
+		<parameter property="timestamp" />
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.Paycustomersecurity" id="resultTbPaycustomersecurity">
+		<result column="LOGINPASSWORD" property="loginpassword" />
+		<result column="PAYPASSFLAG" property="paypassflag" />
+		<result column="PASSWORDERRCNT" property="passworderrcnt" />
+		<result column="CUSTOMERID" property="customerid" />
+		<result column="PAYPASSWORD" property="paypassword" />
+		<result column="TIMESTAMP" property="timestamp" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdPaycustomersecurity" resultMap="resultTbPaycustomersecurity">
+		SELECT * FROM PAYCUSTOMERSECURITY WHERE 1=1 AND ROWNUM = 1  
+		<include refid="paramSql"></include>
+	</select>
+	
+	<select id="list" parameterMap="paramIdPaycustomersecurity" resultMap="resultTbPaycustomersecurity">
+		<if test="pageflag==true">
+			SELECT * FROM (
+			SELECT A.*, ROWNUM RN FROM
+			(
+			SELECT * FROM PAYCUSTOMERSECURITY WHERE 1=1
+			<include refid="paramSql"></include>
+			) A WHERE ROWNUM &lt;= #{curPage}*#{pageSize}
+			) WHERE RN  &gt;=
+			(#{curPage}-1)*#{pageSize}
+		</if>
+		<if test="pageBlag==false">
+			SELECT * FROM PAYCUSTOMERSECURITY
+			WHERE 1=1
+			<include refid="paramSql"></include>
+		</if>
+	</select>
+	
+	<select id="listCount" parameterMap="paramIdPaycustomersecurity" resultType="Integer">
+				SELECT count(1) as count FROM PAYCUSTOMERSECURITY
+				WHERE 1=1 
+				<include refid="paramSql"></include>
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterMap="paramIdPaycustomersecurity"    >
+		INSERT INTO 
+		PAYCUSTOMERSECURITY(
+		<if test="loginpassword !=null and loginpassword !=''">
+		
+			LOGINPASSWORD
+		</if>
+		<if test="paypassflag !=null and paypassflag !=''">
+		,
+			PAYPASSFLAG
+		</if>
+		<if test="passworderrcnt !=null and passworderrcnt !=''">
+		,
+			PASSWORDERRCNT
+		</if>
+		<if test="customerid !=null and customerid !=''">
+		,
+			CUSTOMERID
+		</if>
+		<if test="paypassword !=null and paypassword !=''">
+		,
+			PAYPASSWORD
+		</if>
+		<if test="timestamp !=null and timestamp !=''">
+		,
+			TIMESTAMP
+		</if>
+		)
+		VALUES(
+		<if test="loginpassword !=null and loginpassword !=''">
+		
+#{loginpassword}		</if>
+		<if test="paypassflag !=null and paypassflag !=''">
+		,
+#{paypassflag}		</if>
+		<if test="passworderrcnt !=null and passworderrcnt !=''">
+		,
+#{passworderrcnt}		</if>
+		<if test="customerid !=null and customerid !=''">
+		,
+#{customerid}		</if>
+		<if test="paypassword !=null and paypassword !=''">
+		,
+#{paypassword}		</if>
+		<if test="timestamp !=null and timestamp !=''">
+		,
+#{timestamp}		</if>
+		 )
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE PAYCUSTOMERSECURITY SET
+		<if test="loginpassword !=null and loginpassword !=''">
+		
+			LOGINPASSWORD = #{loginpassword}  
+		</if>
+		<if test="paypassflag !=null and paypassflag !=''">
+		,
+			PAYPASSFLAG = #{paypassflag}  
+		</if>
+		<if test="passworderrcnt !=null and passworderrcnt !=''">
+		,
+			PASSWORDERRCNT = #{passworderrcnt}  
+		</if>
+		<if test="customerid !=null and customerid !=''">
+		,
+			CUSTOMERID = #{customerid}  
+		</if>
+		<if test="paypassword !=null and paypassword !=''">
+		,
+			PAYPASSWORD = #{paypassword}  
+		</if>
+		<if test="timestamp !=null and timestamp !=''">
+		,
+			TIMESTAMP = #{timestamp}  
+		</if>
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</update>
+	
+</mapper>

@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.VwCustCreditDao">
+
+	
+	<sql id="paramSql">
+		<!--  此处一定要增加一个查询 -->
+		<if test="customerpid !=null and customerpid !=''">
+			AND CUSTOMERPID =  #{customerpid}
+		</if>
+		<if test="overdueDay !=null and overdueDay !=''">
+			AND OVERDUE_DAY =  #{overdueDay}
+		</if>
+		<if test="mobileno !=null and mobileno !=''">
+			AND MOBILENO =  #{mobileno}
+		</if>
+		<if test="creditMoney !=null and creditMoney !=''">
+			AND CREDIT_MONEY =  #{creditMoney}
+		</if>
+		<if test="applyAmount !=null and applyAmount !=''">
+			AND APPLY_AMOUNT =  #{applyAmount}
+		</if>
+		<if test="lendAmount !=null and lendAmount !=''">
+			AND LEND_AMOUNT =  #{lendAmount}
+		</if>
+		<if test="allowAmount !=null and allowAmount !=''">
+			AND ALLOW_AMOUNT =  #{allowAmount}
+		</if>
+		<if test="waitAuditAmount !=null and waitAuditAmount !=''">
+			AND WAIT_AUDIT_AMOUNT =  #{waitAuditAmount}
+		</if>
+		<if test="auditedAmount !=null and auditedAmount !=''">
+			AND AUDITED_AMOUNT =  #{auditedAmount}
+		</if>
+		<if test="managerFee !=null and managerFee !=''">
+			AND MANAGER_FEE =  #{managerFee}
+		</if>
+		<if test="poundateFee !=null and poundateFee !=''">
+			AND POUNDATE_FEE =  #{poundateFee}
+		</if>
+		<if test="overdueFee !=null and overdueFee !=''">
+			AND OVERDUE_FEE =  #{overdueFee}
+		</if>
+		<if test="payFee !=null and payFee !=''">
+			AND PAY_FEE =  #{payFee}
+		</if>
+		<if test="payCapital !=null and payCapital !=''">
+			AND PAY_CAPITAL =  #{payCapital}
+		</if>
+		<if test="payManagerFee !=null and payManagerFee !=''">
+			AND PAY_MANAGER_FEE =  #{payManagerFee}
+		</if>
+		<if test="payPoundateFee !=null and payPoundateFee !=''">
+			AND PAY_POUNDATE_FEE =  #{payPoundateFee}
+		</if>
+		<if test="payOverdueFee !=null and payOverdueFee !=''">
+			AND PAY_OVERDUE_FEE =  #{payOverdueFee}
+		</if>
+		<if test="noPayFee !=null and noPayFee !=''">
+			AND NO_PAY_FEE =  #{noPayFee}
+		</if>
+		<if test="noPayCapital !=null and noPayCapital !=''">
+			AND NO_PAY_CAPITAL =  #{noPayCapital}
+		</if>
+		<if test="noPayManagerFee !=null and noPayManagerFee !=''">
+			AND NO_PAY_MANAGER_FEE =  #{noPayManagerFee}
+		</if>
+		<if test="noPayPoundateFee !=null and noPayPoundateFee !=''">
+			AND NO_PAY_POUNDATE_FEE =  #{noPayPoundateFee}
+		</if>
+		<if test="noPayOverdueFee !=null and noPayOverdueFee !=''">
+			AND NO_PAY_OVERDUE_FEE =  #{noPayOverdueFee}
+		</if>
+		<if test="settleFlag !=null and settleFlag !=''">
+			AND SETTLE_FLAG =  #{settleFlag}
+		</if>
+		<if test="overdueFlag !=null and overdueFlag !=''">
+			AND OVERDUE_FLAG =  #{overdueFlag}
+		</if>
+		<if test="customerid !=null and customerid !=''">
+			AND CUSTOMERID =  #{customerid}
+		</if>
+	</sql>
+	
+	<parameterMap type="com.imobpay.base.entity.VwCustCredit" id="paramIdVwCustCredit">
+		<parameter property="pageflag"  javaType="Boolean" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="curPage"   javaType="BigDecimal" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="pageSize"  javaType="BigDecimal" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="customerpid" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="overdueDay" javaType="BigDecimal" jdbcType="NUMERIC" mode="IN"   />
+		<parameter property="mobileno" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="creditMoney" javaType="BigDecimal" jdbcType="NUMERIC" mode="IN"   />
+		<parameter property="applyAmount" javaType="BigDecimal" jdbcType="NUMERIC" mode="IN"   />
+		<parameter property="lendAmount" javaType="BigDecimal" jdbcType="NUMERIC" mode="IN"   />
+		<parameter property="allowAmount" javaType="BigDecimal" jdbcType="NUMERIC" mode="IN"   />
+		<parameter property="waitAuditAmount" javaType="BigDecimal" jdbcType="NUMERIC" mode="IN"   />
+		<parameter property="auditedAmount" javaType="BigDecimal" jdbcType="NUMERIC" mode="IN"   />
+		<parameter property="managerFee" javaType="BigDecimal" jdbcType="NUMERIC" mode="IN"   />
+		<parameter property="poundateFee" javaType="BigDecimal" jdbcType="NUMERIC" mode="IN"   />
+		<parameter property="overdueFee" javaType="BigDecimal" jdbcType="NUMERIC" mode="IN"   />
+		<parameter property="payFee" javaType="BigDecimal" jdbcType="NUMERIC" mode="IN"   />
+		<parameter property="payCapital" javaType="BigDecimal" jdbcType="NUMERIC" mode="IN"   />
+		<parameter property="payManagerFee" javaType="BigDecimal" jdbcType="NUMERIC" mode="IN"   />
+		<parameter property="payPoundateFee" javaType="BigDecimal" jdbcType="NUMERIC" mode="IN"   />
+		<parameter property="payOverdueFee" javaType="BigDecimal" jdbcType="NUMERIC" mode="IN"   />
+		<parameter property="noPayFee" javaType="BigDecimal" jdbcType="NUMERIC" mode="IN"   />
+		<parameter property="noPayCapital" javaType="BigDecimal" jdbcType="NUMERIC" mode="IN"   />
+		<parameter property="noPayManagerFee" javaType="BigDecimal" jdbcType="NUMERIC" mode="IN"   />
+		<parameter property="noPayPoundateFee" javaType="BigDecimal" jdbcType="NUMERIC" mode="IN"   />
+		<parameter property="noPayOverdueFee" javaType="BigDecimal" jdbcType="NUMERIC" mode="IN"   />
+		<parameter property="settleFlag" javaType="String" jdbcType="CHAR" mode="IN"   />
+		<parameter property="overdueFlag" javaType="String" jdbcType="CHAR" mode="IN"   />
+		<parameter property="customerid" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.VwCustCredit" id="resultTbVwCustCredit">
+		<result column="CUSTOMERPID" property="customerpid" javaType="String" jdbcType="VARCHAR" />
+		<result column="OVERDUE_DAY" property="overdueDay" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<result column="MOBILENO" property="mobileno" javaType="String" jdbcType="VARCHAR" />
+		<result column="CREDIT_MONEY" property="creditMoney" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<result column="APPLY_AMOUNT" property="applyAmount" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<result column="LEND_AMOUNT" property="lendAmount" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<result column="ALLOW_AMOUNT" property="allowAmount" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<result column="WAIT_AUDIT_AMOUNT" property="waitAuditAmount" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<result column="AUDITED_AMOUNT" property="auditedAmount" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<result column="MANAGER_FEE" property="managerFee" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<result column="POUNDATE_FEE" property="poundateFee" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<result column="OVERDUE_FEE" property="overdueFee" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<result column="PAY_FEE" property="payFee" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<result column="PAY_CAPITAL" property="payCapital" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<result column="PAY_MANAGER_FEE" property="payManagerFee" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<result column="PAY_POUNDATE_FEE" property="payPoundateFee" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<result column="PAY_OVERDUE_FEE" property="payOverdueFee" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<result column="NO_PAY_FEE" property="noPayFee" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<result column="NO_PAY_CAPITAL" property="noPayCapital" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<result column="NO_PAY_MANAGER_FEE" property="noPayManagerFee" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<result column="NO_PAY_POUNDATE_FEE" property="noPayPoundateFee" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<result column="NO_PAY_OVERDUE_FEE" property="noPayOverdueFee" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<result column="SETTLE_FLAG" property="settleFlag" javaType="String" jdbcType="CHAR" />
+		<result column="OVERDUE_FLAG" property="overdueFlag" javaType="String" jdbcType="CHAR" />
+		<result column="CUSTOMERID" property="customerid" javaType="String" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdVwCustCredit" resultMap="resultTbVwCustCredit">
+		SELECT * FROM QTCREDIT.VW_CUST_CREDIT WHERE  ROWNUM = 1  
+		<include refid="paramSql"></include>
+	</select>
+	
+	<select id="list" parameterMap="paramIdVwCustCredit" resultMap="resultTbVwCustCredit">
+		<if test="pageflag==true">
+			SELECT * FROM (
+				SELECT A.*, ROWNUM RN FROM
+				(
+					SELECT * FROM QTCREDIT.VW_CUST_CREDIT WHERE 1=1
+					<include refid="paramSql"></include>
+				) A WHERE ROWNUM &lt;= #{curPage}*#{pageSize}
+				) WHERE RN  &gt;=
+			(#{curPage}-1)*#{pageSize}
+		</if>
+		<if test="pageBlag==false">
+			SELECT * FROM QTCREDIT.VW_CUST_CREDIT
+			WHERE 1=1
+			<include refid="paramSql"></include>
+		</if>
+	</select>
+	
+	<select id="listCount" parameterMap="paramIdVwCustCredit" resultType="BigDecimal">
+				SELECT count(1) as count FROM QTCREDIT.VW_CUST_CREDIT
+				WHERE 1=1 
+				<include refid="paramSql"></include>
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterMap="paramIdVwCustCredit" timeout="1000"  >
+		INSERT INTO 
+		QTCREDIT.VW_CUST_CREDIT(
+CUSTOMERPID,
+		OVERDUE_DAY,
+		MOBILENO,
+		CREDIT_MONEY,
+		APPLY_AMOUNT,
+		LEND_AMOUNT,
+		ALLOW_AMOUNT,
+		WAIT_AUDIT_AMOUNT,
+		AUDITED_AMOUNT,
+		MANAGER_FEE,
+		POUNDATE_FEE,
+		OVERDUE_FEE,
+		PAY_FEE,
+		PAY_CAPITAL,
+		PAY_MANAGER_FEE,
+		PAY_POUNDATE_FEE,
+		PAY_OVERDUE_FEE,
+		NO_PAY_FEE,
+		NO_PAY_CAPITAL,
+		NO_PAY_MANAGER_FEE,
+		NO_PAY_POUNDATE_FEE,
+		NO_PAY_OVERDUE_FEE,
+		SETTLE_FLAG,
+		OVERDUE_FLAG,
+				CUSTOMERID
+		
+		)
+		VALUES(		#{customerpid},
+				#{overdueDay},
+				#{mobileno},
+				#{creditMoney},
+				#{applyAmount},
+				#{lendAmount},
+				#{allowAmount},
+				#{waitAuditAmount},
+				#{auditedAmount},
+				#{managerFee},
+				#{poundateFee},
+				#{overdueFee},
+				#{payFee},
+				#{payCapital},
+				#{payManagerFee},
+				#{payPoundateFee},
+				#{payOverdueFee},
+				#{noPayFee},
+				#{noPayCapital},
+				#{noPayManagerFee},
+				#{noPayPoundateFee},
+				#{noPayOverdueFee},
+				#{settleFlag},
+				#{overdueFlag},
+		
+#{customerid})
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update"  timeout="1000" >
+		UPDATE QTCREDIT.VW_CUST_CREDIT 
+		<trim prefix="SET" prefixOverrides="SET ,">
+		<if test="customerpid !=null and customerpid !=''">
+			,CUSTOMERPID = #{customerpid}  
+		</if>
+		<if test="overdueDay !=null and overdueDay !=''">
+			,OVERDUE_DAY = #{overdueDay}  
+		</if>
+		<if test="mobileno !=null and mobileno !=''">
+			,MOBILENO = #{mobileno}  
+		</if>
+		<if test="creditMoney !=null and creditMoney !=''">
+			,CREDIT_MONEY = #{creditMoney}  
+		</if>
+		<if test="applyAmount !=null and applyAmount !=''">
+			,APPLY_AMOUNT = #{applyAmount}  
+		</if>
+		<if test="lendAmount !=null and lendAmount !=''">
+			,LEND_AMOUNT = #{lendAmount}  
+		</if>
+		<if test="allowAmount !=null and allowAmount !=''">
+			,ALLOW_AMOUNT = #{allowAmount}  
+		</if>
+		<if test="waitAuditAmount !=null and waitAuditAmount !=''">
+			,WAIT_AUDIT_AMOUNT = #{waitAuditAmount}  
+		</if>
+		<if test="auditedAmount !=null and auditedAmount !=''">
+			,AUDITED_AMOUNT = #{auditedAmount}  
+		</if>
+		<if test="managerFee !=null and managerFee !=''">
+			,MANAGER_FEE = #{managerFee}  
+		</if>
+		<if test="poundateFee !=null and poundateFee !=''">
+			,POUNDATE_FEE = #{poundateFee}  
+		</if>
+		<if test="overdueFee !=null and overdueFee !=''">
+			,OVERDUE_FEE = #{overdueFee}  
+		</if>
+		<if test="payFee !=null and payFee !=''">
+			,PAY_FEE = #{payFee}  
+		</if>
+		<if test="payCapital !=null and payCapital !=''">
+			,PAY_CAPITAL = #{payCapital}  
+		</if>
+		<if test="payManagerFee !=null and payManagerFee !=''">
+			,PAY_MANAGER_FEE = #{payManagerFee}  
+		</if>
+		<if test="payPoundateFee !=null and payPoundateFee !=''">
+			,PAY_POUNDATE_FEE = #{payPoundateFee}  
+		</if>
+		<if test="payOverdueFee !=null and payOverdueFee !=''">
+			,PAY_OVERDUE_FEE = #{payOverdueFee}  
+		</if>
+		<if test="noPayFee !=null and noPayFee !=''">
+			,NO_PAY_FEE = #{noPayFee}  
+		</if>
+		<if test="noPayCapital !=null and noPayCapital !=''">
+			,NO_PAY_CAPITAL = #{noPayCapital}  
+		</if>
+		<if test="noPayManagerFee !=null and noPayManagerFee !=''">
+			,NO_PAY_MANAGER_FEE = #{noPayManagerFee}  
+		</if>
+		<if test="noPayPoundateFee !=null and noPayPoundateFee !=''">
+			,NO_PAY_POUNDATE_FEE = #{noPayPoundateFee}  
+		</if>
+		<if test="noPayOverdueFee !=null and noPayOverdueFee !=''">
+			,NO_PAY_OVERDUE_FEE = #{noPayOverdueFee}  
+		</if>
+		<if test="settleFlag !=null and settleFlag !=''">
+			,SETTLE_FLAG = #{settleFlag}  
+		</if>
+		<if test="overdueFlag !=null and overdueFlag !=''">
+			,OVERDUE_FLAG = #{overdueFlag}  
+		</if>
+		<if test="customerid !=null and customerid !=''">
+			,CUSTOMERID = #{customerid}  
+		</if>
+		</trim>
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</update>
+	
+</mapper>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.TbKybUserinfoDao">
+
+
+	<sql id="paramSql">
+		<!-- 此处一定要增加一个查询 -->
+		<if test="appuser !=null and appuser !=''">
+			AND APPUSER = #{appuser}
+		</if>
+		<if test="branchid !=null and branchid !=''">
+			AND BRANCHID = #{branchid}
+		</if>
+		<if test="userpid !=null and userpid !=''">
+			AND USERPID = #{userpid}
+		</if>
+		<if test="mobileno !=null and mobileno !=''">
+			AND MOBILENO = #{mobileno}
+		</if>
+		<if test="inserttime !=null and inserttime !=''">
+			AND INSERTTIME = #{inserttime}
+		</if>
+		<if test="username !=null and username !=''">
+			AND USERNAME = #{username}
+		</if>
+		<if test="promotion !=null and promotion !=''">
+			AND PROMOTION = #{promotion}
+		</if>
+		<if test="netuser !=null and netuser !=''">
+			AND NETUSER = #{netuser}
+		</if>
+		<if test="customerid !=null and customerid !=''">
+			AND CUSTOMERID = #{customerid}
+		</if>
+	</sql>
+
+	<parameterMap type="com.imobpay.base.entity.TbKybUserinfo" id="paramIdTbKybUserinfo">
+		<parameter property="pageflag" />
+		<parameter property="curPage" />
+		<parameter property="pageSize" />
+		<parameter property="appuser" />
+		<parameter property="branchid" />
+		<parameter property="userpid" />
+		<parameter property="mobileno" />
+		<parameter property="inserttime" />
+		<parameter property="username" />
+		<parameter property="promotion" />
+		<parameter property="netuser" />
+		<parameter property="customerid" />
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.TbKybUserinfo" id="resultTbTbKybUserinfo">
+		<result column="APPUSER" property="appuser" />
+		<result column="BRANCHID" property="branchid" />
+		<result column="USERPID" property="userpid" />
+		<result column="MOBILENO" property="mobileno" />
+		<result column="INSERTTIME" property="inserttime" />
+		<result column="USERNAME" property="username" />
+		<result column="PROMOTION" property="promotion" />
+		<result column="NETUSER" property="netuser" />
+		<result column="CUSTOMERID" property="customerid" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdTbKybUserinfo" resultMap="resultTbTbKybUserinfo">
+		SELECT * FROM TB_KYB_USERINFO WHERE 1=1 AND ROWNUM = 1
+		<include refid="paramSql"></include>
+	</select>
+
+	<select id="list" parameterMap="paramIdTbKybUserinfo" resultMap="resultTbTbKybUserinfo">
+		<if test="pageflag==true">
+			SELECT * FROM (
+			SELECT A.*, ROWNUM RN FROM
+			(
+			SELECT * FROM TB_KYB_USERINFO WHERE
+			1=1
+			<include refid="paramSql"></include>
+			) A WHERE ROWNUM &gt;= #{curPage}*#{pageSize}
+			) WHERE RN &lt;=
+			(#{curPage}-1)*#{pageSize}
+		</if>
+		<if test="pageBlag==false">
+			SELECT * FROM TB_KYB_USERINFO
+			WHERE 1=1
+			<include refid="paramSql"></include>
+		</if>
+	</select>
+
+	<select id="listCount" parameterMap="paramIdTbKybUserinfo" resultType="Integer">
+		SELECT count(1) as count FROM TB_KYB_USERINFO
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</select>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterMap="paramIdTbKybUserinfo">
+		INSERT INTO TB_KYB_USERINFO
+		(APPUSER,
+		BRANCHID,
+		USERPID,
+		MOBILENO,
+		INSERTTIME,
+		USERNAME,
+		PROMOTION,
+		NETUSER,
+		CUSTOMERID)
+		VALUES
+		(#{appuser,jdbcType=VARCHAR},
+		#{branchid,jdbcType=VARCHAR},
+		#{userpid,jdbcType=VARCHAR},
+		#{mobileno,jdbcType=VARCHAR},
+		#{inserttime,jdbcType=VARCHAR},
+		#{username,jdbcType=VARCHAR},
+		#{promotion,jdbcType=VARCHAR},
+		#{netuser,jdbcType=VARCHAR},
+		#{customerid,jdbcType=VARCHAR})
+
+	</insert>
+
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE TB_KYB_USERINFO SET
+		<if test="appuser !=null and appuser !=''">
+
+			APPUSER = #{appuser}
+		</if>
+		<if test="branchid !=null and branchid !=''">
+			,
+			BRANCHID = #{branchid}
+		</if>
+		<if test="userpid !=null and userpid !=''">
+			,
+			USERPID = #{userpid}
+		</if>
+		<if test="mobileno !=null and mobileno !=''">
+			,
+			MOBILENO = #{mobileno}
+		</if>
+		<if test="inserttime !=null and inserttime !=''">
+			,
+			INSERTTIME = #{inserttime}
+		</if>
+		<if test="username !=null and username !=''">
+			,
+			USERNAME = #{username}
+		</if>
+		<if test="promotion !=null and promotion !=''">
+			,
+			PROMOTION = #{promotion}
+		</if>
+		<if test="netuser !=null and netuser !=''">
+			,
+			NETUSER = #{netuser}
+		</if>
+		<if test="customerid !=null and customerid !=''">
+			,
+			CUSTOMERID = #{customerid}
+		</if>
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</update>
+
+</mapper>

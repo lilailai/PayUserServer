@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.PayuserDao">
+
+
+	<sql id="paramSql">
+		<!-- 此处一定要增加一个查询 -->
+		<if test="logintag !=null and logintag !=''">
+			AND LOGINTAG = #{logintag}
+		</if>
+		<if test="timestamp !=null and timestamp !=''">
+			AND TIMESTAMP = #{timestamp}
+		</if>
+		<if test="branchid !=null and branchid !=''">
+			AND BRANCHID = #{branchid}
+		</if>
+		<if test="userid !=null and userid !=''">
+			AND USERID = #{userid}
+		</if>
+		<if test="customerid !=null and customerid !=''">
+			AND CUSTOMERID = #{customerid}
+		</if>
+		<if test="useridtype !=null and useridtype !=''">
+			AND USERIDTYPE = #{useridtype}
+		</if>
+	</sql>
+
+	<parameterMap type="com.imobpay.base.entity.Payuser" id="paramIdPayuser">
+		<parameter property="pageflag" />
+		<parameter property="curPage" />
+		<parameter property="pageSize" />
+		<parameter property="logintag" />
+		<parameter property="timestamp" />
+		<parameter property="branchid" />
+		<parameter property="userid" />
+		<parameter property="customerid" />
+		<parameter property="useridtype" />
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.Payuser" id="resultTbPayuser">
+		<result column="LOGINTAG" property="logintag" />
+		<result column="TIMESTAMP" property="timestamp" />
+		<result column="BRANCHID" property="branchid" />
+		<result column="USERID" property="userid" />
+		<result column="CUSTOMERID" property="customerid" />
+		<result column="USERIDTYPE" property="useridtype" />
+		<result column="IFMOBILECODE" property="ifMobileCode" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdPayuser" resultMap="resultTbPayuser">
+		SELECT * FROM PAYUSER WHERE 1=1 AND ROWNUM = 1
+		<include refid="paramSql"></include>
+	</select>
+
+	<select id="list" parameterMap="paramIdPayuser" resultMap="resultTbPayuser">
+		<if test="pageflag==true">
+			SELECT * FROM (
+			SELECT A.*, ROWNUM RN FROM
+			(
+			SELECT * FROM PAYUSER WHERE
+			1=1
+			<include refid="paramSql"></include>
+			) A WHERE ROWNUM &gt;= #{curPage}*#{pageSize}
+			) WHERE RN &lt;=
+			(#{curPage}-1)*#{pageSize}
+		</if>
+		<if test="pageBlag==false">
+			SELECT * FROM PAYUSER
+			WHERE 1=1
+			<include refid="paramSql"></include>
+		</if>
+	</select>
+
+	<select id="listCount" parameterMap="paramIdPayuser" resultType="Integer">
+		SELECT count(1) as count FROM PAYUSER
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</select>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterMap="paramIdPayuser">
+		INSERT INTO PAYUSER
+		(TIMESTAMP,USERIDTYPE,USERID,CUSTOMERID,BRANCHID) VALUES
+		(#{timestamp,jdbcType=VARCHAR},#{useridtype,jdbcType=VARCHAR},#{userid,jdbcType=VARCHAR},#{customerid,jdbcType=VARCHAR},#{branchid,jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE PAYUSER SET
+		<if test="logintag !=null and logintag !=''">
+
+			LOGINTAG = #{logintag}
+		</if>
+		<if test="timestamp !=null and timestamp !=''">
+			,
+			TIMESTAMP = #{timestamp}
+		</if>
+		<if test="branchid !=null and branchid !=''">
+			,
+			BRANCHID = #{branchid}
+		</if>
+		<if test="userid !=null and userid !=''">
+			,
+			USERID = #{userid}
+		</if>
+		<if test="customerid !=null and customerid !=''">
+			,
+			CUSTOMERID = #{customerid}
+		</if>
+		<if test="useridtype !=null and useridtype !=''">
+			,
+			USERIDTYPE = #{useridtype}
+		</if>
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</update>
+	<!-- 查询当前用户是否在白名单范围之内 -->
+	<select id="selectByUserWhite" parameterMap="paramIdPayuser" resultType="Integer">
+		SELECT COUNT(1) AS CONUM FROM PAYUSER P WHERE
+		P.USERID=#{userid}
+		AND
+		P.BRANCHID
+		<if test="flag==1">
+			IN
+		</if>
+		<if test="flag==0">
+			NOT IN
+		</if>
+		(SELECT PD.BRANCHID FROM PAYUNDERTAKES PD WHERE PD.REGTAG='1')
+	</select>
+
+</mapper>

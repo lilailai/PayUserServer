@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.PayguarantorDao">
+
+	
+	<sql id="paramSql">
+		<!--  此处一定要增加一个查询 -->
+		<if test="customerid !=null and customerid !=''">
+			AND CUSTOMERID =  #{customerid}
+		</if>
+		<if test="guarantorid !=null and guarantorid !=''">
+			AND GUARANTORID =  #{guarantorid}
+		</if>
+		<if test="guarantorname !=null and guarantorname !=''">
+			AND GUARANTORNAME =  #{guarantorname}
+		</if>
+		<if test="branchid !=null and branchid !=''">
+			AND BRANCHID =  #{branchid}
+		</if>
+	</sql>
+	
+	<parameterMap type="com.imobpay.base.entity.Payguarantor" id="paramIdPayguarantor">
+		<parameter property="pageflag" />
+		<parameter property="curPage" />
+		<parameter property="pageSize" />
+		<parameter property="customerid" />
+		<parameter property="guarantorid" />
+		<parameter property="guarantorname" />
+		<parameter property="branchid" />
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.Payguarantor" id="resultTbPayguarantor">
+		<result column="CUSTOMERID" property="customerid" />
+		<result column="GUARANTORID" property="guarantorid" />
+		<result column="GUARANTORNAME" property="guarantorname" />
+		<result column="BRANCHID" property="branchid" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdPayguarantor" resultMap="resultTbPayguarantor">
+		SELECT * FROM PAYGUARANTOR WHERE 1=1 AND ROWNUM = 1  
+		<include refid="paramSql"></include>
+	</select>
+	
+	<select id="list" parameterMap="paramIdPayguarantor" resultMap="resultTbPayguarantor">
+		<if test="pageflag==true">
+			SELECT * FROM (
+			SELECT A.*, ROWNUM RN FROM
+			(
+			SELECT * FROM PAYGUARANTOR WHERE 1=1
+			<include refid="paramSql"></include>
+			) A WHERE ROWNUM &lt;= #{curPage}*#{pageSize}
+			) WHERE RN  &gt;=
+			(#{curPage}-1)*#{pageSize}
+		</if>
+		<if test="pageBlag==false">
+			SELECT * FROM PAYGUARANTOR
+			WHERE 1=1
+			<include refid="paramSql"></include>
+		</if>
+	</select>
+	
+	<select id="listCount" parameterMap="paramIdPayguarantor" resultType="Integer">
+				SELECT count(1) as count FROM PAYGUARANTOR
+				WHERE 1=1 
+				<include refid="paramSql"></include>
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterMap="paramIdPayguarantor"    >
+		INSERT INTO 
+		PAYGUARANTOR(
+		<if test="customerid !=null and customerid !=''">
+		
+			CUSTOMERID
+		</if>
+		<if test="guarantorid !=null and guarantorid !=''">
+		,
+			GUARANTORID
+		</if>
+		<if test="guarantorname !=null and guarantorname !=''">
+		,
+			GUARANTORNAME
+		</if>
+		<if test="branchid !=null and branchid !=''">
+		,
+			BRANCHID
+		</if>
+		)
+		VALUES(
+		<if test="customerid !=null and customerid !=''">
+		
+#{customerid}		</if>
+		<if test="guarantorid !=null and guarantorid !=''">
+		,
+#{guarantorid}		</if>
+		<if test="guarantorname !=null and guarantorname !=''">
+		,
+#{guarantorname}		</if>
+		<if test="branchid !=null and branchid !=''">
+		,
+#{branchid}		</if>
+		 )
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE PAYGUARANTOR SET
+		<if test="customerid !=null and customerid !=''">
+		
+			CUSTOMERID = #{customerid}  
+		</if>
+		<if test="guarantorid !=null and guarantorid !=''">
+		,
+			GUARANTORID = #{guarantorid}  
+		</if>
+		<if test="guarantorname !=null and guarantorname !=''">
+		,
+			GUARANTORNAME = #{guarantorname}  
+		</if>
+		<if test="branchid !=null and branchid !=''">
+		,
+			BRANCHID = #{branchid}  
+		</if>
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</update>
+	
+</mapper>

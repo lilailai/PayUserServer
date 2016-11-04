@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.CsBindcardDao">
+
+	
+	<sql id="paramSql">
+		<!--  此处一定要增加一个查询 -->
+		<if test="verifydesc !=null and verifydesc !=''">
+			AND VERIFYDESC =  #{verifydesc}
+		</if>
+		<if test="createtime !=null and createtime !=''">
+			AND CREATETIME =  #{createtime}
+		</if>
+		<if test="cardholder !=null and cardholder !=''">
+			AND CARDHOLDER =  #{cardholder}
+		</if>
+		<if test="repaymentDate !=null and repaymentDate !=''">
+			AND REPAYMENT_DATE =  #{repaymentDate}
+		</if>
+		<if test="branchid !=null and branchid !=''">
+			AND BRANCHID =  #{branchid}
+		</if>
+		<if test="validtime !=null and validtime !=''">
+			AND VALIDTIME =  #{validtime}
+		</if>
+		<if test="idno !=null and idno !=''">
+			AND IDNO =  #{idno}
+		</if>
+		<if test="createdate !=null and createdate !=''">
+			AND CREATEDATE =  #{createdate}
+		</if>
+		<if test="status !=null and status !=''">
+			AND STATUS =  #{status}
+		</if>
+		<if test="accountname !=null and accountname !=''">
+			AND ACCOUNTNAME =  #{accountname}
+		</if>
+		<if test="cardidx !=null and cardidx !=''">
+			AND CARDIDX =  #{cardidx}
+		</if>
+		<if test="bankid !=null and bankid !=''">
+			AND BANKID =  #{bankid}
+		</if>
+		<if test="bankname !=null and bankname !=''">
+			AND BANKNAME =  #{bankname}
+		</if>
+		<if test="bankbranchid !=null and bankbranchid !=''">
+			AND BANKBRANCHID =  #{bankbranchid}
+		</if>
+		<if test="bankbranchname !=null and bankbranchname !=''">
+			AND BANKBRANCHNAME =  #{bankbranchname}
+		</if>
+		<if test="provinceid !=null and provinceid !=''">
+			AND PROVINCEID =  #{provinceid}
+		</if>
+		<if test="bankprovince !=null and bankprovince !=''">
+			AND BANKPROVINCE =  #{bankprovince}
+		</if>
+		<if test="cityid !=null and cityid !=''">
+			AND CITYID =  #{cityid}
+		</if>
+		<if test="bankcity !=null and bankcity !=''">
+			AND BANKCITY =  #{bankcity}
+		</if>
+		<if test="aliasname !=null and aliasname !=''">
+			AND ALIASNAME =  #{aliasname}
+		</if>
+		<if test="cardtype !=null and cardtype !=''">
+			AND CARDTYPE =  #{cardtype}
+		</if>
+		<if test="cardbindtype !=null and cardbindtype !=''">
+			AND CARDBINDTYPE =  #{cardbindtype}
+		</if>
+		<if test="isbind !=null and isbind !=''">
+			AND ISBIND =  #{isbind}
+		</if>
+		<if test="accountno !=null and accountno !=''">
+			AND ACCOUNTNO =  #{accountno}
+		</if>
+		<if test="customerid !=null and customerid !=''">
+			AND CUSTOMERID =  #{customerid}
+		</if>
+		<if test="id !=null and id !=''">
+			AND ID =  #{id}
+		</if>
+	</sql>
+	
+	<parameterMap type="com.imobpay.base.entity.CsBindcard" id="paramIdCsBindcard">
+		<parameter property="pageflag"  javaType="Boolean" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="curPage"   javaType="Integer" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="pageSize"  javaType="Integer" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="verifydesc" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="createtime" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="cardholder" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="repaymentDate" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="branchid" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="validtime" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="idno" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="createdate" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="status" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="accountname" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="cardidx" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="bankid" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="bankname" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="bankbranchid" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="bankbranchname" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="provinceid" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="bankprovince" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="cityid" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="bankcity" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="aliasname" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="cardtype" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="cardbindtype" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="isbind" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="accountno" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="customerid" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="id" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.CsBindcard" id="resultTbCsBindcard">
+		<result column="VERIFYDESC" property="verifydesc" javaType="String" jdbcType="VARCHAR" />
+		<result column="CREATETIME" property="createtime" javaType="String" jdbcType="VARCHAR" />
+		<result column="CARDHOLDER" property="cardholder" javaType="String" jdbcType="VARCHAR" />
+		<result column="REPAYMENT_DATE" property="repaymentDate" javaType="String" jdbcType="VARCHAR" />
+		<result column="BRANCHID" property="branchid" javaType="String" jdbcType="VARCHAR" />
+		<result column="VALIDTIME" property="validtime" javaType="String" jdbcType="VARCHAR" />
+		<result column="IDNO" property="idno" javaType="String" jdbcType="VARCHAR" />
+		<result column="CREATEDATE" property="createdate" javaType="String" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" javaType="String" jdbcType="VARCHAR" />
+		<result column="ACCOUNTNAME" property="accountname" javaType="String" jdbcType="VARCHAR" />
+		<result column="CARDIDX" property="cardidx" javaType="String" jdbcType="VARCHAR" />
+		<result column="BANKID" property="bankid" javaType="String" jdbcType="VARCHAR" />
+		<result column="BANKNAME" property="bankname" javaType="String" jdbcType="VARCHAR" />
+		<result column="BANKBRANCHID" property="bankbranchid" javaType="String" jdbcType="VARCHAR" />
+		<result column="BANKBRANCHNAME" property="bankbranchname" javaType="String" jdbcType="VARCHAR" />
+		<result column="PROVINCEID" property="provinceid" javaType="String" jdbcType="VARCHAR" />
+		<result column="BANKPROVINCE" property="bankprovince" javaType="String" jdbcType="VARCHAR" />
+		<result column="CITYID" property="cityid" javaType="String" jdbcType="VARCHAR" />
+		<result column="BANKCITY" property="bankcity" javaType="String" jdbcType="VARCHAR" />
+		<result column="ALIASNAME" property="aliasname" javaType="String" jdbcType="VARCHAR" />
+		<result column="CARDTYPE" property="cardtype" javaType="String" jdbcType="VARCHAR" />
+		<result column="CARDBINDTYPE" property="cardbindtype" javaType="String" jdbcType="VARCHAR" />
+		<result column="ISBIND" property="isbind" javaType="String" jdbcType="VARCHAR" />
+		<result column="ACCOUNTNO" property="accountno" javaType="String" jdbcType="VARCHAR" />
+		<result column="CUSTOMERID" property="customerid" javaType="String" jdbcType="VARCHAR" />
+		<result column="ID" property="id" javaType="String" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdCsBindcard" resultMap="resultTbCsBindcard">
+		SELECT * FROM CS_BINDCARD WHERE  ROWNUM = 1  
+		<include refid="paramSql"></include>
+	</select>
+	
+	<select id="list" parameterMap="paramIdCsBindcard" resultMap="resultTbCsBindcard">
+		<if test="pageflag==true">
+			SELECT * FROM (
+				SELECT A.*, ROWNUM RN FROM
+				(
+					SELECT * FROM CS_BINDCARD WHERE 1=1
+					<include refid="paramSql"></include>
+				) A WHERE ROWNUM &lt;= #{curPage}*#{pageSize}
+				) WHERE RN  &gt;=
+			(#{curPage}-1)*#{pageSize}
+		</if>
+		<if test="pageBlag==false">
+			SELECT * FROM CS_BINDCARD
+			WHERE 1=1
+			<include refid="paramSql"></include>
+		</if>
+	</select>
+	
+	<select id="listCount" parameterMap="paramIdCsBindcard" resultType="Integer">
+				SELECT count(1) as count FROM CS_BINDCARD
+				WHERE 1=1 
+				<include refid="paramSql"></include>
+	</select>
+	
+		<!-- 添加 -->
+	<insert id="insertCopyCard" parameterMap="paramIdCsBindcard" timeout="1000"  >
+				insert into qtpay.cs_bindcard_bak
+			  select *
+			    from qtpay.cs_bindcard csb
+			   where csb.customerid = #{customerid}
+			     and csb.cardbindtype = 'T'
+				
+	</insert>
+		<!-- 删除提现卡 -->
+	<delete id="deleteCard" parameterMap="paramIdCsBindcard" timeout="1000"  >
+	
+			 delete qtpay.cs_bindcard csb
+			  where csb.customerid = #{customerid}
+			    and csb.cardbindtype = 'T'
+							
+	</delete>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterMap="paramIdCsBindcard" timeout="1000"  >
+		INSERT INTO 
+		CS_BINDCARD(
+VERIFYDESC,
+		CREATETIME,
+		CARDHOLDER,
+		REPAYMENT_DATE,
+		BRANCHID,
+		VALIDTIME,
+		IDNO,
+		CREATEDATE,
+		STATUS,
+		ACCOUNTNAME,
+		CARDIDX,
+		BANKID,
+		BANKNAME,
+		BANKBRANCHID,
+		BANKBRANCHNAME,
+		PROVINCEID,
+		BANKPROVINCE,
+		CITYID,
+		BANKCITY,
+		ALIASNAME,
+		CARDTYPE,
+		CARDBINDTYPE,
+		ISBIND,
+		ACCOUNTNO,
+		CUSTOMERID,
+				ID
+		
+		)
+		VALUES(		#{verifydesc},
+				#{createtime},
+				#{cardholder},
+				#{repaymentDate},
+				#{branchid},
+				#{validtime},
+				#{idno},
+				#{createdate},
+				#{status},
+				#{accountname},
+				#{cardidx},
+				#{bankid},
+				#{bankname},
+				#{bankbranchid},
+				#{bankbranchname},
+				#{provinceid},
+				#{bankprovince},
+				#{cityid},
+				#{bankcity},
+				#{aliasname},
+				#{cardtype},
+				#{cardbindtype},
+				#{isbind},
+				#{accountno},
+				#{customerid},
+		
+#{id})
+	</insert>
+	
+		<!-- 修改 -->
+	<update id="updateCardStatus"  timeout="1000" >
+			update qtpay.cs_bindcard csb
+			   set csb.status = #{status}
+			 where csb.customerid = #{customerid} 
+			   and csb.cardbindtype = 'T' 
+	</update>
+	
+	<!-- 修改 -->
+	<update id="update"  timeout="1000" >
+		UPDATE CS_BINDCARD 
+		<trim prefix="SET" prefixOverrides="SET">
+		<if test="verifydesc !=null and verifydesc !=''">
+			,VERIFYDESC = #{verifydesc}  
+		</if>
+		<if test="createtime !=null and createtime !=''">
+			,CREATETIME = #{createtime}  
+		</if>
+		<if test="cardholder !=null and cardholder !=''">
+			,CARDHOLDER = #{cardholder}  
+		</if>
+		<if test="repaymentDate !=null and repaymentDate !=''">
+			,REPAYMENT_DATE = #{repaymentDate}  
+		</if>
+		<if test="branchid !=null and branchid !=''">
+			,BRANCHID = #{branchid}  
+		</if>
+		<if test="validtime !=null and validtime !=''">
+			,VALIDTIME = #{validtime}  
+		</if>
+		<if test="idno !=null and idno !=''">
+			,IDNO = #{idno}  
+		</if>
+		<if test="createdate !=null and createdate !=''">
+			,CREATEDATE = #{createdate}  
+		</if>
+		<if test="status !=null and status !=''">
+			,STATUS = #{status}  
+		</if>
+		<if test="accountname !=null and accountname !=''">
+			,ACCOUNTNAME = #{accountname}  
+		</if>
+		<if test="cardidx !=null and cardidx !=''">
+			,CARDIDX = #{cardidx}  
+		</if>
+		<if test="bankid !=null and bankid !=''">
+			,BANKID = #{bankid}  
+		</if>
+		<if test="bankname !=null and bankname !=''">
+			,BANKNAME = #{bankname}  
+		</if>
+		<if test="bankbranchid !=null and bankbranchid !=''">
+			,BANKBRANCHID = #{bankbranchid}  
+		</if>
+		<if test="bankbranchname !=null and bankbranchname !=''">
+			,BANKBRANCHNAME = #{bankbranchname}  
+		</if>
+		<if test="provinceid !=null and provinceid !=''">
+			,PROVINCEID = #{provinceid}  
+		</if>
+		<if test="bankprovince !=null and bankprovince !=''">
+			,BANKPROVINCE = #{bankprovince}  
+		</if>
+		<if test="cityid !=null and cityid !=''">
+			,CITYID = #{cityid}  
+		</if>
+		<if test="bankcity !=null and bankcity !=''">
+			,BANKCITY = #{bankcity}  
+		</if>
+		<if test="aliasname !=null and aliasname !=''">
+			,ALIASNAME = #{aliasname}  
+		</if>
+		<if test="cardtype !=null and cardtype !=''">
+			,CARDTYPE = #{cardtype}  
+		</if>
+		<if test="cardbindtype !=null and cardbindtype !=''">
+			,CARDBINDTYPE = #{cardbindtype}  
+		</if>
+		<if test="isbind !=null and isbind !=''">
+			,ISBIND = #{isbind}  
+		</if>
+		<if test="accountno !=null and accountno !=''">
+			,ACCOUNTNO = #{accountno}  
+		</if>
+		<if test="customerid !=null and customerid !=''">
+			,CUSTOMERID = #{customerid}  
+		</if>
+		<if test="id !=null and id !=''">
+			,ID = #{id}  
+		</if>
+		</trim>
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</update>
+	
+</mapper>

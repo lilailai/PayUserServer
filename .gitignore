@@ -1,0 +1,8 @@
+/.settings/
+/logs/
+/target/
+/.checkstyle
+/.classpath
+/.project
+/lib/
+/workdir_IS_UNDEFINED/

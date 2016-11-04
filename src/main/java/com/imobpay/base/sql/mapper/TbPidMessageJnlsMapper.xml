@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.TbPidMessageJnlsDao">
+
+	
+	<sql id="paramSql">
+		<!--  此处一定要增加一个查询 -->
+		<if test="customerid !=null and customerid !=''">
+			AND CUSTOMERID =  #{customerid}
+		</if>
+		<if test="createtime !=null and createtime !=''">
+			AND CREATETIME =  #{createtime}
+		</if>
+		<if test="appuser !=null and appuser !=''">
+			AND APPUSER =  #{appuser}
+		</if>
+		<if test="branchid !=null and branchid !=''">
+			AND BRANCHID =  #{branchid}
+		</if>
+		<if test="sex !=null and sex !=''">
+			AND SEX =  #{sex}
+		</if>
+		<if test="familyname !=null and familyname !=''">
+			AND FAMILYNAME =  #{familyname}
+		</if>
+		<if test="birthday !=null and birthday !=''">
+			AND BIRTHDAY =  #{birthday}
+		</if>
+		<if test="address !=null and address !=''">
+			AND ADDRESS =  #{address}
+		</if>
+		<if test="validtime !=null and validtime !=''">
+			AND VALIDTIME =  #{validtime}
+		</if>
+		<if test="issuedepartment !=null and issuedepartment !=''">
+			AND ISSUEDEPARTMENT =  #{issuedepartment}
+		</if>
+		<if test="pidimgurl !=null and pidimgurl !=''">
+			AND PIDIMGURL =  #{pidimgurl}
+		</if>
+		<if test="pidantiimgurl !=null and pidantiimgurl !=''">
+			AND PIDANTIIMGURL =  #{pidantiimgurl}
+		</if>
+		<if test="picurl !=null and picurl !=''">
+			AND PICURL =  #{picurl}
+		</if>
+		<if test="ifonephotograph !=null and ifonephotograph !=''">
+			AND IFONEPHOTOGRAPH =  #{ifonephotograph}
+		</if>
+		<if test="iftwophotograph !=null and iftwophotograph !=''">
+			AND IFTWOPHOTOGRAPH =  #{iftwophotograph}
+		</if>
+		<if test="ifthreephotograph !=null and ifthreephotograph !=''">
+			AND IFTHREEPHOTOGRAPH =  #{ifthreephotograph}
+		</if>
+		<if test="createdate !=null and createdate !=''">
+			AND CREATEDATE =  #{createdate}
+		</if>
+		<if test="id !=null and id !=''">
+			AND ID =  #{id}
+		</if>
+	</sql>
+	
+	<parameterMap type="com.imobpay.base.entity.TbPidMessageJnls" id="paramIdTbPidMessageJnls">
+		<parameter property="pageflag"  javaType="Boolean" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="curPage"   javaType="Integer" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="pageSize"  javaType="Integer" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="customerid" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="createtime" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="appuser" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="branchid" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="sex" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="familyname" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="birthday" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="address" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="validtime" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="issuedepartment" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="pidimgurl" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="pidantiimgurl" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="picurl" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="ifonephotograph" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="iftwophotograph" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="ifthreephotograph" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="createdate" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="id" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.TbPidMessageJnls" id="resultTbTbPidMessageJnls">
+		<result column="CUSTOMERID" property="customerid" javaType="String" jdbcType="VARCHAR" />
+		<result column="CREATETIME" property="createtime" javaType="String" jdbcType="VARCHAR" />
+		<result column="APPUSER" property="appuser" javaType="String" jdbcType="VARCHAR" />
+		<result column="BRANCHID" property="branchid" javaType="String" jdbcType="VARCHAR" />
+		<result column="SEX" property="sex" javaType="String" jdbcType="VARCHAR" />
+		<result column="FAMILYNAME" property="familyname" javaType="String" jdbcType="VARCHAR" />
+		<result column="BIRTHDAY" property="birthday" javaType="String" jdbcType="VARCHAR" />
+		<result column="ADDRESS" property="address" javaType="String" jdbcType="VARCHAR" />
+		<result column="VALIDTIME" property="validtime" javaType="String" jdbcType="VARCHAR" />
+		<result column="ISSUEDEPARTMENT" property="issuedepartment" javaType="String" jdbcType="VARCHAR" />
+		<result column="PIDIMGURL" property="pidimgurl" javaType="String" jdbcType="VARCHAR" />
+		<result column="PIDANTIIMGURL" property="pidantiimgurl" javaType="String" jdbcType="VARCHAR" />
+		<result column="PICURL" property="picurl" javaType="String" jdbcType="VARCHAR" />
+		<result column="IFONEPHOTOGRAPH" property="ifonephotograph" javaType="String" jdbcType="VARCHAR" />
+		<result column="IFTWOPHOTOGRAPH" property="iftwophotograph" javaType="String" jdbcType="VARCHAR" />
+		<result column="IFTHREEPHOTOGRAPH" property="ifthreephotograph" javaType="String" jdbcType="VARCHAR" />
+		<result column="CREATEDATE" property="createdate" javaType="String" jdbcType="VARCHAR" />
+		<result column="ID" property="id" javaType="String" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdTbPidMessageJnls" resultMap="resultTbTbPidMessageJnls">
+		SELECT * FROM TB_PID_MESSAGE_JNLS WHERE  ROWNUM = 1  
+		<include refid="paramSql"></include>
+	</select>
+	
+	<select id="list" parameterMap="paramIdTbPidMessageJnls" resultMap="resultTbTbPidMessageJnls">
+		<if test="pageflag==true">
+			SELECT * FROM (
+				SELECT A.*, ROWNUM RN FROM
+				(
+					SELECT * FROM TB_PID_MESSAGE_JNLS WHERE 1=1
+					<include refid="paramSql"></include>
+				) A WHERE ROWNUM &lt;= #{curPage}*#{pageSize}
+				) WHERE RN  &gt;=
+			(#{curPage}-1)*#{pageSize}
+		</if>
+		<if test="pageBlag==false">
+			SELECT * FROM TB_PID_MESSAGE_JNLS
+			WHERE 1=1
+			<include refid="paramSql"></include>
+		</if>
+	</select>
+	
+	<select id="listCount" parameterMap="paramIdTbPidMessageJnls" resultType="Integer">
+				SELECT count(1) as count FROM TB_PID_MESSAGE_JNLS
+				WHERE 1=1 
+				<include refid="paramSql"></include>
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterMap="paramIdTbPidMessageJnls" timeout="1000"  >
+		INSERT INTO 
+		TB_PID_MESSAGE_JNLS(
+CUSTOMERID,
+		CREATETIME,
+		APPUSER,
+		BRANCHID,
+		SEX,
+		FAMILYNAME,
+		BIRTHDAY,
+		ADDRESS,
+		VALIDTIME,
+		ISSUEDEPARTMENT,
+		PIDIMGURL,
+		PIDANTIIMGURL,
+		PICURL,
+		IFONEPHOTOGRAPH,
+		IFTWOPHOTOGRAPH,
+		IFTHREEPHOTOGRAPH,
+		CREATEDATE,
+				ID
+		
+		)
+		VALUES(		#{customerid},
+				#{createtime},
+				#{appuser},
+				#{branchid},
+				#{sex},
+				#{familyname},
+				#{birthday},
+				#{address},
+				#{validtime},
+				#{issuedepartment},
+				#{pidimgurl},
+				#{pidantiimgurl},
+				#{picurl},
+				#{ifonephotograph},
+				#{iftwophotograph},
+				#{ifthreephotograph},
+				#{createdate},
+		
+#{id})
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update"  timeout="1000" >
+		UPDATE TB_PID_MESSAGE_JNLS 
+		<trim prefix="SET" prefixOverrides="SET ,">
+		<if test="customerid !=null and customerid !=''">
+			,CUSTOMERID = #{customerid}  
+		</if>
+		<if test="createtime !=null and createtime !=''">
+			,CREATETIME = #{createtime}  
+		</if>
+		<if test="appuser !=null and appuser !=''">
+			,APPUSER = #{appuser}  
+		</if>
+		<if test="branchid !=null and branchid !=''">
+			,BRANCHID = #{branchid}  
+		</if>
+		<if test="sex !=null and sex !=''">
+			,SEX = #{sex}  
+		</if>
+		<if test="familyname !=null and familyname !=''">
+			,FAMILYNAME = #{familyname}  
+		</if>
+		<if test="birthday !=null and birthday !=''">
+			,BIRTHDAY = #{birthday}  
+		</if>
+		<if test="address !=null and address !=''">
+			,ADDRESS = #{address}  
+		</if>
+		<if test="validtime !=null and validtime !=''">
+			,VALIDTIME = #{validtime}  
+		</if>
+		<if test="issuedepartment !=null and issuedepartment !=''">
+			,ISSUEDEPARTMENT = #{issuedepartment}  
+		</if>
+		<if test="pidimgurl !=null and pidimgurl !=''">
+			,PIDIMGURL = #{pidimgurl}  
+		</if>
+		<if test="pidantiimgurl !=null and pidantiimgurl !=''">
+			,PIDANTIIMGURL = #{pidantiimgurl}  
+		</if>
+		<if test="picurl !=null and picurl !=''">
+			,PICURL = #{picurl}  
+		</if>
+		<if test="ifonephotograph !=null and ifonephotograph !=''">
+			,IFONEPHOTOGRAPH = #{ifonephotograph}  
+		</if>
+		<if test="iftwophotograph !=null and iftwophotograph !=''">
+			,IFTWOPHOTOGRAPH = #{iftwophotograph}  
+		</if>
+		<if test="ifthreephotograph !=null and ifthreephotograph !=''">
+			,IFTHREEPHOTOGRAPH = #{ifthreephotograph}  
+		</if>
+		<if test="createdate !=null and createdate !=''">
+			,CREATEDATE = #{createdate}  
+		</if>
+		<if test="id !=null and id !=''">
+			,ID = #{id}  
+		</if>
+		</trim>
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</update>
+	
+</mapper>

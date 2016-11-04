@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.TbCustActivityRecordDao">
+
+	
+	<sql id="paramSql">
+		<!--  此处一定要增加一个查询 -->
+		<if test="createdate !=null and createdate !=''">
+			AND CREATEDATE =  #{createdate}
+		</if>
+		<if test="customerid !=null and customerid !=''">
+			AND CUSTOMERID =  #{customerid}
+		</if>
+		<if test="activitykey !=null and activitykey !=''">
+			AND ACTIVITYKEY =  #{activitykey}
+		</if>
+		<if test="awardDate !=null and awardDate !=''">
+			AND AWARD_DATE =  #{awardDate}
+		</if>
+		<if test="activityBeginDate !=null and activityBeginDate !=''">
+			AND ACTIVITY_BEGIN_DATE =  #{activityBeginDate}
+		</if>
+		<if test="activityEndDate !=null and activityEndDate !=''">
+			AND ACTIVITY_END_DATE =  #{activityEndDate}
+		</if>
+		<if test="awardcount !=null and awardcount !=''">
+			AND AWARDCOUNT =  #{awardcount}
+		</if>
+		<if test="id !=null and id !=''">
+			AND ID =  #{id}
+		</if>
+	</sql>
+	
+	<parameterMap type="com.imobpay.base.entity.TbCustActivityRecord" id="paramIdTbCustActivityRecord">
+		<parameter property="pageflag"  javaType="Boolean" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="curPage"   javaType="Integer" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="pageSize"  javaType="Integer" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="createdate" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="customerid" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="activitykey" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="awardDate" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="activityBeginDate" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="activityEndDate" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+		<parameter property="awardcount" javaType="Integer" jdbcType="NUMERIC" mode="IN"   />
+		<parameter property="id" javaType="String" jdbcType="VARCHAR" mode="IN"   />
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.TbCustActivityRecord" id="resultTbTbCustActivityRecord">
+		<result column="CREATEDATE" property="createdate" javaType="String" jdbcType="VARCHAR" />
+		<result column="CUSTOMERID" property="customerid" javaType="String" jdbcType="VARCHAR" />
+		<result column="ACTIVITYKEY" property="activitykey" javaType="String" jdbcType="VARCHAR" />
+		<result column="AWARD_DATE" property="awardDate" javaType="String" jdbcType="VARCHAR" />
+		<result column="ACTIVITY_BEGIN_DATE" property="activityBeginDate" javaType="String" jdbcType="VARCHAR" />
+		<result column="ACTIVITY_END_DATE" property="activityEndDate" javaType="String" jdbcType="VARCHAR" />
+		<result column="AWARDCOUNT" property="awardcount" javaType="Integer" jdbcType="NUMERIC" />
+		<result column="ID" property="id" javaType="String" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdTbCustActivityRecord" resultMap="resultTbTbCustActivityRecord">
+		SELECT * FROM TB_CUST_ACTIVITY_RECORD WHERE  ROWNUM = 1  
+		<include refid="paramSql"></include>
+	</select>
+	
+	<select id="list" parameterMap="paramIdTbCustActivityRecord" resultMap="resultTbTbCustActivityRecord">
+		<if test="pageflag==true">
+			SELECT * FROM (
+				SELECT A.*, ROWNUM RN FROM
+				(
+					SELECT * FROM TB_CUST_ACTIVITY_RECORD WHERE 1=1
+					<include refid="paramSql"></include>
+				) A WHERE ROWNUM &lt;= #{curPage}*#{pageSize}
+				) WHERE RN  &gt;=
+			(#{curPage}-1)*#{pageSize}
+		</if>
+		<if test="pageBlag==false">
+			SELECT * FROM TB_CUST_ACTIVITY_RECORD
+			WHERE 1=1
+			<include refid="paramSql"></include>
+		</if>
+	</select>
+	
+	<select id="listCount" parameterMap="paramIdTbCustActivityRecord" resultType="Integer">
+				SELECT count(1) as count FROM TB_CUST_ACTIVITY_RECORD
+				WHERE 1=1 
+				<include refid="paramSql"></include>
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterMap="paramIdTbCustActivityRecord" timeout="1000"  >
+		INSERT INTO 
+		TB_CUST_ACTIVITY_RECORD(
+CREATEDATE,
+		CUSTOMERID,
+		ACTIVITYKEY,
+		AWARD_DATE,
+		ACTIVITY_BEGIN_DATE,
+		ACTIVITY_END_DATE,
+		AWARDCOUNT,
+				ID
+		
+		)
+		VALUES(		#{createdate},
+				#{customerid},
+				#{activitykey},
+				#{awardDate},
+				#{activityBeginDate},
+				#{activityEndDate},
+				#{awardcount},
+		
+#{id})
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update"  timeout="1000" >
+		UPDATE TB_CUST_ACTIVITY_RECORD 
+		<trim prefix="SET" prefixOverrides="SET ,">
+		<if test="createdate !=null and createdate !=''">
+			,CREATEDATE = #{createdate}  
+		</if>
+		<if test="customerid !=null and customerid !=''">
+			,CUSTOMERID = #{customerid}  
+		</if>
+		<if test="activitykey !=null and activitykey !=''">
+			,ACTIVITYKEY = #{activitykey}  
+		</if>
+		<if test="awardDate !=null and awardDate !=''">
+			,AWARD_DATE = #{awardDate}  
+		</if>
+		<if test="activityBeginDate !=null and activityBeginDate !=''">
+			,ACTIVITY_BEGIN_DATE = #{activityBeginDate}  
+		</if>
+		<if test="activityEndDate !=null and activityEndDate !=''">
+			,ACTIVITY_END_DATE = #{activityEndDate}  
+		</if>
+		<if test="awardcount !=null and awardcount !=''">
+			,AWARDCOUNT = #{awardcount}  
+		</if>
+		<if test="id !=null and id !=''">
+			,ID = #{id}  
+		</if>
+		</trim>
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</update>
+	
+</mapper>
