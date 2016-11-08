@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.MobilepaycheckcodeDao">
+
+
+	<sql id="paramSql">
+		<!-- 此处一定要增加一个查询 -->
+		<if test="userid !=null and userid !=''">
+			AND USERID = #{userid}
+		</if>
+		<if test="mobileno !=null and mobileno !=''">
+			AND MOBILENO = #{mobileno}
+		</if>
+		<if test="branchid !=null and branchid !=''">
+			AND BRANCHID = #{branchid}
+		</if>
+		<if test="efftime !=null and efftime !=''">
+			AND EFFTIME = #{efftime}
+		</if>
+		<if test="checktag !=null and checktag !=''">
+			AND CHECKTAG = #{checktag}
+		</if>
+		<if test="checkcode !=null and checkcode !=''">
+			AND CHECKCODE = #{checkcode}
+		</if>
+	</sql>
+
+	<parameterMap type="com.imobpay.base.entity.Mobilepaycheckcode" id="paramIdMobilepaycheckcode">
+		<parameter property="pageflag" javaType="Boolean" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="curPage" javaType="Integer" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="pageSize" javaType="Integer" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="mobileno" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="branchid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="efftime" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="checktag" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="checkcode" javaType="String" jdbcType="VARCHAR" mode="IN" />
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.Mobilepaycheckcode" id="resultTbMobilepaycheckcode">
+		<result column="USERID" property="userid" javaType="String" jdbcType="VARCHAR" />
+		<result column="MOBILENO" property="mobileno" javaType="String" jdbcType="VARCHAR" />
+		<result column="BRANCHID" property="branchid" javaType="String" jdbcType="VARCHAR" />
+		<result column="EFFTIME" property="efftime" javaType="String" jdbcType="VARCHAR" />
+		<result column="CHECKTAG" property="checktag" javaType="String" jdbcType="VARCHAR" />
+		<result column="CHECKCODE" property="checkcode" javaType="String" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdMobilepaycheckcode" resultMap="resultTbMobilepaycheckcode">
+		SELECT * FROM MOBILEPAYCHECKCODE WHERE ROWNUM = 1
+		<include refid="paramSql"></include>
+	</select>
+
+
+
+
+	<!-- 修改 -->
+	<update id="update" parameterMap="paramIdMobilepaycheckcode">
+		UPDATE MOBILEPAYCHECKCODE set
+		CHECKTAG = #{checktag}
+		where BRANCHID=#{branchid} and
+		MOBILENO=#{mobileno}
+	</update>
+
+</mapper>

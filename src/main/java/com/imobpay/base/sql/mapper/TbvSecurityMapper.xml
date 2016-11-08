@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.TbvSecurityDao">
+
+
+	<sql id="paramSql">
+		<!-- 此处一定要增加一个查询 -->
+		<if test="timestamp !=null and timestamp !=''">
+			AND TIMESTAMP = #{timestamp}
+		</if>
+		<if test="passworderrcnt !=null and passworderrcnt !=''">
+			AND PASSWORDERRCNT = #{passworderrcnt}
+		</if>
+		<if test="paypassword !=null and paypassword !=''">
+			AND PAYPASSWORD = #{paypassword}
+		</if>
+		<if test="tid !=null and tid !=''">
+			AND TID = #{tid}
+		</if>
+	</sql>
+
+	<parameterMap type="com.imobpay.base.entity.TbvSecurity" id="paramIdTbvSecurity">
+		<parameter property="pageflag" javaType="Boolean" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="curPage" javaType="Integer" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="pageSize" javaType="Integer" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="timestamp" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="passworderrcnt" javaType="Integer" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="paypassword" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="tid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.TbvSecurity" id="resultTbTbvSecurity">
+		<result column="TIMESTAMP" property="timestamp" javaType="String" jdbcType="VARCHAR" />
+		<result column="PASSWORDERRCNT" property="passworderrcnt" javaType="Integer" jdbcType="NUMERIC" />
+		<result column="PAYPASSWORD" property="paypassword" javaType="String" jdbcType="VARCHAR" />
+		<result column="TID" property="tid" javaType="String" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdTbvSecurity" resultMap="resultTbTbvSecurity">
+		SELECT * FROM TBV_SECURITY WHERE ROWNUM = 1
+		<include refid="paramSql"></include>
+	</select>
+
+
+	<!-- 添加 -->
+	<insert id="insert" parameterMap="paramIdTbvSecurity" timeout="1000">
+		INSERT INTO
+		TBV_SECURITY(
+		TIMESTAMP,
+		PASSWORDERRCNT,
+		PAYPASSWORD,
+		TID
+		)
+		VALUES(
+		#{timestamp,jdbcType=VARCHAR},
+		#{passworderrcnt,jdbcType=VARCHAR},
+		#{paypassword,jdbcType=VARCHAR},
+		#{tid,jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 修改 -->
+	<update id="update" timeout="1000">
+		UPDATE TBV_SECURITY set
+		TIMESTAMP = #{timestamp,jdbcType=VARCHAR},
+		PASSWORDERRCNT
+		=#{passworderrcnt,jdbcType=VARCHAR},
+		PAYPASSWORD = #{paypassword,jdbcType=VARCHAR}
+		WHERE TID = #{tid,jdbcType=VARCHAR}
+	</update>
+	<!-- 修改密码错误次数 -->
+	<update id="updateCusSecurity">
+		update tbv_security t set t.passworderrcnt='0' where t.passworderrcnt!='0'
+
+	</update>
+
+	<!-- 用户密码错误次数添加 1 -->
+	<update id="updateCusSecCount" parameterMap="paramIdTbvSecurity">
+		update tbv_security t set t.passworderrcnt=t.passworderrcnt+1 where t.tid= #{tid,jdbcType=VARCHAR}
+	</update>
+
+
+
+</mapper>

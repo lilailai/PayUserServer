@@ -34,5 +34,13 @@
 		<mapper resource="com/imobpay/base/sql/mapper/IdentityQueryMapper.xml" />
 		<mapper resource="com/imobpay/base/sql/mapper/TbPidMessageJnlsMapper.xml" />
 		<mapper resource="com/imobpay/base/sql/mapper/TbCustActivityRecordMapper.xml" />
+		
+		<mapper resource="com/imobpay/base/sql/mapper/TbvActivityLotteryMapper.xml" />
+		<mapper resource="com/imobpay/base/sql/mapper/TbvCustomerMapper.xml" />
+		<!-- <mapper resource="com/imobpay/base/sql/mapper/CsCardbinMapper.xml" />
+		<mapper resource="com/imobpay/base/sql/mapper/TbvBindcardMapper.xml" />
+		<mapper resource="com/imobpay/base/sql/mapper/TbvSecurityMapper.xml" />
+		<mapper resource="com/imobpay/base/sql/mapper/TbvCardMapper.xml" />
+		<mapper resource="com/imobpay/base/sql/mapper/MobilepaycheckcodeMapper.xml" /> -->
 	</mappers>
 </configuration>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.CsCardbinDao">
+
+
+	<!-- 查询卡的信息 -->
+	<select id="selectByCardLen" parameterType="csBinBankInfo" resultType="csBinBankInfo">
+		select *
+		from (select
+		(case when b.banknameshort is
+		not null then
+		b.banknameshort
+		when b.banknameshort is null and
+		b.bankname is not null then b.bankname
+		when b.banknameshort is
+		null and
+		b.bankname is null then
+		c.bankname
+		end) bankname,
+		b.provinceid,
+		b.provincename,
+		b.cityid,
+		b.cityname,
+		b.bankbranchname,
+		c.cardtype,
+		c.issusers as
+		bankid,
+		c.branchid2 as bankbranchid
+		from qtpay.cs_cardbin
+		c
+		left join qtpay.cs_bankinfo b
+		on c.branchid2 = b.bankbranchid
+		where
+		instr(#{cardno,jdbcType=VARCHAR}, c.cardbin)
+		= 1
+		and c.cardlen
+		= #{cardleng,jdbcType=VARCHAR}
+		order by
+		length(cardbin) desc)
+		where rownum = 1
+	</select>
+
+	<select id="selectBranckBank" parameterType="csBinBankInfo" resultType="csBinBankInfo">
+		SELECT T.FS_BRANCHNAME AS bankname ,T.FS_BANKNO AS bankno FROM
+		QTFUND.TBRANCHBANK T
+		WHERE T.FS_BRANCHNO=#{bankno,jdbcType=VARCHAR} AND T.FS_STATUS='0'
+
+	</select>
+
+	<!-- 查询是否在18家银行之内 -->
+	<select id="selectPayBankNo" parameterType="String" resultType="Integer">
+
+		select count(1) from qtfund.PAYBANKNO t where t.status='0' and
+		t.settlebranchid='0000000000' and t.bankno=#{bankno,jdbcType=VARCHAR}
+	</select>
+</mapper>

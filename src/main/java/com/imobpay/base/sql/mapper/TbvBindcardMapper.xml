@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.TbvBindcardDao">
+
+
+	<sql id="paramSql">
+		<!-- 此处一定要增加一个查询 -->
+		<if test="provinceid !=null and provinceid !=''">
+			AND PROVINCEID = #{provinceid}
+		</if>
+		<if test="branchid !=null and branchid !=''">
+			AND BRANCHID = #{branchid}
+		</if>
+		<if test="accountname !=null and accountname !=''">
+			AND ACCOUNTNAME = #{accountname}
+		</if>
+		<if test="bankid !=null and bankid !=''">
+			AND BANKID = #{bankid}
+		</if>
+		<if test="bankname !=null and bankname !=''">
+			AND BANKNAME = #{bankname}
+		</if>
+		<if test="bankbranchid !=null and bankbranchid !=''">
+			AND BANKBRANCHID = #{bankbranchid}
+		</if>
+		<if test="bankbranchname !=null and bankbranchname !=''">
+			AND BANKBRANCHNAME = #{bankbranchname}
+		</if>
+		<if test="idno !=null and idno !=''">
+			AND IDNO = #{idno}
+		</if>
+		<if test="bankprovince !=null and bankprovince !=''">
+			AND BANKPROVINCE = #{bankprovince}
+		</if>
+		<if test="cityid !=null and cityid !=''">
+			AND CITYID = #{cityid}
+		</if>
+		<if test="bankcity !=null and bankcity !=''">
+			AND BANKCITY = #{bankcity}
+		</if>
+		<if test="accountno !=null and accountno !=''">
+			AND ACCOUNTNO = #{accountno}
+		</if>
+		<if test="tid !=null and tid !=''">
+			AND TID = #{tid}
+		</if>
+		<if test="id !=null and id !=''">
+			AND ID = #{id}
+		</if>
+	</sql>
+
+	<parameterMap type="com.imobpay.base.entity.TbvBindcard" id="paramIdTbvBindcard">
+		<parameter property="pageflag" javaType="Boolean" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="curPage" javaType="Integer" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="pageSize" javaType="Integer" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="provinceid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="branchid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="enddate" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="accountname" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="bankid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="bankname" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="bankbranchid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="bankbranchname" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="idno" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="bankprovince" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="cityid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="bankcity" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="begindate" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="accountno" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="tid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="id" javaType="String" jdbcType="VARCHAR" mode="IN" />
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.TbvBindcard" id="resultTbTbvBindcard">
+		<result column="PROVINCEID" property="provinceid" javaType="String" jdbcType="VARCHAR" />
+		<result column="BRANCHID" property="branchid" javaType="String" jdbcType="VARCHAR" />
+		<result column="ENDDATE" property="enddate" javaType="String" jdbcType="VARCHAR" />
+		<result column="ACCOUNTNAME" property="accountname" javaType="String" jdbcType="VARCHAR" />
+		<result column="BANKID" property="bankid" javaType="String" jdbcType="VARCHAR" />
+		<result column="BANKNAME" property="bankname" javaType="String" jdbcType="VARCHAR" />
+		<result column="BANKBRANCHID" property="bankbranchid" javaType="String" jdbcType="VARCHAR" />
+		<result column="BANKBRANCHNAME" property="bankbranchname" javaType="String" jdbcType="VARCHAR" />
+		<result column="IDNO" property="idno" javaType="String" jdbcType="VARCHAR" />
+		<result column="BANKPROVINCE" property="bankprovince" javaType="String" jdbcType="VARCHAR" />
+		<result column="CITYID" property="cityid" javaType="String" jdbcType="VARCHAR" />
+		<result column="BANKCITY" property="bankcity" javaType="String" jdbcType="VARCHAR" />
+		<result column="BEGINDATE" property="begindate" javaType="String" jdbcType="VARCHAR" />
+		<result column="ACCOUNTNO" property="accountno" javaType="String" jdbcType="VARCHAR" />
+		<result column="TID" property="tid" javaType="String" jdbcType="VARCHAR" />
+		<result column="ID" property="id" javaType="String" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdTbvBindcard" resultMap="resultTbTbvBindcard">
+		SELECT * FROM TBV_BINDCARD WHERE ROWNUM = 1
+		<include refid="paramSql"></include>
+	</select>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterMap="paramIdTbvBindcard" timeout="1000">
+		INSERT INTO
+		TBV_BINDCARD(
+		PROVINCEID,
+		BRANCHID,
+		ENDDATE,
+		ACCOUNTNAME,
+		BANKID,
+		BANKNAME,
+		BANKBRANCHID,
+		BANKBRANCHNAME,
+		IDNO,
+		BANKPROVINCE,
+		CITYID,
+		BANKCITY,
+		BEGINDATE,
+		ACCOUNTNO,
+		TID,
+		ID
+		)
+		VALUES(
+		#{provinceid,jdbcType=VARCHAR},
+		#{branchid,jdbcType=VARCHAR},
+		#{enddate,jdbcType=VARCHAR},
+		#{accountname,jdbcType=VARCHAR},
+		#{bankid,jdbcType=VARCHAR},
+		#{bankname,jdbcType=VARCHAR},
+		#{bankbranchid,jdbcType=VARCHAR},
+		#{bankbranchname,jdbcType=VARCHAR},
+		#{idno,jdbcType=VARCHAR},
+		#{bankprovince,jdbcType=VARCHAR},
+		#{cityid,jdbcType=VARCHAR},
+		#{bankcity,jdbcType=VARCHAR},
+		#{begindate,jdbcType=VARCHAR},
+		#{accountno,jdbcType=VARCHAR},
+		#{tid,jdbcType=VARCHAR},
+		#{id,jdbcType=VARCHAR})
+	</insert>
+	<!-- 修改 -->
+	<update id="update" timeout="1000">
+		UPDATE TBV_BINDCARD SET
+		ACCOUNTNO = #{accountno,jdbcType=VARCHAR},
+		BANKID =#{bankid,jdbcType=VARCHAR},
+		BANKNAME =
+		#{bankname,jdbcType=VARCHAR},
+		BANKBRANCHID = #{bankbranchid,jdbcType=VARCHAR},
+		BANKBRANCHNAME = #{bankbranchname,jdbcType=VARCHAR},
+		PROVINCEID =
+		#{provinceid,jdbcType=VARCHAR},
+		BANKPROVINCE = #{bankprovince,jdbcType=VARCHAR},
+		CITYID =#{cityid,jdbcType=VARCHAR},
+		BANKCITY =
+		#{bankcity,jdbcType=VARCHAR},
+		BEGINDATE = #{begindate,jdbcType=VARCHAR},
+		ENDDATE = #{enddate,jdbcType=VARCHAR},
+		BRANCHID = #{branchid,jdbcType=VARCHAR}
+		WHERE TID = #{tid}
+	</update>
+
+</mapper>
