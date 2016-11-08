@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONObject;
@@ -51,6 +52,7 @@ import com.imobpay.base.util.Tools;
  * 【作者】：HuaiYu.Wen <br/> 
  * </pre>
  */
+@Service
 public class ServicesUserRegisterTA implements BusinessInterface {
 
     /** 卡类型列表 */
