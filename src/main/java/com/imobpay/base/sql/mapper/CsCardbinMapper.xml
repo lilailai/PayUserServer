@@ -5,7 +5,7 @@
 
 
 	<!-- 查询卡的信息 -->
-	<select id="selectByCardLen" parameterType="csBinBankInfo" resultType="csBinBankInfo">
+	<select id="selectByCardLen" parameterType="com.imobpay.base.entity.CsBinBankInfo" resultType="com.imobpay.base.entity.CsBinBankInfo">
 		select *
 		from (select
 		(case when b.banknameshort is
@@ -41,7 +41,7 @@
 		where rownum = 1
 	</select>
 
-	<select id="selectBranckBank" parameterType="csBinBankInfo" resultType="csBinBankInfo">
+	<select id="selectBranckBank" parameterType="com.imobpay.base.entity.CsBinBankInfo" resultType="com.imobpay.base.entity.CsBinBankInfo">
 		SELECT T.FS_BRANCHNAME AS bankname ,T.FS_BANKNO AS bankno FROM
 		QTFUND.TBRANCHBANK T
 		WHERE T.FS_BRANCHNO=#{bankno,jdbcType=VARCHAR} AND T.FS_STATUS='0'
