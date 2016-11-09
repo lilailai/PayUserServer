@@ -25,9 +25,9 @@ public class CsCardbin extends BaseEntity {
     /** 序号 */
     private static final long serialVersionUID = 1L;
 
-    /** 属性描述： */
+    /** 属性描述：银行编号 */
     private String            bankid;
-    /** 属性描述： */
+    /** 属性描述： f*/
     private String            feemsg;
     /** 属性描述： */
     private String            cardno;

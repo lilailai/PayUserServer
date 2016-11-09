@@ -29,47 +29,47 @@ public class CsBinBankInfo implements Serializable {
      */
     private static final long serialVersionUID = 1L;
     /**
-     * 
+     * 银行名称
      */
     public String             bankname;
     /**
-     * 
+     * 省份编号
      */
     public String             provinceid;
     /**
-     * 
+     * 省份名称
      */
     public String             provincename;
     /**
-     * 
+     * 城市编号
      */
     public String             cityid;
     /**
-     * 
+     * 城市名称
      */
     public String             cityname;
     /**
-     * 
+     * 银行机构名称
      */
     public String             bankbranchname;
     /**
-     * 
+     * 卡类型
      */
     public String             cardtype;
     /**
-     * 
+     * 银行编号
      */
     public String             bankid;
     /**
-     * 
+     * 银行机构编号
      */
     public String             bankbranchid;
     /**
-     * 
+     * 卡号
      */
     public String             cardno;
     /**
-     * 
+     * 卡号长度
      */
     public String             cardleng;
     /**

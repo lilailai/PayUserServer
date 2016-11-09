@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imobpay.base.dao.TbvBranchParamDao">
+
+
+	<sql id="paramSql">
+		<!-- 此处一定要增加一个查询 -->
+
+		<if test="branchid !=null and branchid !=''">
+			AND BRANCHID = #{branchid}
+		</if>
+		<if test="status !=null and status !=''">
+			AND STATUS = #{status}
+		</if>
+		<if test="pubaccount !=null and pubaccount !=''">
+			AND PUBACCOUNT = #{pubaccount}
+		</if>
+	</sql>
+
+	<parameterMap type="com.imobpay.base.entity.TbvBranchParam" id="paramIdTbvBranchParam">
+		<parameter property="pageflag" javaType="Boolean" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="curPage" javaType="Integer" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="pageSize" javaType="Integer" jdbcType="NUMERIC" mode="IN" />
+		<parameter property="ticketUrl" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="tokenUrl" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="createtime" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="token" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="branchid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="ticket" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="status" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="pubaccount" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="tadesc" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="taurl" javaType="String" jdbcType="VARCHAR" mode="IN" />
+
+	</parameterMap>
+
+	<resultMap type="com.imobpay.base.entity.TbvBranchParam" id="resultTbTbvBranchParam">
+		<result column="TICKET_URL" property="ticketUrl" javaType="String" jdbcType="VARCHAR" />
+		<result column="TOKEN_URL" property="tokenUrl" javaType="String" jdbcType="VARCHAR" />
+		<result column="CREATETIME" property="createtime" javaType="String" jdbcType="VARCHAR" />
+		<result column="TOKEN" property="token" javaType="String" jdbcType="VARCHAR" />
+		<result column="BRANCHID" property="branchid" javaType="String" jdbcType="VARCHAR" />
+		<result column="TICKET" property="ticket" javaType="String" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" javaType="String" jdbcType="VARCHAR" />
+		<result column="PUBACCOUNT" property="pubaccount" javaType="String" jdbcType="VARCHAR" />
+		<result column="APPID" property="appid" javaType="String" jdbcType="VARCHAR" />
+		<result column="SECRET" property="secret" javaType="String" jdbcType="VARCHAR" />
+		<result column="TADESC" property="tadesc" javaType="String" jdbcType="VARCHAR" />
+		<result column="TAURL" property="taurl" javaType="String" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="selectById" parameterMap="paramIdTbvBranchParam" resultMap="resultTbTbvBranchParam">
+		SELECT * FROM TBV_BRANCH_PARAM WHERE ROWNUM = 1
+		<include refid="paramSql"></include>
+	</select>
+
+	<select id="selectPublist" parameterMap="paramIdTbvBranchParam" resultMap="resultTbTbvBranchParam">
+		SELECT *
+		FROM (SELECT ROW_NUMBER() OVER(PARTITION BY PUBACCOUNT ORDER
+		BY PUBACCOUNT DESC) RN,
+		TBV_BRANCH_PARAM.*
+		FROM TBV_BRANCH_PARAM WHERE STATUS=#{status,jdbcType=VARCHAR})
+		WHERE RN = 1
+	</select>
+
+
+
+
+	<!-- 修改 -->
+	<update id="update" timeout="1000">
+		UPDATE TBV_BRANCH_PARAM
+		<trim prefix="SET" prefixOverrides=" , ">
+			<if test="createtime !=null and createtime !=''">
+				CREATETIME = #{createtime},
+			</if>
+			<if test="token !=null and token !=''">
+				TOKEN = #{token},
+			</if>
+			<if test="ticket !=null and ticket !=''">
+				TICKET = #{ticket}
+			</if>
+		</trim>
+		WHERE 1=1
+		<include refid="paramSql"></include>
+	</update>
+
+</mapper>
