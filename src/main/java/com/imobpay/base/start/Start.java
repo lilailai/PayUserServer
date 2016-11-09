@@ -72,10 +72,17 @@ public class Start {
             }
         }
 
+        /**
+         *修改人:文怀宇
+         *修改描述:设置环境放置项目启动前设置
+         *修改时间:2016年11月9日14:09:01
+         */
+        System.setProperty("workdir", workdir);
+        
         /** 加载Spring配置文件 */
         context = new FileSystemXmlApplicationContext(new String[] { "File:" + workdir + "/config/spring-context.xml" });
         long l2 = System.currentTimeMillis();
-        System.setProperty("workdir", workdir);
+        
         LogPay.info("加载文件Jar使用时间[" + (l2 - l) + "]");
 
     }
