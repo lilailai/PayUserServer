@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.fastjson.JSONObject;
 import com.imobpay.base.config.PropertiesConfig;
 import com.imobpay.base.config.SendEncrypt;
+import com.imobpay.base.console.Console_Column;
 import com.imobpay.base.console.Console_ErrCode;
 import com.imobpay.base.console.UserConsoleColumn;
 import com.imobpay.base.dao.CsCardbinDao;
@@ -116,9 +117,9 @@ public class ServicesUserRegisterTA implements BusinessInterface {
     public String execute(String json) throws QTException {
 
         JSONObject reqJson = JSONObject.parseObject(json);
-        EmptyChecker.checkEmpty(reqJson, UserConsoleColumn.MOBILENO, UserConsoleColumn.APPUSER, UserConsoleColumn.PASSWORD, UserConsoleColumn.TAACCOUNT, UserConsoleColumn.PASSWORD,
-                UserConsoleColumn.SHOPNAME, UserConsoleColumn.USEFNAME, UserConsoleColumn.CUSTOMERPID, UserConsoleColumn.MAINBUS, UserConsoleColumn.PROVINCE, UserConsoleColumn.CITY,
-                UserConsoleColumn.REGION, UserConsoleColumn.ADDRESS, UserConsoleColumn.CARDNO, UserConsoleColumn.OPENID);
+        EmptyChecker.checkEmpty(reqJson, UserConsoleColumn.MOBILENO, UserConsoleColumn.APPUSER, UserConsoleColumn.PASSWORD, UserConsoleColumn.TAACCOUNT, UserConsoleColumn.SHOPNAME,
+                UserConsoleColumn.USEFNAME, UserConsoleColumn.CUSTOMERPID, UserConsoleColumn.MAINBUS, UserConsoleColumn.PROVINCE, UserConsoleColumn.CITY, UserConsoleColumn.REGION,
+                UserConsoleColumn.ADDRESS, UserConsoleColumn.CARDNO, UserConsoleColumn.OPENID);
         // 判断手机号是否注册 或者 TA卡是否已经使用
         String mobile = reqJson.getString(UserConsoleColumn.MOBILENO);
         String appuser = reqJson.getString(UserConsoleColumn.APPUSER);
@@ -255,7 +256,11 @@ public class ServicesUserRegisterTA implements BusinessInterface {
             tbvActiveLotteryDao.updateCodeLottery(tbvActiveLottery);
         }
 
-        return UserConsoleColumn.RETURNNULL;
+        /** 组装成功信息返回 */
+        JSONObject respJson=new JSONObject();
+        respJson.put(Console_Column.MSG_CODE, Console_ErrCode.SUCCESS);
+        respJson.put(Console_Column.MSG_TEXT, Console_ErrCode.SUCCESSDESC);
+        return respJson.toString();
     }
     
     /**
