@@ -47,13 +47,15 @@ public final class JymFindServerConfig {
         item.put(Console_Server_Jym.JYM_RECORDPIDINFO, "servicesRecordPidInfo");
         
         item.put(Console_Server_Jym.JYM_TAUSERREGISTER, "servicesUserRegisterTA");
+        
+        item.put(Console_Server_Jym.JYM_TAUSERLOGIN, "servicesUserLoginTA");
         /** 错误码返回类 */
         result.put(Console_Server_Jym.JYM_QUERYUSERINFO, "mapResultBean");
         result.put(Console_Server_Jym.JYM_USERLOGIN, "mapResultBean");
 //        result.put(Console_Server_Jym.JYM_QUERYUSERINFO, "defaultResultBean");
         result.put(Console_Server_Jym.JYM_RECORDPIDINFO, "defaultResultBean");
         result.put(Console_Server_Jym.JYM_TAUSERREGISTER, "defaultResultBean");
-
+        result.put(Console_Server_Jym.JYM_TAUSERLOGIN, "defaultResultBean");
 
     }
 
