@@ -158,7 +158,7 @@ public class UserConsoleColumn {
     public static final String RS_CUSTOMERREGDATE       = "customerRegDate";
     /** 返回结果 */
     public static final String UPD_TYPE                 = "UPDTYPE";
-    /** 返回结果 */
+    /** 内容 */
     public static final String CONTENT                  = "CONTENT";
     /** 结算卡修改 */
     public static final String UPD_TYPE_1               = "1";
