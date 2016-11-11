@@ -43,5 +43,6 @@
 		<mapper resource="com/imobpay/base/sql/mapper/TbvCardMapper.xml" />
 		<mapper resource="com/imobpay/base/sql/mapper/MobilepaycheckcodeMapper.xml" />
 		<mapper resource="com/imobpay/base/sql/mapper/TbvBranchParamMapper.xml" />
+		<mapper resource="com/imobpay/base/sql/mapper/TbvHisCustomerMapper.xml" />
 	</mappers>
 </configuration>

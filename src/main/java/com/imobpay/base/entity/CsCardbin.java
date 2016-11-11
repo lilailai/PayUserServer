@@ -27,35 +27,35 @@ public class CsCardbin extends BaseEntity {
 
     /** 属性描述：银行编号 */
     private String            bankid;
-    /** 属性描述： f*/
+    /** 属性描述： 费用信息*/
     private String            feemsg;
-    /** 属性描述： */
+    /** 属性描述： 卡号*/
     private String            cardno;
-    /** 属性描述： */
+    /** 属性描述： 卡长度*/
     private Integer           cardlen;
-    /** 属性描述： */
+    /** 属性描述： 卡绑定*/
     private String            cardbin;
-    /** 属性描述： */
+    /** 属性描述： 卡名称*/
     private String            cardname;
-    /** 属性描述： */
+    /** 属性描述： 银行名称*/
     private String            bankname;
-    /** 属性描述： */
+    /** 属性描述： 银行Id*/
     private String            branchid;
-    /** 属性描述： */
+    /** 属性描述： 银行Id2*/
     private String            branchid2;
-    /** 属性描述： */
+    /** 属性描述： 卡类型*/
     private String            cardtype;
     /** 属性描述： */
     private String            cardorg;
-    /** 属性描述： */
+    /** 属性描述： 卡目标*/
     private Integer           cardtag;
-    /** 属性描述： */
+    /** 属性描述： 卡目标2*/
     private Integer           cardtag2;
     /** 属性描述：通道标识：1001：多渠道一笔投（T+0/T+0）、0101：多渠道两笔代付（T+0）、0011：华势一笔投 */
     private String            channelsflag;
     /** 属性描述：到账时间描述 */
     private String            paymentdesc;
-    /** 属性描述： */
+    /** 属性描述： 是否使用标识*/
     private String            issusers;
 
     /**
