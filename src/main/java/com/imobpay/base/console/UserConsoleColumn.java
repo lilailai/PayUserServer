@@ -89,9 +89,9 @@ public class UserConsoleColumn {
     public static final int    SIZE_PAGE                = 10;
     /** 是否是最后一条 */
     public static final String ISLAST                   = "isLast";
-    /** 返回结果 */
+    /** 返回结果  */
     public static final String RESULTS                  = "results";
-    /** 返回结果Bean */
+    /** 返回结果Bean  */
     public static final String RESULT_BEAN              = "resultBean";
     /** 当前日期 */
     public static final String RS_LOCALDATE             = "localDate";
