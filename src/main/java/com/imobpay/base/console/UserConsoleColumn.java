@@ -91,64 +91,63 @@ public class UserConsoleColumn {
     public static final String ISLAST                   = "isLast";
     /** 返回结果 */
     public static final String RESULTS                  = "results";
-    /** 返回结果 */
+    /** 返回结果Bean */
     public static final String RESULT_BEAN              = "resultBean";
-    /** 返回结果 */
+    /** 当前日期 */
     public static final String RS_LOCALDATE             = "localDate";
-    /** 返回结果 */
+    /** 当前时间 */
     public static final String RS_LOCALTIME             = "localTime";
-    /** 返回结果 */
+    /** 订单号 */
     public static final String RS_ORDER_ID              = "orderId";
-    /** 返回结果 */
+    /** 支付类型 */
     public static final String RS_PAYTYPE               = "payType";
-    /** 返回结果 */
+    /** 账号(驼峰命名) */
     public static final String RS_ACCOUNTNO             = "accountNo";
-    /** 返回结果 */
+    /** 账号(全大写) */
     public static final String ACCOUNTNO                = "ACCOUNTNO";
-    /** 返回结果 */
+    /** 总计 */
     public static final String RS_AMOUNT                = "amount";
-    /** 返回结果 */
+    /** TA账号 */
     public static final String RS_TAACCOUNT             = "taAccount";
-    /** 返回结果 */
+    /** 手续费 */
     public static final String RS_FEE                   = "fee";
-    /** 返回结果 */
+    /** 手续费2 */
     public static final String RS_FD_FEE                = "fdFee";
-    /** 返回结果 */
+    /** 经度 */
     public static final String RS_LONGITUDE             = "longitude";
-    /** 返回结果 */
+    /** 维度 */
     public static final String RS_LATITUDE              = "latitude";
-    /** 返回结果 */
+    /** 返回信息描述 */
     public static final String RS_MSGTEXT               = "msgText";
-    /** 返回结果 */
+    /** 返回编码 */
     public static final String RS_MSGCODE               = "msgCode";
-    /** 返回结果 */
+    /** 当前日志号 */
     public static final String RS_LOCALLOGNO            = "localLogno";
-    /** 返回结果 */
+    /** 商品号 */
     public static final String RS_MERCHANTID            = "merchantId";
-    /** 用户信息 */
-    /** 返回结果 */
+    /** 手机号 */
     public static final String MOBILE                   = "mobile";
     /** 姓名 */
     public static final String USERNAME                 = "userName";
-    /** 返回结果 */
+    /** 客户身份证 */
     public static final String RS_CUSTOMERPID           = "customerPid";
-    /** 返回结果 */
+    /** 商店名称 */
     public static final String RS_SHOPNAME              = "shopName";
-    /** 返回结果 */
+    /** 主要业务 */
     public static final String RS_MAIN_BUS              = "mainBus";
-    /** 返回结果 */
+    /** 省份 */
     public static final String RS_PROVINCE              = "province";
-    /** 返回结果 */
+    /** 城市 */
     public static final String RS_CITY                  = "city";
-    /** 返回结果 */
+    /** 地区*/
     public static final String RS_REGION                = "region";
-    /** 返回结果 */
+    /** 地址 */
     public static final String RS_ADDRESS               = "address";
-    /** 返回结果 */
+    /** 机构号 */
     public static final String RS_BRANCHID              = "branchid";
-    /** 返回结果 */
+    /** 状态 */
     public static final String RS_STATUS                = "status";
-    /** 返回结果 */
+    /** 账户名称 */
     public static final String RS_ACCOUNTNANME          = "accountName";
     /** 银行ID */
     public static final String RS_BANKID                = "bankId";
