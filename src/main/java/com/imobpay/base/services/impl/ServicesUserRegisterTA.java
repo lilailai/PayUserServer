@@ -165,7 +165,7 @@ public class ServicesUserRegisterTA implements BusinessInterface {
         cb.setCardleng(cardNo.length() + "");
         CsBinBankInfo selectByCardLen = csCardBinDao.selectByCardLen(cb);
         if (EmptyChecker.isEmpty(selectByCardLen)) {
-            throw new QTException(Console_ErrCode.NOTE_BANKINFODCODE, Console_ErrCode.NOTE_BANKINFODCODE);
+            throw new QTException(Console_ErrCode.NOTE_BANKINFODCODE, Console_ErrCode.NOTE_BANKINFODESC);
         }
         String cardType = getCType(selectByCardLen.getCardtype());
         if (!UserConsoleColumn.CARD_TYPE_D.equals(cardType)) {
